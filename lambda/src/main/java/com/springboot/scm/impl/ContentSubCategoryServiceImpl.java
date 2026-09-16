@@ -52,5 +52,10 @@ public class ContentSubCategoryServiceImpl implements ContentSubCategoryService{
 		contentSubCategoryRepo.deleteById(id);
 		
 	}
+	@Override
+	public List<ContentSubCategory> getAll() {
+		
+		return contentSubCategoryRepo.findAll();
+	}
 
 }

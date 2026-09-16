@@ -1,0 +1,37 @@
+   /* Desktop */
+
+    #languageContainer,
+    #languageButtonArrow {
+        display: block;
+    }
+
+
+    /* Mobile */
+
+    @media (max-width: 767px) {
+
+        #languageContainer,
+        #languageButtonArrow {
+            display: none;
+        }
+
+        #languageButton {
+            padding: 8px;
+        }
+
+        #languageButton > div:first-child {
+            width: 40px;
+            height: 40px;
+        }
+
+        #languagePopup {
+            position: fixed;
+            top: 80px;
+            right: 1rem;
+            left: 1rem;
+            width: auto !important;
+            max-width: none !important;
+            transform: none;
+        }
+
+    }

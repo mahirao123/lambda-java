@@ -1,0 +1,437 @@
+
+<!-- ================================================= -->
+<!-- Chabge Language  -->
+<!-- ================================================= -->
+<!-- ===================================================== -->
+<!-- LANGUAGE BUTTON -->
+<!-- ===================================================== -->
+
+<div th:fragment="changeLanguage"
+
+class="relative">
+
+    <button id="languageButton"
+            type="button"
+            class="flex items-center gap-3
+                   px-4 py-2
+                   bg-white
+                   border border-gray-300
+                   rounded-xl
+                   shadow-sm
+                   hover:border-red-500
+                   hover:shadow-md
+                   transition">
+
+        <!-- LANGUAGE ICON -->
+        <div class="flex items-center justify-center
+                    w-10 h-10
+                    bg-red-50
+                    text-red-600
+                    rounded-lg">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-6 h-6"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 5h12M9 3v2m0 0c0 4-2 7-5 9m5-9c0 3 2 6 5 8M5 21l4-4m0 0l4 4m-4-4v-5m7-9h5m-2 0v14" />
+
+            </svg>
+
+        </div>
+
+        <!-- SELECTED LANGUAGE -->
+        <div id="languageContainer"
+             class="text-left">
+
+            <div id="selectedLanguage"
+                 class="text-sm font-bold text-gray-900">
+                हिन्दी
+            </div>
+
+			<span th:text="#{language}">
+			    Language
+			</span>
+
+        </div>
+
+        <!-- ARROW -->
+        <svg id="languageButtonArrow"
+             xmlns="http://www.w3.org/2000/svg"
+             class="w-4 h-4 text-gray-500"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+
+        </svg>
+
+    </button>
+
+
+    <!-- ================================================= -->
+    <!-- LANGUAGE POPUP -->
+    <!-- ================================================= -->
+
+    <div id="languagePopup"
+         class="hidden absolute top-full
+                right-0
+                mt-3
+                bg-white
+                rounded-2xl
+                shadow-2xl
+                border border-gray-200
+                p-4
+                z-[100]"
+         style="width: 360px; max-width: calc(100vw - 2rem);">
+
+        <!-- HEADER -->
+
+        <div class="flex items-center justify-between
+                    pb-3 mb-3 border-b">
+
+            <div>
+
+				<h3 th:text="#{select.language}">
+				    Select Language
+				</h3>
+
+                <p class="text-xs text-gray-500">
+                    अपनी भाषा चुनें
+                </p>
+
+            </div>
+
+            <button id="closeLanguagePopup"
+                    type="button"
+                    class="w-8 h-8
+                           flex items-center justify-center
+                           rounded-full
+                           hover:bg-gray-100
+                           text-gray-500
+                           text-xl">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- LANGUAGES -->
+
+        <div id="languageList"
+             class="grid grid-cols-2 gap-2">
+
+            <!-- HINDI -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-red-200
+                           bg-red-50
+                           hover:bg-red-100
+                           transition"
+                    data-language="hi"
+                    data-name="हिन्दी">
+
+                <span class="font-semibold text-gray-800">
+                    हिन्दी
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    हिंदी
+                </span>
+
+            </button>
+
+
+            <!-- ENGLISH -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="en"
+                    data-name="English">
+
+                <span class="font-semibold text-gray-800">
+                    English
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    EN
+                </span>
+
+            </button>
+
+
+            <!-- BENGALI -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="bn"
+                    data-name="বাংলা">
+
+                <span class="font-semibold text-gray-800">
+                    বাংলা
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    বাংলা
+                </span>
+
+            </button>
+
+
+            <!-- MARATHI -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="mr"
+                    data-name="मराठी">
+
+                <span class="font-semibold text-gray-800">
+                    मराठी
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    मराठी
+                </span>
+
+            </button>
+
+
+            <!-- GUJARATI -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="gu"
+                    data-name="ગુજરાતી">
+
+                <span class="font-semibold text-gray-800">
+                    ગુજરાતી
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    ગુજરાતી
+                </span>
+
+            </button>
+
+
+            <!-- TAMIL -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="ta"
+                    data-name="தமிழ்">
+
+                <span class="font-semibold text-gray-800">
+                    தமிழ்
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    தமிழ்
+                </span>
+
+            </button>
+
+
+            <!-- TELUGU -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="te"
+                    data-name="తెలుగు">
+
+                <span class="font-semibold text-gray-800">
+                    తెలుగు
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    తెలుగు
+                </span>
+
+            </button>
+
+
+            <!-- KANNADA -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="kn"
+                    data-name="ಕನ್ನಡ">
+
+                <span class="font-semibold text-gray-800">
+                    ಕನ್ನಡ
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    ಕನ್ನಡ
+                </span>
+
+            </button>
+
+
+            <!-- MALAYALAM -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="ml"
+                    data-name="മലയാളം">
+
+                <span class="font-semibold text-gray-800">
+                    മലയാളം
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    മലയാളം
+                </span>
+
+            </button>
+
+
+            <!-- PUNJABI -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="pa"
+                    data-name="ਪੰਜਾਬੀ">
+
+                <span class="font-semibold text-gray-800">
+                    ਪੰਜਾਬੀ
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    ਪੰਜਾਬੀ
+                </span>
+
+            </button>
+
+
+            <!-- ODIA -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="or"
+                    data-name="ଓଡ଼ିଆ">
+
+                <span class="font-semibold text-gray-800">
+                    ଓଡ଼ିଆ
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    ଓଡ଼ିଆ
+                </span>
+
+            </button>
+
+
+            <!-- ASSAMESE -->
+
+            <button type="button"
+                    class="language-option
+                           flex items-center justify-between
+                           px-3 py-3
+                           rounded-xl
+                           border border-gray-200
+                           hover:border-red-300
+                           hover:bg-red-50
+                           transition"
+                    data-language="as"
+                    data-name="অসমীয়া">
+
+                <span class="font-semibold text-gray-800">
+                    অসমীয়া
+                </span>
+
+                <span class="text-xs text-gray-400">
+                    অসমীয়া
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

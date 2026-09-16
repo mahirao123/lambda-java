@@ -14,6 +14,7 @@ public interface ContentSubCategoryService {
 	Optional<ContentSubCategory> getById(Long id);
 	
 List<ContentSubCategory>	getByCategoryId(Long categoryId);
+List<ContentSubCategory>	getAll();
 
 List<ContentSubCategory>	searchByNameIgnoreCaseOrderByNameAsc(String name);
 

@@ -1,0 +1,25 @@
+.epaper-calendar-popup {
+    width: 560px;
+    max-width: calc(100vw - 2rem);
+}
+
+@media (max-width: 767px) {
+
+    .epaper-calendar-popup {
+        width: calc(100vw - 2rem);
+    }
+
+}
+       /* Mobile: hide date and day */
+       @media (max-width: 767px) {
+
+           #calendarDateContainer {
+               display: none;
+           }
+
+           #calendarButton {
+               padding-left: 8px;
+               padding-right: 8px;
+           }
+
+       }

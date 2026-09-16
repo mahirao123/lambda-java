@@ -1,439 +1,347 @@
 <!DOCTYPE html>
 
-<html
-    data-th-replace="~{base :: parent(~{:: #content},~{::title},~{::script})}"
-    lang="en">
+<html data-th-replace="~{base :: parent(~{:: #content},~{::title},~{::script})}" lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title
-        data-th-text="${loggedInEmployee != null ? loggedInEmployee.name + ' | Category' : 'Category'}">
-        Category
-    </title>
+	<title data-th-text="${loggedInEmployee != null ? loggedInEmployee.name + ' | Category' : 'Category'}">
+		Category
+	</title>
 
 </head>
 
 
 <body class="bg-gray-200">
 
-<div id="content"
-     class="min-h-screen flex flex-col">
+	<div id="content" class="min-h-screen flex flex-col">
 
 
-    <main class="flex-1 px-4 sm:ml-64 transition-all duration-300">
+		<main class="flex-1 px-4 sm:ml-64 transition-all duration-300">
 
 
-        <!-- ================================================= -->
-        <!-- HEADER -->
-        <!-- ================================================= -->
+			<!-- ================================================= -->
+			<!-- HEADER -->
+			<!-- ================================================= -->
 
-        <div class="flex flex-col md:flex-row
+			<div class="flex flex-col md:flex-row
                     md:items-center md:justify-between
                     gap-4 mb-8">
 
-            <div>
+				<div>
 
-                <h1 class="text-3xl font-bold
+					<h1 class="text-3xl font-bold
                            text-gray-900 dark:text-white">
 
-                    Content Categories
+						Content Categories
 
-                </h1>
+					</h1>
 
-                <p class="mt-1 text-gray-500 dark:text-gray-400">
+					<p class="mt-1 text-gray-500 dark:text-gray-400">
 
-                    Manage categories and subcategories
-                    for your media content.
+						Manage categories and subcategories
+						for your media content.
 
-                </p>
+					</p>
 
-            </div>
+				</div>
 
 
-            <button
-                type="button"
-                onclick="openCategoryModal()"
-
-                class="px-5 py-3 text-white
+				<div class="flex flex-row items-center justify-between gap-2 ">
+					<button type="button" onclick="openCategoryModal()" class="px-5 py-3 text-white
                        bg-blue-600 hover:bg-blue-700
                        rounded-lg font-medium">
 
-                + Add Category
+						+ Add Category
 
-            </button>
-
-        </div>
+					</button>
 
 
 
-        <!-- ================================================= -->
-        <!-- CATEGORY CARDS -->
-        <!-- ================================================= -->
+					<a th:href="@{/editor/dashboard}" class="px-6 py-3.5 
+			           text-sm font-medium text-center
+			           bg-gray-200
+			           rounded-lg
+			           hover:bg-gray-300">
 
-        <div
-            th:if="${!#lists.isEmpty(categories)}"
+						x Cancel
 
-            class="grid grid-cols-1 md:grid-cols-2
+					</a>
+
+
+				</div>
+			</div>
+
+
+
+			<!-- ================================================= -->
+			<!-- CATEGORY CARDS -->
+			<!-- ================================================= -->
+
+			<div th:if="${!#lists.isEmpty(categories)}" class="grid grid-cols-1 md:grid-cols-2
                    xl:grid-cols-3 gap-4">
 
 
-            <div
-                th:each="category : ${categories}"
-
-                class="bg-white dark:bg-gray-800
+				<div th:each="category : ${categories}" class="bg-white dark:bg-gray-800
                        border border-gray-200
                        dark:border-gray-700
                        rounded-xl shadow-sm
                        overflow-hidden">
 
 
-                <!-- ========================================= -->
-                <!-- CATEGORY HEADER -->
-                <!-- ========================================= -->
+					<!-- ========================================= -->
+					<!-- CATEGORY HEADER -->
+					<!-- ========================================= -->
 
-                <div
-                    class="p-5
+					<div class="p-5
                            bg-gray-50 dark:bg-gray-900
                            border-b border-gray-200
                            dark:border-gray-700">
 
 
-                    <div
-                        class="flex items-start
+						<div class="flex items-start
                                justify-between gap-3">
 
 
-                        <div class="min-w-0">
+							<div class="min-w-0">
 
 
-                            <!-- DATE -->
+								<!-- DATE -->
 
-                            <h2
-                                class="text-xl font-bold
+								<h2 class="text-xl font-bold
                                        text-gray-900
                                        dark:text-white">
 
-									   <span th:text="${category.date != null ? #dates.format(category.date, 'dd/MM/yyyy') : ''}">
-									   </span>
+									<span
+										th:text="${category.date != null ? #dates.format(category.date, 'dd/MM/yyyy') : ''}">
+									</span>
 
-                            </h2>
+								</h2>
 
 
-                            <!-- DAY + SUBCATEGORY COUNT -->
+								<!-- DAY + SUBCATEGORY COUNT -->
 
-                            <p
-                                class="text-sm text-gray-500 mt-1">
+								<p class="text-sm text-gray-500 mt-1">
 
-                                <span
-                                    th:text="${category.day != null
+									<span th:text="${category.day != null
                                         ? category.day
                                         : ''}">
 
-                                    Thursday
+										Monday
 
-                                </span>
+									</span>
 
-                                <span class="mx-1">•</span>
+									<span class="mx-1">•</span>
 
-                                <span
-                                    th:text="${category.subCategories != null
+									<span th:text="${category.subCategories != null
                                         ? category.subCategories.size()
                                         : 0}">
 
-                                    0
+										0
 
-                                </span>
+									</span>
 
-                                Subcategories
+									Subcategories
 
-                            </p>
+								</p>
 
-                        </div>
-
-
-
-                        <!-- CATEGORY ACTIONS -->
-
-                        <div class="flex items-center gap-3">
+							</div>
 
 
-                            <!-- EDIT CATEGORY -->
 
-                            <button
-                                type="button"
-                                title="Edit Category"
+							<!-- CATEGORY ACTIONS -->
 
-                                th:attr="
+							<div class="flex items-center gap-3">
+
+
+								<!-- EDIT CATEGORY -->
+
+								<button type="button" title="Edit Category" th:attr="
                                     data-id=${category.id},
                                     data-date=${category.date},
-                                    data-day=${category.day}"
-
-                                onclick="openEditCategoryModal(this)"
-
-                                class="text-blue-500
+                                    data-day=${category.day}" onclick="openEditCategoryModal(this)" class="text-blue-500
                                        hover:text-blue-700">
 
 
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="w-5 h-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+										viewBox="0 0 24 24" stroke="currentColor">
 
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-
-                                        d="M11 5H6a2 2 0 00-2 2v11
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11
                                            a2 2 0 002 2h11a2 2 0
                                            002-2v-5m-1.5-9.5a2.121
                                            2.121 0 113 3L12 15l-4
-                                           1 1-4 8.5-8.5z"/>
+                                           1 1-4 8.5-8.5z" />
 
-                                </svg>
+									</svg>
 
-                            </button>
+								</button>
 
 
 
-                            <!-- DELETE CATEGORY -->
+								<!-- DELETE CATEGORY -->
 
-                            <a
-                                th:href="@{/editor/category/delete/{id}(id=${category.id})}"
-
-                                onclick="return confirm(
+								<a th:href="@{/editor/category/delete/{id}(id=${category.id})}" onclick="return confirm(
                                     'Delete this category and all its subcategories?'
-                                )"
-
-                                title="Delete Category"
-
-                                class="text-red-500
+                                )" title="Delete Category" class="text-red-500
                                        hover:text-red-700">
 
 
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="w-5 h-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+										viewBox="0 0 24 24" stroke="currentColor">
 
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-
-                                        d="M19 7l-.867 12.142
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142
                                            A2 2 0 0116.138 21H7.862
                                            a2 2 0 01-1.995-1.858L5
                                            7m5 4v6m4-6v6M9 7V4a1
                                            1 0 011-1h4a1 1 0
-                                           011 1v3m-9 0h12"/>
+                                           011 1v3m-9 0h12" />
 
-                                </svg>
+									</svg>
 
-                            </a>
+								</a>
 
-                        </div>
+							</div>
 
-                    </div>
+						</div>
 
-                </div>
-
-
-
-                <!-- ========================================= -->
-                <!-- SUBCATEGORIES -->
-                <!-- ========================================= -->
-
-                <div class="p-5">
-
-
-                    <!-- NO SUBCATEGORY -->
-
-                    <div
-                        th:if="${category.subCategories == null ||
-                                #lists.isEmpty(category.subCategories)}"
-
-                        class="text-center py-6">
-
-                        <p class="text-gray-500">
-
-                            No subcategories added.
-
-                        </p>
-
-                    </div>
+					</div>
 
 
 
-                    <!-- SUBCATEGORY LIST -->
+					<!-- ========================================= -->
+					<!-- SUBCATEGORIES -->
+					<!-- ========================================= -->
 
-                    <ul
-                        th:if="${category.subCategories != null &&
-                                !#lists.isEmpty(category.subCategories)}"
-
-                        class="space-y-2">
+					<div class="p-5">
 
 
-                        <li
-                            th:each="sub : ${category.subCategories}"
+						<!-- NO SUBCATEGORY -->
 
-                            class="flex items-center
+						<div th:if="${category.subCategories == null ||
+                                #lists.isEmpty(category.subCategories)}" class="text-center py-6">
+
+							<p class="text-gray-500">
+
+								No subcategories added.
+
+							</p>
+
+						</div>
+
+
+
+						<!-- SUBCATEGORY LIST -->
+
+						<ul th:if="${category.subCategories != null &&
+                                !#lists.isEmpty(category.subCategories)}" class="space-y-2">
+
+
+							<li th:each="sub : ${category.subCategories}" class="flex items-center
                                    justify-between gap-3
                                    p-3 rounded-lg
                                    bg-gray-50
                                    dark:bg-gray-700">
 
 
-                            <!-- SUBCATEGORY NAME -->
+								<!-- SUBCATEGORY NAME -->
 
-                            <div
-                                class="flex items-center
+								<div class="flex items-center
                                        gap-3 min-w-0">
 
 
-                                <span
-                                    class="w-2 h-2 rounded-full
+									<span class="w-2 h-2 rounded-full
                                            bg-blue-600
                                            flex-shrink-0">
-                                </span>
+									</span>
 
 
-                                <span
-                                    class="text-gray-800
+									<span class="text-gray-800
                                            dark:text-gray-200
-                                           truncate"
+                                           truncate" th:text="${sub.name}">
 
-                                    th:text="${sub.name}">
+										School Education
 
-                                    School Education
+									</span>
 
-                                </span>
-
-                            </div>
+								</div>
 
 
 
-                            <!-- SUBCATEGORY ACTIONS -->
+								<!-- SUBCATEGORY ACTIONS -->
 
-                            <div
-                                class="flex items-center
+								<div class="flex items-center
                                        gap-3 flex-shrink-0">
 
 
-                                <!-- EDIT SUBCATEGORY -->
+									<!-- EDIT SUBCATEGORY -->
 
-                                <button
-                                    type="button"
-                                    title="Edit Subcategory"
-
-                                    th:attr="
+									<button type="button" title="Edit Subcategory" th:attr="
                                         data-id=${sub.id},
                                         data-name=${sub.name},
                                         data-category-id=${category.id},
                                         data-category-date=${category.date},
-                                        data-category-day=${category.day}"
-
-                                    onclick="openEditSubCategoryModal(this)"
-
-                                    class="text-blue-500
+                                        data-category-day=${category.day}" onclick="openEditSubCategoryModal(this)"
+										class="text-blue-500
                                            hover:text-blue-700">
 
 
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="w-4 h-4"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+											viewBox="0 0 24 24" stroke="currentColor">
 
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-
-                                            d="M11 5H6a2 2 0 00-2 2v11
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11
                                                a2 2 0 002 2h11a2 2
                                                0 002-2v-5m-1.5-9.5
                                                a2.121 2.121 0 113
                                                3L12 15l-4 1 1-4
-                                               8.5-8.5z"/>
+                                               8.5-8.5z" />
 
-                                    </svg>
+										</svg>
 
-                                </button>
+									</button>
 
 
 
-                                <!-- DELETE SUBCATEGORY -->
+									<!-- DELETE SUBCATEGORY -->
 
-                                <a
-                                    th:href="@{/editor/category/subcategory/delete/{id}(id=${sub.id})}"
-
-                                    onclick="return confirm(
+									<a th:href="@{/editor/category/subcategory/delete/{id}(id=${sub.id})}" onclick="return confirm(
                                         'Delete this subcategory?'
-                                    )"
-
-                                    title="Delete Subcategory"
-
-                                    class="text-red-500
+                                    )" title="Delete Subcategory" class="text-red-500
                                            hover:text-red-700">
 
 
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="w-4 h-4"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+											viewBox="0 0 24 24" stroke="currentColor">
 
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-
-                                            d="M19 7l-.867 12.142
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142
                                                A2 2 0 0116.138 21H7.862
                                                a2 2 0 01-1.995-1.858L5
                                                7m5 4v6m4-6v6M9 7V4a1
                                                1 0 011-1h4a1 1 0
-                                               011 1v3m-9 0h12"/>
+                                               011 1v3m-9 0h12" />
 
-                                    </svg>
+										</svg>
 
-                                </a>
+									</a>
 
-                            </div>
+								</div>
 
-                        </li>
+							</li>
 
-                    </ul>
+						</ul>
 
 
 
-                    <!-- ===================================== -->
-                    <!-- ADD SUBCATEGORY -->
-                    <!-- ===================================== -->
+						<!-- ===================================== -->
+						<!-- ADD SUBCATEGORY -->
+						<!-- ===================================== -->
 
-                    <button
-                        type="button"
-
-                        th:attr="
+						<button type="button" th:attr="
                             data-category-id=${category.id},
                             data-category-date=${category.date},
-                            data-category-day=${category.day}"
-
-                        onclick="openSubCategoryModal(this)"
-
-                        class="w-full mt-5 px-4 py-2
+                            data-category-day=${category.day}" onclick="openSubCategoryModal(this)" class="w-full mt-5 px-4 py-2
                                text-sm font-medium
                                text-blue-600
                                border border-blue-600
@@ -441,129 +349,104 @@
                                hover:bg-blue-50
                                dark:hover:bg-gray-700">
 
-                        + Add Subcategory
+							+ Add Subcategory
 
-                    </button>
+						</button>
 
-                </div>
+					</div>
 
-            </div>
+				</div>
 
-        </div>
-
-
-
-        <!-- ================================================= -->
-        <!-- EMPTY STATE -->
-        <!-- ================================================= -->
-
-        <div
-            th:if="${#lists.isEmpty(categories)}"
-
-            class="text-center py-20">
+			</div>
 
 
-            <div class="text-6xl mb-4">
-                📂
-            </div>
+
+			<!-- ================================================= -->
+			<!-- EMPTY STATE -->
+			<!-- ================================================= -->
+
+			<div th:if="${#lists.isEmpty(categories)}" class="text-center py-20">
 
 
-            <h2
-                class="text-2xl font-bold
+				<div class="text-6xl mb-4">
+					📂
+				</div>
+
+
+				<h2 class="text-2xl font-bold
                        text-gray-800
                        dark:text-white">
 
-                No Categories Yet
+					No Categories Yet
 
-            </h2>
-
-
-            <p class="text-gray-500 mt-2">
-
-                Start by creating your first
-                content category.
-
-            </p>
-
-        </div>
+				</h2>
 
 
+				<p class="text-gray-500 mt-2">
 
-        <!-- ================================================= -->
-        <!-- ADD CATEGORY MODAL -->
-        <!-- ================================================= -->
+					Start by creating your first
+					content category.
 
-        <div
-            id="categoryModal"
+				</p>
 
-            class="hidden fixed inset-0 z-50
+			</div>
+
+
+
+			<!-- ================================================= -->
+			<!-- ADD CATEGORY MODAL -->
+			<!-- ================================================= -->
+
+			<div id="categoryModal" class="hidden fixed inset-0 z-50
                    flex items-center justify-center
                    bg-black/50 px-4">
 
 
-            <div
-                class="bg-white dark:bg-gray-800
+				<div class="bg-white dark:bg-gray-800
                        rounded-xl shadow-xl
                        w-full max-w-md p-6">
 
 
-                <div
-                    class="flex justify-between
+					<div class="flex justify-between
                            items-center mb-5">
 
 
-                    <h2
-                        class="text-xl font-bold
+						<h2 class="text-xl font-bold
                                text-gray-900
                                dark:text-white">
 
-                        Add Category
+							Add Category
 
-                    </h2>
+						</h2>
 
 
-                    <button
-                        type="button"
-                        onclick="closeCategoryModal()"
-
-                        class="text-gray-500
+						<button type="button" onclick="closeCategoryModal()" class="text-gray-500
                                hover:text-gray-800
                                text-2xl">
 
-                        &times;
+							&times;
 
-                    </button>
+						</button>
 
-                </div>
-
-
-
-                <form
-                    th:action="@{/editor/category/add}"
-                    method="post">
+					</div>
 
 
-                    <!-- DATE -->
 
-                    <label
-                        class="block mb-2 font-medium
+					<form th:action="@{/editor/category/add}" method="post">
+
+
+						<!-- DATE -->
+
+						<label class="block mb-2 font-medium
                                text-gray-700
                                dark:text-gray-300">
 
-                        Date
+							Date
 
-                    </label>
+						</label>
 
 
-                    <input
-                        type="date"
-                        name="date"
-                        id="categoryDate"
-
-                        
-                        required
-
-                        class="w-full px-4 py-3
+						<input type="date" name="date" id="categoryDate" required class="w-full px-4 py-3
                                border border-gray-300
                                rounded-lg
                                bg-gray-100
@@ -573,27 +456,18 @@
 
 
 
-                    <!-- DAY -->
+						<!-- DAY -->
 
-                    <label
-                        class="block mt-4 mb-2 font-medium
+						<label class="block mt-4 mb-2 font-medium
                                text-gray-700
                                dark:text-gray-300">
 
-                        Day
+							Day
 
-                    </label>
+						</label>
 
 
-                    <input
-                        type="text"
-                        name="day"
-                        id="categoryDay"
-
-                        
-                        required
-
-                        class="w-full px-4 py-3
+						<input type="text" name="day" id="categoryDay" required class="w-full px-4 py-3
                                border border-gray-300
                                rounded-lg
                                bg-gray-100
@@ -603,131 +477,99 @@
 
 
 
-                    <div
-                        class="flex justify-end
+						<div class="flex justify-end
                                gap-3 mt-6">
 
 
-                        <button
-                            type="button"
-                            onclick="closeCategoryModal()"
-
-                            class="px-4 py-2
+							<button type="button" onclick="closeCategoryModal()" class="px-4 py-2
                                    bg-gray-200
                                    rounded-lg">
 
-                            Cancel
+								Cancel
 
-                        </button>
+							</button>
 
 
-                        <button
-                            type="submit"
-
-                            class="px-5 py-2
+							<button type="submit" class="px-5 py-2
                                    text-white
                                    bg-blue-600
                                    rounded-lg
                                    hover:bg-blue-700">
 
-                            Save Category
+								Save Category
 
-                        </button>
+							</button>
 
-                    </div>
+						</div>
 
-                </form>
+					</form>
 
-            </div>
+				</div>
 
-        </div>
+			</div>
 
 
 
-        <!-- ================================================= -->
-        <!-- UPDATE CATEGORY MODAL -->
-        <!-- ================================================= -->
+			<!-- ================================================= -->
+			<!-- UPDATE CATEGORY MODAL -->
+			<!-- ================================================= -->
 
-        <div
-            id="editCategoryModal"
-
-            class="hidden fixed inset-0 z-50
+			<div id="editCategoryModal" class="hidden fixed inset-0 z-50
                    flex items-center justify-center
                    bg-black/50 px-4">
 
 
-            <div
-                class="bg-white dark:bg-gray-800
+				<div class="bg-white dark:bg-gray-800
                        rounded-xl shadow-xl
                        w-full max-w-md p-6">
 
 
-                <div
-                    class="flex justify-between
+					<div class="flex justify-between
                            items-center mb-5">
 
 
-                    <h2
-                        class="text-xl font-bold
+						<h2 class="text-xl font-bold
                                text-gray-900
                                dark:text-white">
 
-                        Update Category
+							Update Category
 
-                    </h2>
+						</h2>
 
 
-                    <button
-                        type="button"
-                        onclick="closeEditCategoryModal()"
-
-                        class="text-gray-500
+						<button type="button" onclick="closeEditCategoryModal()" class="text-gray-500
                                hover:text-gray-800
                                text-2xl">
 
-                        &times;
+							&times;
 
-                    </button>
+						</button>
 
-                </div>
-
-
-
-                <form
-                    th:action="@{/editor/category/update}"
-                    method="post">
-
-
-                    <!-- CATEGORY ID -->
-
-                    <input
-                        type="hidden"
-                        name="id"
-                        id="editCategoryId">
+					</div>
 
 
 
-                    <!-- DATE -->
+					<form th:action="@{/editor/category/update}" method="post">
 
-                    <label
-                        class="block mb-2 font-medium
+
+						<!-- CATEGORY ID -->
+
+						<input type="hidden" name="id" id="editCategoryId">
+
+
+
+						<!-- DATE -->
+
+						<label class="block mb-2 font-medium
                                text-gray-700
                                dark:text-gray-300">
 
-                        Date
+							Date
 
-                    </label>
+						</label>
 
 
-                    <input
-                        type="date"
-                        name="date"
-                        id="editCategoryDate"
-
-                        
-                        required
-
-                        class="w-full px-4 py-3
+						<input type="date" name="date" id="editCategoryDate" required class="w-full px-4 py-3
                                border border-gray-300
                                rounded-lg
                                bg-gray-100
@@ -737,27 +579,18 @@
 
 
 
-                    <!-- DAY -->
+						<!-- DAY -->
 
-                    <label
-                        class="block mt-4 mb-2 font-medium
+						<label class="block mt-4 mb-2 font-medium
                                text-gray-700
                                dark:text-gray-300">
 
-                        Day
+							Day
 
-                    </label>
+						</label>
 
 
-                    <input
-                        type="text"
-                        name="day"
-                        id="editCategoryDay"
-
-                        readonly
-                        
-
-                        class="w-full px-4 py-3
+						<input type="text" name="day" id="editCategoryDay" readonly class="w-full px-4 py-3
                                border border-gray-300
                                rounded-lg
                                bg-gray-100
@@ -767,141 +600,107 @@
 
 
 
-                    <div
-                        class="flex justify-end
+						<div class="flex justify-end
                                gap-3 mt-6">
 
 
-                        <button
-                            type="button"
-                            onclick="closeEditCategoryModal()"
-
-                            class="px-4 py-2
+							<button type="button" onclick="closeEditCategoryModal()" class="px-4 py-2
                                    bg-gray-200
                                    rounded-lg">
 
-                            Cancel
+								Cancel
 
-                        </button>
+							</button>
 
 
-                        <button
-                            type="submit"
-
-                            class="px-5 py-2
+							<button type="submit" class="px-5 py-2
                                    text-white
                                    bg-blue-600
                                    rounded-lg
                                    hover:bg-blue-700">
 
-                            Update Category
+								Update Category
 
-                        </button>
+							</button>
 
-                    </div>
+						</div>
 
-                </form>
+					</form>
 
-            </div>
+				</div>
 
-        </div>
+			</div>
 
 
 
-        <!-- ================================================= -->
-        <!-- ADD SUBCATEGORY MODAL -->
-        <!-- ================================================= -->
+			<!-- ================================================= -->
+			<!-- ADD SUBCATEGORY MODAL -->
+			<!-- ================================================= -->
 
-        <div
-            id="subCategoryModal"
-
-            class="hidden fixed inset-0 z-50
+			<div id="subCategoryModal" class="hidden fixed inset-0 z-50
                    flex items-center justify-center
                    bg-black/50 px-4">
 
 
-            <div
-                class="bg-white dark:bg-gray-800
+				<div class="bg-white dark:bg-gray-800
                        rounded-xl shadow-xl
                        w-full max-w-md p-6">
 
 
-                <div
-                    class="flex justify-between
+					<div class="flex justify-between
                            items-center mb-5">
 
 
-                    <div>
+						<div>
 
-                        <h2
-                            class="text-xl font-bold
+							<h2 class="text-xl font-bold
                                    text-gray-900
                                    dark:text-white">
 
-                            Add Subcategory
+								Add Subcategory
 
-                        </h2>
-
-
-                        <p
-                            id="selectedCategory"
-                            class="text-sm text-gray-500 mt-1">
-                        </p>
-
-                    </div>
+							</h2>
 
 
-                    <button
-                        type="button"
-                        onclick="closeSubCategoryModal()"
+							<p id="selectedCategory" class="text-sm text-gray-500 mt-1">
+							</p>
 
-                        class="text-gray-500
+						</div>
+
+
+						<button type="button" onclick="closeSubCategoryModal()" class="text-gray-500
                                text-2xl">
 
-                        &times;
+							&times;
 
-                    </button>
+						</button>
 
-                </div>
-
-
-
-                <form
-                    th:action="@{/editor/category/subcategory/add}"
-                    method="post">
-
-
-                    <!-- CATEGORY ID -->
-
-                    <input
-                        type="hidden"
-                        name="categoryId"
-                        id="categoryId">
+					</div>
 
 
 
-                    <!-- SUBCATEGORY NAME -->
+					<form th:action="@{/editor/category/subcategory/add}" method="post">
 
-                    <label
-                        class="block mb-2 font-medium
+
+						<!-- CATEGORY ID -->
+
+						<input type="hidden" name="categoryId" id="categoryId">
+
+
+
+						<!-- SUBCATEGORY NAME -->
+
+						<label class="block mb-2 font-medium
                                text-gray-700
                                dark:text-gray-300">
 
-                        Subcategory Name
+							Subcategory Name
 
-                    </label>
+						</label>
 
 
-                    <input
-                        type="text"
-                        name="name"
-                        id="subCategoryName"
-
-                        required
-
-                        placeholder="Example: School Education"
-
-                        class="w-full px-4 py-3
+						<input type="text" name="name" id="subCategoryName" required
+							placeholder="Example: School Education" class="w-full px-4 py-3
                                border border-gray-300
                                rounded-lg
                                focus:ring-2
@@ -912,139 +711,106 @@
 
 
 
-                    <div
-                        class="flex justify-end
+						<div class="flex justify-end
                                gap-3 mt-6">
 
 
-                        <button
-                            type="button"
-                            onclick="closeSubCategoryModal()"
-
-                            class="px-4 py-2
+							<button type="button" onclick="closeSubCategoryModal()" class="px-4 py-2
                                    bg-gray-200
                                    rounded-lg">
 
-                            Cancel
+								Cancel
 
-                        </button>
+							</button>
 
 
-                        <button
-                            type="submit"
-
-                            class="px-5 py-2
+							<button type="submit" class="px-5 py-2
                                    text-white
                                    bg-blue-600
                                    rounded-lg
                                    hover:bg-blue-700">
 
-                            Add Subcategory
+								Add Subcategory
 
-                        </button>
+							</button>
 
-                    </div>
+						</div>
 
-                </form>
+					</form>
 
-            </div>
+				</div>
 
-        </div>
+			</div>
 
 
 
-        <!-- ================================================= -->
-        <!-- UPDATE SUBCATEGORY MODAL -->
-        <!-- ================================================= -->
+			<!-- ================================================= -->
+			<!-- UPDATE SUBCATEGORY MODAL -->
+			<!-- ================================================= -->
 
-        <div
-            id="editSubCategoryModal"
-
-            class="hidden fixed inset-0 z-50
+			<div id="editSubCategoryModal" class="hidden fixed inset-0 z-50
                    flex items-center justify-center
                    bg-black/50 px-4">
 
 
-            <div
-                class="bg-white dark:bg-gray-800
+				<div class="bg-white dark:bg-gray-800
                        rounded-xl shadow-xl
                        w-full max-w-md p-6">
 
 
-                <div
-                    class="flex justify-between
+					<div class="flex justify-between
                            items-center mb-5">
 
 
-                    <div>
+						<div>
 
-                        <h2
-                            class="text-xl font-bold
+							<h2 class="text-xl font-bold
                                    text-gray-900
                                    dark:text-white">
 
-                            Update Subcategory
+								Update Subcategory
 
-                        </h2>
-
-
-                        <p
-                            id="editSubCategoryCategory"
-                            class="text-sm text-gray-500 mt-1">
-                        </p>
-
-                    </div>
+							</h2>
 
 
-                    <button
-                        type="button"
-                        onclick="closeEditSubCategoryModal()"
+							<p id="editSubCategoryCategory" class="text-sm text-gray-500 mt-1">
+							</p>
 
-                        class="text-gray-500
+						</div>
+
+
+						<button type="button" onclick="closeEditSubCategoryModal()" class="text-gray-500
                                text-2xl">
 
-                        &times;
+							&times;
 
-                    </button>
+						</button>
 
-                </div>
-
-
-
-                <form
-                    th:action="@{/editor/category/subcategory/update}"
-                    method="post">
-
-
-                    <!-- SUBCATEGORY ID -->
-
-                    <input
-                        type="hidden"
-                        name="id"
-                        id="editSubCategoryId">
+					</div>
 
 
 
-                    <!-- SUBCATEGORY NAME -->
+					<form th:action="@{/editor/category/subcategory/update}" method="post">
 
-                    <label
-                        class="block mb-2 font-medium
+
+						<!-- SUBCATEGORY ID -->
+
+						<input type="hidden" name="id" id="editSubCategoryId">
+
+
+
+						<!-- SUBCATEGORY NAME -->
+
+						<label class="block mb-2 font-medium
                                text-gray-700
                                dark:text-gray-300">
 
-                        Subcategory Name
+							Subcategory Name
 
-                    </label>
+						</label>
 
 
-                    <input
-                        type="text"
-                        name="name"
-                        id="editSubCategoryName"
-
-                        required
-
-                        class="w-full px-4 py-3
+						<input type="text" name="name" id="editSubCategoryName" required class="w-full px-4 py-3
                                border border-gray-300
                                rounded-lg
                                focus:ring-2
@@ -1055,59 +821,51 @@
 
 
 
-                    <div
-                        class="flex justify-end
+						<div class="flex justify-end
                                gap-3 mt-6">
 
 
-                        <button
-                            type="button"
-                            onclick="closeEditSubCategoryModal()"
-
-                            class="px-4 py-2
+							<button type="button" onclick="closeEditSubCategoryModal()" class="px-4 py-2
                                    bg-gray-200
                                    rounded-lg">
 
-                            Cancel
+								Cancel
 
-                        </button>
+							</button>
 
 
-                        <button
-                            type="submit"
-
-                            class="px-5 py-2
+							<button type="submit" class="px-5 py-2
                                    text-white
                                    bg-blue-600
                                    rounded-lg
                                    hover:bg-blue-700">
 
-                            Update Subcategory
+								Update Subcategory
 
-                        </button>
+							</button>
 
-                    </div>
+						</div>
 
-                </form>
+					</form>
 
-            </div>
+				</div>
 
-        </div>
-
-
-    </main>
-
-</div>
+			</div>
 
 
+		</main>
 
-<!-- ===================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ===================================================== -->
+	</div>
 
-<script>
 
-</script>
+
+	<!-- ===================================================== -->
+	<!-- JAVASCRIPT -->
+	<!-- ===================================================== -->
+
+	<script>
+
+	</script>
 
 
 </html>

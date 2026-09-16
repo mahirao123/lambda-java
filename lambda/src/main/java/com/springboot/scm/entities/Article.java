@@ -1,38 +1,45 @@
+
 package com.springboot.scm.entities;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.springboot.scm.employeeEntities.EmployeeDetails;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Article {
 
+    // =========================================================
+    // PRIMARY KEY
+    // =========================================================
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
+    // =========================================================
+    // ARTICLE INFORMATION
+    // =========================================================
+
 
     private String articleId;
 
@@ -40,37 +47,136 @@ public class Article {
 
     private String slug;
 
+    @Column(name = "shortDescription", columnDefinition = "LONGTEXT")
     private String shortDescription;
 
+    @Lob
+    @Column(name = "content", columnDefinition = "LONGTEXT")
     private String content;
 
+
+    // =========================================================
+    // CONTENT TYPE
+    // =========================================================
+
+    /**
+     * NEWS
+     * OPINION
+     * BLOG
+     * FEATURE
+     * PRESS_RELEASE
+     */
+    private String contentType;
+
+
+    // =========================================================
+    // STATUS
+    // =========================================================
+
+    /**
+     * DRAFT
+     * SCHEDULED
+     * PUBLISHED
+     * ARCHIVED
+     */
     private String status;
+
+
+    // =========================================================
+    // NEWS FLAGS
+    // =========================================================
+
+    @Builder.Default
+    private Boolean breakingNews = false;
+
+    @Builder.Default
+    private Boolean featured = false;
+
+
+    // =========================================================
+    // DATE / TIME
+    // =========================================================
+
+    private LocalDateTime createdAt;
 
     private LocalDateTime publishedAt;
 
+    private LocalDateTime scheduledAt;
+
     private LocalDateTime updatedAt;
 
-    // Category/SubCategory
+
+    // =========================================================
+    // MEDIA
+    // =========================================================
+    private String mainFrameImageUrl;// main page image url
+    
+    private String mainFrameCloudinaryid;
+    
+    private String mediaType;
+    
+    private String imageUrl;
+    
+    private String embedMainUrl;
+    
+    private String mainUrl;
+    
+    private String subUrl1;
+    private String subUrl2;
+    private String subUrl3;
+    private String subUrl4;
+
+    private String imageCloudinaryId;
+
+    private String caption;
+
+
+    // =========================================================
+    // SEO
+    // =========================================================
+
+    private String seoTitle;
+
+    private String seoDescription;
+
+    private String keywords;
+
+    private String canonicalUrl;
+
+    private String metaRobots;
+
+
+
+    // =========================================================
+    // STATISTICS
+    // =========================================================
+
+    @Builder.Default
+    private Long viewCount = 0L;
+
+
+    // =========================================================
+    // CATEGORY / SUBCATEGORY
+    // =========================================================
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sub_category_id", nullable = false)
+    @JoinColumn(
+        name = "sub_category_id",
+        nullable = false
+    )
     private ContentSubCategory subCategory;
 
 
-    // Author / Employee
+    // =========================================================
+    // AUTHOR
+    // =========================================================
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = true)
+    @JoinColumn(
+        name = "author_id",
+        nullable = true
+    )
     private EmployeeDetails author;
 
-
-    // Article media
-
-    @Builder.Default
-    @OneToMany(
-            mappedBy = "article",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<ArticleMedia> media = new ArrayList<>();
 }
+

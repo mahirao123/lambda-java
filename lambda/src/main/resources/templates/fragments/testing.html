@@ -1,33 +1,449 @@
-<!-- =========================================================
-     OTHER SLIDER
-     ========================================================= -->
+// =====================================================
+// CATEGORY DATA
+// =====================================================
 
-<div th:fragment="otherSlider"
-th:each="obj, stat : ${otherSliders}"
-     class="w-full max-w-7xl mx-auto px-4 py-6">
-	 <a  target="_blank">
-	      <div
-	          class="w-48 h-28 border rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 overflow-hidden">
+const categoryData = {};
 
-	          <!-- Image -->
-	          <img th:if="${obj.mediaType == 'IMAGE'}"
-	               th:src="${obj.mediaUrl}"
-	               class="w-full h-full object-cover rounded-lg"
-	               alt="Slide Image">
+document
+    .querySelectorAll(".category-data")
+    .forEach(function (element) {
 
-	          <!-- Video -->
-	          <video th:if="${obj.mediaType == 'VIDEO'}"
-	                 class="w-full h-full object-cover rounded-lg preview-video"
-	                 autoplay
-	                 muted
-	                 loop
-	                 playsinline
-	                 onmouseenter="this.pause()"
-	                 onmouseleave="this.play()">
-	              <source th:src="${obj.mediaUrl}" type="video/mp4">
-	              Your browser does not support the video tag.
-	          </video>
+        const date =
+            element.dataset.date;
 
-	      </div>
-	  </a>
-</div>
+        const categoryId =
+            Number(element.dataset.categoryId);
+
+        categoryData[date] = categoryId;
+
+    });
+
+
+console.log("CATEGORY DATA:", categoryData);
+
+
+// =====================================================
+// VARIABLES
+// =====================================================
+
+let currentDate = new Date();
+
+
+// =====================================================
+// MONTH NAMES
+// =====================================================
+
+const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+];
+
+
+const monthNamesHindi = [
+    "जनवरी",
+    "फरवरी",
+    "मार्च",
+    "अप्रैल",
+    "मई",
+    "जून",
+    "जुलाई",
+    "अगस्त",
+    "सितंबर",
+    "अक्टूबर",
+    "नवंबर",
+    "दिसंबर"
+];
+
+
+// =====================================================
+// FORMAT DATE
+// =====================================================
+
+function formatDate(year, month, day) {
+
+    return year + "-"
+        + String(month + 1).padStart(2, "0")
+        + "-"
+        + String(day).padStart(2, "0");
+
+}
+
+
+// =====================================================
+// RENDER CALENDAR
+// =====================================================
+
+function renderCalendar() {
+
+    const calendar =
+        document.getElementById("calendar");
+
+    const monthTitle =
+        document.getElementById("monthTitle");
+
+
+    if (!calendar || !monthTitle) {
+        return;
+    }
+
+
+    calendar.innerHTML = "";
+
+
+    const year =
+        currentDate.getFullYear();
+
+    const month =
+        currentDate.getMonth();
+
+
+    monthTitle.innerText =
+        monthNamesHindi[month] + " " + year;
+
+
+    // =================================================
+    // FIRST DAY OF MONTH
+    // =================================================
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    // =================================================
+    // TOTAL DAYS
+    // =================================================
+
+    const totalDays =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    // =================================================
+    // EMPTY CELLS
+    // =================================================
+
+    for (let i = 0; i < firstDay; i++) {
+
+        const empty =
+            document.createElement("div");
+
+        calendar.appendChild(empty);
+
+    }
+
+
+    // =================================================
+    // TODAY
+    // =================================================
+
+    const today = new Date();
+
+    const todayString =
+        formatDate(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+        );
+
+
+    // =================================================
+    // CREATE DATES
+    // =================================================
+
+    for (
+        let day = 1;
+        day <= totalDays;
+        day++
+    ) {
+
+        const dateString =
+            formatDate(
+                year,
+                month,
+                day
+            );
+
+
+        // =================================================
+        // GET CATEGORY ID
+        // =================================================
+
+        const categoryId =
+            categoryData[dateString];
+
+
+        console.log(
+            dateString,
+            "=>",
+            categoryId
+        );
+
+
+        const dateElement =
+            document.createElement("div");
+
+
+        dateElement.className =
+            "calendar-date";
+
+
+        // =================================================
+        // EPAPER EXISTS
+        // =================================================
+
+        if (
+            categoryId !== undefined &&
+            categoryId !== null
+        ) {
+
+            dateElement.classList.add(
+                "has-epaper"
+            );
+
+
+            // =============================================
+            // CLICK DATE
+            // =============================================
+
+            dateElement.addEventListener(
+                "click",
+                function () {
+
+                    console.log(
+                        "Selected Date:",
+                        dateString
+                    );
+
+                    console.log(
+                        "Category ID:",
+                        categoryId
+                    );
+
+
+                    /*
+                     * Immediately open ePaper.
+                     *
+                     * No Select button required.
+                     */
+
+                    window.location.href =
+                        "/public/epaper/" +
+                        categoryId;
+
+                }
+            );
+
+
+        } else {
+
+            // =================================================
+            // NO EPAPER
+            // =================================================
+
+            dateElement.classList.add(
+                "disabled-date"
+            );
+
+        }
+
+
+        // =================================================
+        // TODAY
+        // =================================================
+
+        if (dateString === todayString) {
+
+            /*
+             * Today's date will be selected
+             * only if today's ePaper exists.
+             */
+
+            if (
+                categoryId !== undefined &&
+                categoryId !== null
+            ) {
+
+                dateElement.classList.add(
+                    "selected-date"
+                );
+
+            }
+
+        }
+
+
+        // =================================================
+        // DATE NUMBER
+        // =================================================
+
+        const number =
+            document.createElement("span");
+
+        number.className =
+            "date-number";
+
+        number.innerText =
+            day;
+
+
+        // =================================================
+        // MONTH
+        // =================================================
+
+        const monthText =
+            document.createElement("span");
+
+        monthText.className =
+            "date-month";
+
+        monthText.innerText =
+            monthNames[month];
+
+
+        // =================================================
+        // APPEND
+        // =================================================
+
+        dateElement.appendChild(
+            number
+        );
+
+        dateElement.appendChild(
+            monthText
+        );
+
+
+        calendar.appendChild(
+            dateElement
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// PREVIOUS MONTH
+// =====================================================
+
+function previousMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() - 1
+    );
+
+    renderCalendar();
+
+}
+
+
+// =====================================================
+// NEXT MONTH
+// =====================================================
+
+function nextMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() + 1
+    );
+
+    renderCalendar();
+
+}
+
+
+// =====================================================
+// CLOSE POPUP
+// =====================================================
+
+function closeEpaperPopup() {
+
+    const overlay =
+        document.querySelector(
+            ".epaper-overlay"
+        );
+
+
+    if (overlay) {
+
+        overlay.style.display = "none";
+
+    }
+
+}
+
+
+// =====================================================
+// OUTSIDE CLICK
+// =====================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const overlay =
+            document.querySelector(
+                ".epaper-overlay"
+            );
+
+
+        const popup =
+            document.querySelector(
+                ".epaper-popup"
+            );
+
+
+        if (!overlay || !popup) {
+            return;
+        }
+
+
+        /*
+         * Click on dark background
+         * = close popup
+         *
+         * Click inside popup
+         * = do nothing
+         */
+
+        overlay.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === overlay
+                ) {
+
+                    closeEpaperPopup();
+
+                }
+
+            }
+        );
+
+
+        // =================================================
+        // INITIAL CALENDAR
+        // =================================================
+
+        renderCalendar();
+
+    }
+);

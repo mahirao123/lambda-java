@@ -1,0 +1,62 @@
+
+
+<div th:fragment="socialMediaPage"
+
+ class="flex items-center gap-2">
+
+
+	<!-- FACEBOOK -->
+	<a href="#" 
+	     class="h-9 w-9 rounded-full
+          bg-blue-600 text-white
+          flex items-center justify-center
+          hover:opacity-90">
+
+		  <i class="fa-brands fa-facebook"></i>
+
+	</a>
+
+
+	<!-- X -->
+	<a href="#"  class="h-9 w-9 rounded-full
+          bg-blue-500 text-white
+          flex items-center justify-center
+          hover:opacity-90">
+
+		 <i class="fa-brands fa-twitter"></i>
+
+	</a>
+	
+	<!-- instagram -->
+	<a href="#"
+	   
+	   class="instagram-btn h-9 w-9 rounded-full
+	          text-white flex items-center justify-center
+	          hover:opacity-90 transition">
+	
+	    <i class="fa-brands fa-instagram"></i>
+	
+	</a>
+	<!-- WHATSAPP -->
+	<a href="#" class="h-9 w-9 rounded-full font-bold
+          bg-green-600 text-white
+          flex items-center justify-center
+          hover:opacity-90">
+		<i class="fa-brands fa-whatsapp"></i>
+
+
+	</a>
+
+			<div class="copy-link-wrapper">
+			
+				<!-- Copy Link -->
+			<button type="button"
+			        onclick="copyArticleLinkFromPopup()"
+			        class="share-option copy-link">
+			    <i class="fa-solid fa-link"></i>
+			    <span>Copy Link</span>
+			</button>
+			
+			<p id="copyMessage" class="copy-message"></p>
+			</div>
+</div>

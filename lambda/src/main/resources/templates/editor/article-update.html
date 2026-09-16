@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+
+	<title>Update Article</title>
+
+</head>
+
+
+<body>
+
+	<div id="content" class="flex-1 px-4 sm:ml-64 transition-all duration-300">
+
+
+		<h1 class="text-2xl font-bold
+               text-gray-900 dark:text-white mb-6">
+
+			Update Article
+
+		</h1>
+
+
+		<!-- Message -->
+		<div data-th-replace="~{message::messagebox}"></div>
+
+		<form th:action="@{/editor/article/update/{id}(id=${id})}" th:object="${articleForm}" method="post"
+			enctype="multipart/form-data" class="space-y-6">
+
+
+			<!-- =================================================
+			             Category/SubCategory Information
+			        ================================================== -->
+			<div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+
+				<h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-5">
+
+					Category/SubCategory Information
+
+				</h2>
+
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+
+
+					<!-- CATEGORY -->
+					<div>
+						<label for="categoryId" class="block mb-2 text-sm font-medium text-gray-900">
+							Category <span class="text-red-500">*</span>
+						</label>
+
+						<select id="categoryId" name="categoryId" th:field="*{categoryId}"
+							class="w-full p-2.5 border rounded-lg">
+
+							<option value="">
+								Select Category
+							</option>
+
+							<option th:each="category : ${categories}" th:value="${category.id}"
+								th:text="${category.date + ' - ' + category.day}">
+								Category
+							</option>
+
+						</select>
+
+						<p th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"
+							class="text-red-500 text-sm mt-1">
+							Category is required
+						</p>
+					</div>
+
+
+<!-- SUBCATEGORY -->
+<div>
+    <label for="subCategoryId"
+           class="block mb-2 text-sm font-medium">
+        Sub Category *
+    </label>
+
+    <select id="subCategoryId"
+            th:field="*{subCategoryId}"
+            th:data-existing-id="${articleForm.subCategoryId}"
+            required
+            disabled
+            class="w-full p-2.5 border rounded-lg">
+
+        <option value="">
+            Select Sub Category
+        </option>
+
+        <option th:each="subCategory : ${subCategories}"
+                th:value="${subCategory.id}"
+                th:text="${subCategory.name}">
+        </option>
+
+    </select>
+
+    <p th:if="${#fields.hasErrors('subCategoryId')}"
+       th:errors="*{subCategoryId}"
+       class="mt-1 text-sm text-red-600">
+    </p>
+</div>
+				</div>
+
+			</div>
+
+
+			<!-- =================================================
+					     MainFrame	Media 
+					================================================== -->
+
+			<div class="p-6 bg-white rounded-lg
+					            shadow dark:bg-gray-800">
+
+				<h2 class="text-lg font-semibold mb-5">
+
+					MainFrame Media
+
+				</h2>
+
+
+				<div class="grid grid-cols-1 md:grid-cols-2
+					                gap-5">
+
+					<!-- Image upload to cloudinary -->
+
+					<div>
+						<label class="block mb-2 text-sm  font-medium">
+							Upload MainFrame Image
+
+						</label>
+
+						<input type="file" th:field="*{mainFrameImageFile}" id="mainFrameImage_file_input"
+							accept=".jpg,.jpeg,.png" placeholder="SUB URL 1........"
+							class="w-full p-2.5 border rounded-lg">
+						<img th:src="*{mainFrameImagePreviewUrl}" id="mianFrameUpload_image_preview" alt="" />
+					</div>
+
+
+				</div>
+
+			</div>
+
+
+
+
+			<!-- =================================================
+             BASIC INFORMATION
+        ================================================== -->
+
+			<div class="p-6 bg-white rounded-lg
+                    shadow dark:bg-gray-800">
+
+				<h2 class="text-lg font-semibold
+                       text-gray-900 dark:text-white mb-5">
+
+					Article Information
+
+				</h2>
+
+
+				<div class="grid grid-cols-1 md:grid-cols-2
+                        gap-5">
+
+
+
+					<!-- TITLE -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Title *
+
+						</label>
+
+						<input type="text" th:field="*{title}" required placeholder="Enter article headline" class="w-full p-2.5 border
+                               rounded-lg">
+
+						<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="mt-1 text-sm text-red-600">
+						</p>
+
+					</div>
+
+
+					<!-- SLUG -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Slug
+
+						</label>
+
+						<input type="text" th:field="*{slug}" placeholder="article-url-slug" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+
+					<!-- CONTENT TYPE -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Content Type *
+
+						</label>
+
+						<select th:field="*{contentType}" class="w-full p-2.5 border
+                               rounded-lg">
+
+							<option value="NEWS">
+								News
+							</option>
+
+							<option value="OPINION">
+								Opinion
+							</option>
+
+							<option value="BLOG">
+								Blog
+							</option>
+
+							<option value="FEATURE">
+								Feature
+							</option>
+
+							<option value="PRESS_RELEASE">
+								Press Release
+							</option>
+
+						</select>
+
+					</div>
+					<p th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}"
+						class="mt-1 text-sm text-red-600">
+					</p>
+
+				</div>
+
+
+				<!-- SHORT DESCRIPTION -->
+
+				<div class="mt-5">
+
+					<label class="block mb-2 text-sm
+                              font-medium">
+
+						Short Description
+
+					</label>
+
+					<textarea th:field="*{shortDescription}" rows="4" placeholder="Short summary of article" class="w-full p-2.5 border
+                           rounded-lg"></textarea>
+
+				</div>
+
+
+				<!-- CONTENT -->
+
+				<div class="mt-5">
+
+					<label class="block mb-2 text-sm
+                              font-medium">
+
+						Content *
+
+					</label>
+
+					<textarea th:field="*{content}" rows="12" required placeholder="Write article content..." class="w-full p-2.5 border
+                           rounded-lg"></textarea>
+
+					<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="mt-1 text-sm text-red-600">
+					</p>
+				</div>
+
+			</div>
+
+
+			<!-- =================================================
+             STATUS
+        ================================================== -->
+
+			<div class="p-6 bg-white rounded-lg
+                    shadow dark:bg-gray-800">
+
+				<h2 class="text-lg font-semibold mb-5">
+
+					Publishing
+
+				</h2>
+
+
+				<div class="grid grid-cols-1 md:grid-cols-3
+                        gap-5">
+
+
+					<!-- STATUS -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Status
+
+						</label>
+
+						<select th:field="*{status}" class="w-full p-2.5 border
+                               rounded-lg">
+
+							<option value="DRAFT">
+								Draft
+							</option>
+
+							<option value="PUBLISHED">
+								Published
+							</option>
+
+							<option value="ARCHIVED">
+								Archived
+							</option>
+
+						</select>
+
+					</div>
+
+				</div>
+
+
+				<div class="flex gap-6 mt-5">
+
+
+					<!-- BREAKING -->
+
+					<label class="flex items-center gap-2">
+
+						<input type="checkbox" th:field="*{breakingNews}" class="w-4 h-4">
+
+						<span>
+							Breaking News
+						</span>
+
+					</label>
+
+
+					<!-- FEATURED -->
+
+					<label class="flex items-center gap-2">
+
+						<input type="checkbox" th:field="*{featured}" class="w-4 h-4">
+
+						<span>
+							Featured
+						</span>
+
+					</label>
+
+				</div>
+
+			</div>
+
+
+			<!-- =================================================
+             MEDIA
+        ================================================== -->
+
+			<div class="p-6 bg-white rounded-lg
+                    shadow dark:bg-gray-800">
+
+				<h2 class="text-lg font-semibold mb-5">
+
+					Media
+
+				</h2>
+
+
+				<div class="grid grid-cols-1 md:grid-cols-2
+                        gap-5">
+
+					<!-- Image upload to cloudinary -->
+
+					<div>
+						<label class="block mb-2 text-sm  font-medium">
+							Upload Image
+
+						</label>
+
+						<input type="file" th:field="*{imageFile}" id="image_file_input" accept=".jpg,.jpeg,.png"
+							placeholder="SUB URL 1........" class="w-full p-2.5 border rounded-lg">
+
+						<img th:src="*{imagePreviewUrl}" id="upload_image_preview" alt="" />
+					</div>
+
+
+					<!-- Main URL -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Main URL
+
+						</label>
+
+						<input type="url" th:field="*{mainUrl}" placeholder="Main URL For Long  Videos Like Youtube...."
+							class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+
+					<!-- Sub  URL 1-->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Sub URL 1
+
+						</label>
+
+						<input type="url" th:field="*{subUrl1}" placeholder="SUB URL 1........" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+					<!-- Sub  URL 2-->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Sub URL 2
+
+						</label>
+
+						<input type="url" th:field="*{subUrl2}" placeholder="SUB URL 2........" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+					<!-- Sub  URL 3-->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Sub URL 3
+
+						</label>
+
+						<input type="url" th:field="*{subUrl3}" placeholder="SUB URL 3........" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+					<!-- Sub  URL 4-->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Sub URL 4
+
+						</label>
+
+						<input type="url" th:field="*{subUrl4}" placeholder="SUB URL 4........" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+
+
+					<!-- CAPTION -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Caption
+
+						</label>
+
+						<input type="text" th:field="*{caption}" placeholder="Image caption........" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<!-- =================================================
+             SEO
+        ================================================== -->
+
+			<div class="p-6 bg-white rounded-lg
+                    shadow dark:bg-gray-800">
+
+				<h2 class="text-lg font-semibold mb-5">
+
+					SEO Information
+
+				</h2>
+
+
+				<div class="space-y-5">
+
+
+					<!-- SEO TITLE -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							SEO Title
+
+						</label>
+
+						<input type="text" th:field="*{seoTitle}" maxlength="60" placeholder="SEO optimized title"
+							class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+
+					<!-- SEO DESCRIPTION -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							SEO Description
+
+						</label>
+
+						<textarea th:field="*{seoDescription}" maxlength="160" rows="3"
+							placeholder="SEO meta description" class="w-full p-2.5 border
+                               rounded-lg"></textarea>
+
+					</div>
+
+
+					<!-- KEYWORDS -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Keywords
+
+						</label>
+
+						<input type="text" th:field="*{keywords}" placeholder="news, india, politics" class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+
+					<!-- CANONICAL -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Canonical URL
+
+						</label>
+
+						<input type="text" th:field="*{canonicalUrl}" placeholder="https://example.com/article/..."
+							class="w-full p-2.5 border
+                               rounded-lg">
+
+					</div>
+
+
+					<!-- ROBOTS -->
+
+					<div>
+
+						<label class="block mb-2 text-sm
+                                  font-medium">
+
+							Meta Robots
+
+						</label>
+
+						<select th:field="*{metaRobots}" class="w-full p-2.5 border
+                               rounded-lg">
+
+							<option value="index,follow">
+								index,follow
+							</option>
+
+							<option value="noindex,follow">
+								noindex,follow
+							</option>
+
+							<option value="index,nofollow">
+								index,nofollow
+							</option>
+
+							<option value="noindex,nofollow">
+								noindex,nofollow
+							</option>
+
+						</select>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<!-- =================================================
+             BUTTONS
+        ================================================== -->
+
+			<div class="flex gap-3">
+
+				<button type="submit" class="px-6 py-3
+                       text-sm font-medium
+                       text-white
+                       bg-blue-600
+                       rounded-lg
+                       hover:bg-blue-700">
+
+					update Article
+
+				</button>
+
+
+				<a th:href="@{/editor/article/list}" class="px-6 py-3
+                       text-sm font-medium
+                       bg-gray-200
+                       rounded-lg
+                       hover:bg-gray-300">
+
+					Cancel
+
+				</a>
+
+			</div>
+
+		</form>
+
+	</div>
+
+
+	<script></script>
+</body>
+
+</html>

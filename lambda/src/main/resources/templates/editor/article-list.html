@@ -1,0 +1,505 @@
+```html
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+
+	<title>Article List</title>
+
+</head>
+
+<body>
+
+	<div id="content" class="flex-1 px-4 sm:ml-64 transition-all duration-300">
+
+		<!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+		<div class="flex flex-col md:flex-row
+                md:items-center md:justify-between
+                gap-4 mb-6">
+
+			<div>
+
+				<h1 class="text-2xl font-bold
+                       text-gray-900 dark:text-white">
+
+					Article List
+
+				</h1>
+
+				<p class="text-sm text-gray-500 mt-1">
+					Manage all articles
+				</p>
+
+			</div>
+			<div class="flex flex-row
+		                items-center justify-between
+		                gap-2 ">
+
+				<a th:href="@{/editor/article/add}" class="px-5 py-2.5
+
+                  text-sm font-medium
+                  text-white
+                  bg-blue-600
+                  rounded-lg
+                  hover:bg-blue-700">
+
+					+ Add Article
+
+				</a>
+
+				<a th:href="@{/editor/dashboard}" class="px-6 py-3
+		       text-sm font-medium
+		       bg-gray-200
+		       rounded-lg
+		       hover:bg-gray-300">
+
+					Back 
+
+				</a>
+
+			</div>
+		</div>
+
+
+		<!-- =========================================================
+         MESSAGE
+    ========================================================== -->
+
+		<div th:if="${session.message}" class="mb-5">
+
+			<div th:replace="~{message :: messagebox}"></div>
+
+			<th:block th:text="${@sessionHelper.removeMessage()}"></th:block>
+
+		</div>
+
+
+		<!-- =========================================================
+         ARTICLE TABLE
+    ========================================================== -->
+
+		<div class="relative overflow-x-auto
+                shadow-md sm:rounded-lg
+                bg-white dark:bg-gray-800">
+
+			<table class="w-full text-sm text-left
+                      text-gray-500 dark:text-gray-400">
+
+				<!-- TABLE HEADER -->
+
+				<thead class="text-xs uppercase
+                          bg-gray-100
+                          dark:bg-gray-700
+                          dark:text-gray-300">
+
+					<tr>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							#
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Article ID
+						</th>
+
+						<th scope="col" class="px-6 py-4 min-w-[250px]">
+							Title
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Content Type
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Category
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Sub Category
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Status
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							MainFrame ImageUrl
+						</th>
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Article ImageUrl
+						</th>
+						
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Article MediaType
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Featured
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Breaking
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Created
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Actions
+						</th>
+
+					</tr>
+
+				</thead>
+
+
+				<!-- TABLE BODY -->
+
+				<tbody>
+
+					<tr th:each="article, stat : ${articles}" class="bg-white
+                       border-b
+                       dark:bg-gray-800
+                       dark:border-gray-700
+                       hover:bg-gray-50
+                       dark:hover:bg-gray-600">
+
+						<!-- NUMBER -->
+
+						<td class="px-6 py-4 font-medium
+                           text-gray-900
+                           dark:text-white">
+
+							<span th:text="${stat.count}">
+								1
+							</span>
+
+						</td>
+
+
+						<!-- ARTICLE ID -->
+
+						<td class="px-6 py-4
+                           whitespace-nowrap
+                           font-medium">
+
+							<span th:text="${article.articleId}">
+								ART-2026-AUG-30-ABCD
+							</span>
+
+						</td>
+
+
+						<!-- TITLE -->
+
+						<td class="px-6 py-4">
+
+							<div class="font-semibold
+                                text-gray-900
+                                dark:text-white" th:text="${article.title}">
+
+								Article Title
+
+							</div>
+
+							<div class="text-xs text-gray-500 mt-1" th:text="${article.slug}">
+
+								article-slug
+
+							</div>
+
+						</td>
+
+
+						<!-- CONTENT TYPE -->
+
+						<td class="px-6 py-4 whitespace-nowrap" th:text="${article.contentType}">
+
+							NEWS
+
+						</td>
+
+
+						<!-- CATEGORY -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<span th:if="${article.subCategory != null
+                                  and article.subCategory.category != null}"
+								th:text="${article.subCategory.category.date}">
+
+								Category
+
+							</span>
+
+							<span th:unless="${article.subCategory != null
+                                      and article.subCategory.category != null}">
+								-
+							</span>
+
+						</td>
+
+
+						<!-- SUB CATEGORY -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<span th:if="${article.subCategory != null}" th:text="${article.subCategory.name}">
+
+								Sub Category
+
+							</span>
+
+							<span th:unless="${article.subCategory != null}">
+								-
+							</span>
+
+						</td>
+
+
+						<!-- STATUS -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<span th:switch="${article.status}">
+
+								<span th:case="'PUBLISHED'" class="px-2.5 py-1
+                                     rounded-full
+                                     text-xs
+                                     font-medium
+                                     bg-green-100
+                                     text-green-800">
+
+									Published
+
+								</span>
+
+								<span th:case="'DRAFT'" class="px-2.5 py-1
+                                     rounded-full
+                                     text-xs
+                                     font-medium
+                                     bg-gray-100
+                                     text-gray-800">
+
+									Draft
+
+								</span>
+
+								<span th:case="'SCHEDULED'" class="px-2.5 py-1
+                                     rounded-full
+                                     text-xs
+                                     font-medium
+                                     bg-yellow-100
+                                     text-yellow-800">
+
+									Scheduled
+
+								</span>
+
+								<span th:case="'ARCHIVED'" class="px-2.5 py-1
+                                     rounded-full
+                                     text-xs
+                                     font-medium
+                                     bg-red-100
+                                     text-red-800">
+
+									Archived
+
+								</span>
+
+								<span th:case="*" th:text="${article.status}">
+								</span>
+
+							</span>
+
+						</td>
+
+
+						<!-- MAIN FRAME IMAGE URL -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<a th:href="${article.mainFrameImageUrl}"
+							target="_blank"
+							class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+								MainFrame ImageUrl
+							</a>
+
+
+						</td>
+						
+						<!-- Article IMAGE URL -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<a th:href="${article.imageUrl}"
+							target="_blank"
+							class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+								Article ImageUrl
+							</a>
+
+
+						</td>
+						
+						<!-- ARTICLE MEDIA TYPE -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<span th:if="${article.mediaType != null}" th:text="${article.mediaType}">
+								IMAGE
+							</span>
+
+							<span th:unless="${article.mediaType != null}">
+								NONE
+							</span>
+
+						</td>
+
+
+						<!-- FEATURED -->
+
+						<td class="px-6 py-4 text-center">
+
+							<span th:if="${article.featured}" class="text-green-600 font-bold">
+								Yes
+							</span>
+
+							<span th:unless="${article.featured}" class="text-gray-400">
+								No
+							</span>
+
+						</td>
+
+
+						<!-- BREAKING -->
+
+						<td class="px-6 py-4 text-center">
+
+							<span th:if="${article.breakingNews}" class="text-red-600 font-bold">
+								Yes
+							</span>
+
+							<span th:unless="${article.breakingNews}" class="text-gray-400">
+								No
+							</span>
+
+						</td>
+
+
+						<!-- CREATED DATE -->
+
+						<td class="px-6 py-4 whitespace-nowrap" th:text="${#temporals.format(
+                        article.createdAt,
+                        'dd-MM-yyyy HH:mm'
+                    )}">
+
+							30-08-2026 16:00
+
+						</td>
+
+
+						<!-- ACTIONS -->
+
+						<td class="px-6 py-4 whitespace-nowrap">
+
+							<div class="flex items-center gap-2">
+
+								<!-- VIEW -->
+
+								<a th:href="@{/editor/article/view/{id}
+                                   (id=${article.id})}" title="View Article" class="inline-flex items-center
+                                  px-3 py-2
+                                  text-xs font-medium
+                                  text-white
+                                  bg-green-600
+                                  rounded-lg
+                                  hover:bg-green-700">
+
+									View
+
+								</a>
+
+
+								<!-- UPDATE -->
+
+								<a th:href="@{/editor/article/update/{id}(id=${article.id})}" title="Update Article"
+									class="inline-flex items-center
+                                  px-3 py-2
+                                  text-xs font-medium
+                                  text-white
+                                  bg-blue-600
+                                  rounded-lg
+                                  hover:bg-blue-700">
+
+									Update
+
+								</a>
+
+
+								<!-- DELETE -->
+
+								<a th:href="@{/editor/article/delete/{id}(id=${article.id})}" title="Delete Article"
+									onclick="return confirm(
+                               'Are you sure you want to delete this article?'
+                           );" class="inline-flex items-center
+                                  px-3 py-2
+                                  text-xs font-medium
+                                  text-white
+                                  bg-red-600
+                                  rounded-lg
+                                  hover:bg-red-700">
+
+									Delete
+
+								</a>
+
+							</div>
+
+						</td>
+
+					</tr>
+
+
+					<!-- NO DATA -->
+
+					<tr th:if="${#lists.isEmpty(articles)}">
+
+						<td colspan="12" class="px-6 py-10
+                           text-center
+                           text-gray-500">
+
+							No articles found.
+
+						</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+	</div>
+
+
+	<script>
+
+		document.addEventListener("DOMContentLoaded", function () {
+
+			console.log("Article list loaded");
+
+		});
+
+	</script>
+
+</body>
+
+</html>
+```

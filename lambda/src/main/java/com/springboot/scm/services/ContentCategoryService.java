@@ -11,7 +11,7 @@ public interface ContentCategoryService {
     
     ContentCategory updateCategory(ContentCategory category);
 
-    List<ContentCategory> findAll();
+  
 
     ContentCategory findById(Long id);
     
@@ -19,9 +19,11 @@ public interface ContentCategoryService {
     
     List<ContentCategory> searchByDay(String day);
     
+   List<ContentCategory> getAllCategoriesByDate();
+    
     ContentCategory searchByDate(Date date);
     
- 
+    boolean isExistContent(Date date);
     
     void delete(Long id);
 }

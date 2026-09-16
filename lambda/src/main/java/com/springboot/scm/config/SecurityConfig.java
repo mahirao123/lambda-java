@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.springboot.scm.employeeImpl.EmployeeSecurityUserDetailService;
 import com.springboot.scm.impl.SecurityCostomUserDetailService;
@@ -81,6 +82,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher("/admin/**")
 
             .authorizeHttpRequests(auth -> {
@@ -141,6 +147,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher(
                     "/manager/**")
 
@@ -200,6 +211,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher(
                     "/editor/**")
 
@@ -259,6 +275,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher(
                     "/production/**")
 
@@ -318,6 +339,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher(
                     "/finance/**")
 
@@ -377,6 +403,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher(
                     "/socialMeadia/**")
 
@@ -436,6 +467,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher("/employee/**")
 
             .authenticationProvider(
@@ -514,6 +550,11 @@ public class SecurityConfig {
             throws Exception {
 
         http
+        .csrf(csrf -> csrf
+                .csrfTokenRepository(
+                    CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+            )
             .securityMatcher("/hr/**")
 
             .authorizeHttpRequests(auth -> {
@@ -572,6 +613,11 @@ SecurityFilterChain commonSecurity(
     http
 
         // ADD THIS
+    .csrf(csrf -> csrf
+            .csrfTokenRepository(
+                CookieCsrfTokenRepository.withHttpOnlyFalse()
+            )
+        )
         .authenticationProvider(
                 authenticationProvider())
 

@@ -8,10 +8,14 @@
 
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" data-th-href="@{/css/output.css}">
+    <link rel="stylesheet" data-th-href="@{/css/article.css}">
     <link rel="stylesheet" data-th-href="@{/css/style.css}">
     <link rel="stylesheet" data-th-href="@{/css/emergencyVideo.css}">
     <link rel="stylesheet" data-th-href="@{/css/mainSlider.css}">
     <link rel="stylesheet" data-th-href="@{/css/otherSlider.css}">
+    <link rel="stylesheet" data-th-href="@{/css/epaper.css}">
+    <link rel="stylesheet" data-th-href="@{/css/epaperCalendar.css}">
+    <link rel="stylesheet" data-th-href="@{/css/language.css}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	
 </head>
@@ -63,6 +67,9 @@
 		th:replace="~{fragments/footer :: footer}"></div> -->
 		
 	
+		<script th:src="@{/js/language.js}"></script>
+		<script th:src="@{/js/epaperCalendar.js}"></script>
+		<script th:src="@{/js/epaper.js}"></script>
 		<script th:src="@{/js/article.js}"></script>
 		<script th:src="@{/js/category.js}"></script>
 		<script th:src="@{/js/addAndUpdate.js}"></script>

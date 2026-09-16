@@ -27,7 +27,7 @@ public class ContentCategoryServiceImpl
     }
 
     @Override
-    public List<ContentCategory> findAll() {
+    public List<ContentCategory> getAll() {
         return categoryRepository.findAll();
     }
 
@@ -42,14 +42,6 @@ public class ContentCategoryServiceImpl
     public void delete(Long id) {
         categoryRepository.deleteById(id);
     }
-
-
-
-	@Override
-	public List<ContentCategory> getAll() {
-
-		return categoryRepository.findAll() ;
-	}
 
 	@Override
 	public List<ContentCategory> searchByDay(String day) {
@@ -67,5 +59,17 @@ public class ContentCategoryServiceImpl
 	public ContentCategory updateCategory(ContentCategory category) {
 		
 		return categoryRepository.save(category);
+	}
+
+	@Override
+	public boolean isExistContent(Date date) {
+		
+		return categoryRepository.existsByDate(date);
+	}
+
+	@Override
+	public List<ContentCategory> getAllCategoriesByDate() {
+		
+		return categoryRepository.findAllByOrderByDateAsc();
 	}
 }

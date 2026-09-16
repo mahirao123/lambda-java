@@ -2,6 +2,7 @@ package com.springboot.scm.employeeController;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,7 @@ import com.springboot.scm.services.LiveService;
 import com.springboot.scm.services.SliderService;
 import com.springboot.scm.services.SlidingTextService;
 import com.springboot.scm.services.SocialMediaUrlsService;
+import com.springboot.scm.util.SocialMediaUrlUtil;
 import com.springboot.scm.validator.CreateGroup;
 import com.springboot.scm.validator.UpdateGroup;
 
@@ -781,20 +783,22 @@ public String aimsCategoryPage(Model model) {
     return "editor/content-category";
 }
 
-
 // ======================================================
 // ADD CATEGORY
 // ======================================================
-
-// ======================================================
-// ADD CATEGORY
-// ======================================================
-
 @PostMapping("/category/add")
 public String addAimsCategory(
         @RequestParam("date") Date date,
         @RequestParam("day") String day) {
 
+    // Check duplicate date
+    if (categoryService.isExistContent(date)) {
+
+        // Duplicate found
+        return "redirect:/editor/ourAims/category?error=duplicate";
+    }
+
+    // Validate input
     if (date != null
             && day != null
             && !day.trim().isEmpty()) {
@@ -811,7 +815,6 @@ public String addAimsCategory(
     return "redirect:/editor/ourAims/category";
 }
 
-
 // ======================================================
 // UPDATE CATEGORY
 // ======================================================
@@ -821,7 +824,13 @@ public String updateAimsCategory(
         @RequestParam("id") Long id,
         @RequestParam("date") Date date,
         @RequestParam("day") String day) {
+	
+    // Check duplicate date
+    if (categoryService.isExistContent(date)) {
 
+        // Duplicate found
+        return "redirect:/editor/ourAims/category?error=duplicate";
+    }
     ContentCategory category =
             categoryService.findById(id);
 
@@ -832,13 +841,6 @@ public String updateAimsCategory(
         );
     }
 
-
-    // UPDATE DATE
-
-    if (date != null) {
-
-        category.setDate(date);
-    }
 
 
     // UPDATE DAY
@@ -1043,235 +1045,825 @@ public String deleteSbCategory(
 
 
 
-// ======================================================
-// ADD ARTICLE PAGE
-// ======================================================
 
-@GetMapping("/article/add")
-public String addArticlePage(Model model) {
 
-    model.addAttribute(
-            "articleForm",
-            new ArticleForm()
-    );
+// =========================================================
+// ARTICLE LIST
+// GET /editor/article/list
+// =========================================================
 
-    model.addAttribute(
-            "categories",
-            categoryService.getAll()
-    );
+@GetMapping("/article/list")
+public String articleList(Model model) {
+	List<Article> articles = articleService.getAllArticles();
+	model.addAttribute("articles", articles);
+	return "editor/article-list";
+}
+    // =========================================================
+    // ADD ARTICLE FORM
+    // GET /editor/article/add
+    // =========================================================
 
-    return "editor/add-article";
+@GetMapping("article/add")
+public String addArticleForm(Model model) {
+
+    ArticleForm articleForm = new ArticleForm();
+
+    model.addAttribute("articleForm", articleForm);
+
+    List<ContentCategory> allCategories = categoryService.getAll();
+
+    LocalDate today = LocalDate.now();
+
+    List<ContentCategory> categories = allCategories.stream()
+            .filter(category -> category.getDate() != null)
+            .filter(category ->
+                    !category.getDate().toLocalDate().isBefore(today)
+            )
+            .toList();
+
+    model.addAttribute("categories", categories);
+
+    return "editor/article-add";
 }
 
+	// =========================================================
+	// SAVE ARTICLE
+	// POST /editor/article/save
+	// =========================================================
 
-// ======================================================
-// SAVE ARTICLE
-// ======================================================
 
-@PostMapping("/article/save")
+@PostMapping("article/save")
 public String saveArticle(
-        @Validated @ModelAttribute("articleForm") ArticleForm form,
+        @Valid @ModelAttribute("articleForm") ArticleForm articleForm,
         BindingResult bindingResult,
+        HttpSession session,
         Authentication authentication,
-        Model model) throws IOException {
+        Model model)  {
 
-    // -----------------------------------------------
-    // VALIDATION ERROR
-    // -----------------------------------------------
+    // =====================================================
+    // VALIDATION
+    // =====================================================
 
-    if (bindingResult.hasErrors()) {
+if (bindingResult.hasErrors()) {
 
-        model.addAttribute(
-                "categories",
-                categoryService.getAll()
-        );
+    session.setAttribute(
+            "message",
+            Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build()
+    );
+    
 
-        // IMPORTANT:
-        // Load subcategories again when validation fails
-        if (form.getCategoryId() != null) {
+//    
+//    List<ContentCategory> categories =
+//            categoryService.getAll();
+//
+//    model.addAttribute("categories", categories);
 
-            model.addAttribute(
-                    "subCategories",
-                    subCategoryService
-                            .getByCategoryId(
-                                    form.getCategoryId()
-                            )
-            );
-        }
-
-        return "editor/add-article";
-    }
-
-
-    // -----------------------------------------------
-    // CHECK CATEGORY
-    // -----------------------------------------------
-
-    if (form.getCategoryId() == null) {
-
-        bindingResult.rejectValue(
-                "categoryId",
-                "category.required",
-                "Please select a category"
-        );
-
-        model.addAttribute(
-                "categories",
-                categoryService.getAll()
-        );
-
-        return "editor/add-article";
-    }
-
-
-    // -----------------------------------------------
-    // CHECK SUBCATEGORY
-    // -----------------------------------------------
-
-    if (form.getSubCategoryId() == null) {
-
-        bindingResult.rejectValue(
-                "subCategoryId",
-                "subcategory.required",
-                "Please select a subcategory"
-        );
-
-        model.addAttribute(
-                "categories",
-                categoryService.getAll()
-        );
-
-        model.addAttribute(
-                "subCategories",
-                subCategoryService
-                        .getByCategoryId(
-                                form.getCategoryId()
-                        )
-        );
-
-        return "editor/add-article";
-    }
-
-
-    // -----------------------------------------------
-    // GET SUBCATEGORY
-    // -----------------------------------------------
-
-    ContentSubCategory subCategory =
-            subCategoryService
-                    .getById(form.getSubCategoryId())
-                    .orElseThrow(() ->
-                            new RuntimeException(
-                                    "SubCategory not found"
-                            )
-                    );
-
-
-    // -----------------------------------------------
-    // VERIFY SUBCATEGORY BELONGS TO CATEGORY
-    // -----------------------------------------------
-
-    if (subCategory.getCategory() == null ||
-            !subCategory.getCategory()
-                    .getId()
-                    .equals(form.getCategoryId())) {
-
-        bindingResult.rejectValue(
-                "subCategoryId",
-                "subcategory.invalid",
-                "Selected subcategory does not belong to selected category"
-        );
-
-        model.addAttribute(
-                "categories",
-                categoryService.getAll()
-        );
-
-        model.addAttribute(
-                "subCategories",
-                subCategoryService
-                        .getByCategoryId(
-                                form.getCategoryId()
-                        )
-        );
-
-        return "editor/add-article";
-    }
-
-
-    // -----------------------------------------------
-    // GET LOGGED-IN EMPLOYEE
-    // -----------------------------------------------
-
-    EmployeeDetails employee =
-            employeeService
-                    .getEmployeeByEmail(authentication.getName())
-                    .orElseThrow(() ->
-                            new RuntimeException(
-                                    "Employee not found"
-                            )
-                    );
-
-
-    // -----------------------------------------------
-    // CREATE ARTICLE
-    // -----------------------------------------------
+    return "editor/article-add";
+}
 
     Article article = new Article();
 
-    article.setArticleId(
-            UUID.randomUUID().toString()
-    );
-
-    article.setTitle(
-            form.getTitle()
-    );
-
-    article.setSlug(
-            form.getTitle()
-                    .toLowerCase()
-                    .trim()
-                    .replaceAll("[^a-z0-9]+", "-")
-                    .replaceAll("^-|-$", "")
-    );
-
-    article.setShortDescription(
-            form.getShortDescription()
-    );
-
-    article.setContent(
-            form.getContent()
-    );
-
-    // SubCategory contains Category relationship
-    article.setSubCategory(
-            subCategory
-    );
-
-    article.setAuthor(
-            employee
-    );
-
-    article.setStatus(
-            form.getStatus()
-    );
-
-    article.setPublishedAt(
-            LocalDateTime.now()
-    );
-
-    article.setUpdatedAt(
-            LocalDateTime.now()
-    );
+    String fileName = UUID.randomUUID().toString();
 
 
-    // -----------------------------------------------
-    // SAVE
-    // -----------------------------------------------
+    // =====================================================
+    // SUBCATEGORY
+    // =====================================================
+    ContentSubCategory subCategory =
+            subCategoryService
+                    .getById(articleForm.getSubCategoryId())
+                    .orElseThrow(
+                            () -> new RuntimeException(
+                                    "SubCategory not found"
+                            )
+                    );
+    subCategory.setEnable(true);
+    article.setSubCategory(subCategory);
 
-    articleService.saveArticle(article);
+    // =====================================================
+    // MAIN FRAME IMAGE
+    // =====================================================
+
+    if (articleForm.getMainFrameImageFile() != null
+            && !articleForm.getMainFrameImageFile().isEmpty()) {
+
+        String imageId = "mainFrameImage_" + fileName;
+        
+        String fileUrl = cloudinaryService.uploadFile(articleForm.getMainFrameImageFile(),imageId);
+        article.setMainFrameCloudinaryid(imageId);
+        article.setMainFrameImageUrl(fileUrl);
 
 
-    return "redirect:/editor/article/list";
+    }
+
+    
+    
+    // =====================================================
+    // AUTHOR
+    // =====================================================
+
+    if (authentication != null
+            && authentication.isAuthenticated()) {
+
+        EmployeeDetails employee =
+                employeeService
+                        .getEmployeeByEmail(authentication.getName())
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Employee not found"
+                                )
+                        );
+
+        article.setAuthor(employee);
+    }
+
+
+    // =====================================================
+    // ARTICLE
+    // =====================================================
+    //Start Main Article if
+if(articleForm.getContent()!=null && !articleForm.getContent().isEmpty()) {
+    article.setArticleId("ART-" + System.currentTimeMillis() );
+
+    article.setTitle(articleForm.getTitle() );
+
+    article.setShortDescription(articleForm.getShortDescription());
+
+    article.setContentType(articleForm.getContentType() );
+
+    article.setContent(articleForm.getContent());
+
+
+    // =====================================================
+    // SLUG
+    // =====================================================
+
+    if (articleForm.getSlug() == null || articleForm.getSlug().isBlank()) {
+
+        article.setSlug(generateSlug(articleForm.getTitle()));
+
+    } else {
+
+        article.setSlug(articleForm.getSlug());
+    }
+
+
+    // =====================================================
+    // STATUS
+    // =====================================================
+
+    article.setStatus( articleForm.getStatus());
+
+
+    // =====================================================
+    // CREATED / PUBLISHED DATE
+    // =====================================================
+
+    LocalDateTime now = LocalDateTime.now();
+
+    article.setCreatedAt(now);
+    article.setPublishedAt(now);
+
+
+    // =====================================================
+    // BREAKING NEWS
+    // =====================================================
+
+    article.setBreakingNews( Boolean.TRUE.equals(articleForm.getBreakingNews()));
+
+
+    // =====================================================
+    // FEATURED
+    // =====================================================
+
+    article.setFeatured( Boolean.TRUE.equals(articleForm.getFeatured()));
+
+
+    // =====================================================
+    // IMAGE
+    // =====================================================
+
+    if (articleForm.getImageFile() != null && !articleForm.getImageFile().isEmpty()) {
+
+        String imageId = "image_" + fileName;
+
+        String fileUrl = cloudinaryService.uploadFile( articleForm.getImageFile(),imageId);
+
+        article.setImageCloudinaryId(imageId);
+
+        article.setMediaType("IMAGE");
+
+        article.setImageUrl(fileUrl);
+
+        article.setCaption(articleForm.getCaption());
+    }
+
+
+    // =====================================================
+    // URLS
+    // =====================================================
+
+    article.setMainUrl(articleForm.getMainUrl());
+    
+    article.setEmbedMainUrl(SocialMediaUrlUtil.youtubeEmbedUrl(articleForm.getMainUrl()));
+
+    article.setSubUrl1(articleForm.getSubUrl1());
+
+    article.setSubUrl2(articleForm.getSubUrl2());
+
+    article.setSubUrl3( articleForm.getSubUrl3());
+
+    article.setSubUrl4(articleForm.getSubUrl4());
+
+
+    // =====================================================
+    // SEO
+    // =====================================================
+
+    article.setSeoTitle( articleForm.getSeoTitle());
+
+    article.setSeoDescription(articleForm.getSeoDescription());
+
+    article.setKeywords(articleForm.getKeywords() );
+
+    article.setCanonicalUrl(articleForm.getCanonicalUrl());
+
+    article.setMetaRobots(articleForm.getMetaRobots());
+// End if
 }
+
+
+    // =====================================================
+    // SAVE
+    // =====================================================
+
+    try {
+
+        articleService.saveArticle(article);
+
+        session.setAttribute(
+                "message",
+                Message.builder()
+                        .content("Article Added Successfully")
+                        .type(MessageType.green)
+                        .build()
+        );
+
+        return "redirect:/editor/article/list";
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        List<ContentCategory> categories =
+                categoryService.getAll();
+
+        model.addAttribute(
+                "categories",
+                categories
+        );
+
+        model.addAttribute(
+                "error",
+                e.getMessage()
+        );
+
+        model.addAttribute(
+                "articleForm",
+                articleForm
+        );
+
+        return "editor/article-add";
+    }
+}
+
+    // =========================================================
+    // VIEW ARTICLE
+    // GET /editor/article/view/{id}
+    // =========================================================
+
+    @GetMapping("article/view/{id}")
+    public String viewArticle(
+            @PathVariable Long id,
+            Model model) {
+
+
+        Article article =
+                articleService.getArticleById(id);
+
+
+        model.addAttribute(
+                "article",
+                article
+        );
+
+
+        return "editor/article-view";
+    }
+
+
+    // =========================================================
+    // UPDATE FORM
+    // GET /editor/article/update/{id}
+    // =========================================================
+
+@GetMapping("article/update/{id}")
+public String updateArticleForm(
+        @PathVariable Long id,
+        Model model) {
+
+    // =========================================================
+    // GET ARTICLE
+    // =========================================================
+
+    Article article = articleService.getArticleById(id);
+
+    if (article == null) {
+        throw new RuntimeException("Article not found with id: " + id);
+    }
+
+
+    // =========================================================
+    // CREATE FORM
+    // =========================================================
+
+    ArticleForm articleForm = new ArticleForm();
+
+
+    // =========================================================
+    // CATEGORY / SUBCATEGORY
+    // =========================================================
+
+    if (article.getSubCategory() != null) {
+
+        // Existing SubCategory
+        Long subCategoryId =
+                article.getSubCategory().getId();
+
+        articleForm.setSubCategoryId(subCategoryId);
+
+        System.out.println(
+                "SubCategoryId = " + subCategoryId
+        );
+
+
+        // Existing Category
+        if (article.getSubCategory().getCategory() != null) {
+
+            Long categoryId =
+                    article.getSubCategory()
+                           .getCategory()
+                           .getId();
+
+            articleForm.setCategoryId(categoryId);
+
+            System.out.println(
+                    "CategoryId = " + categoryId
+            );
+        }
+    }
+
+
+    // =========================================================
+    // BASIC INFORMATION
+    // =========================================================
+
+    articleForm.setTitle(article.getTitle());
+    articleForm.setSlug(article.getSlug());
+    articleForm.setContentType(article.getContentType());
+    articleForm.setShortDescription(article.getShortDescription());
+    articleForm.setContent(article.getContent());
+    articleForm.setStatus(article.getStatus());
+
+    articleForm.setBreakingNews(
+            article.getBreakingNews()
+    );
+
+    articleForm.setFeatured(
+            article.getFeatured()
+    );
+
+
+    // =========================================================
+    // MEDIA
+    // =========================================================
+
+    articleForm.setMainFrameImagePreviewUrl(
+            article.getMainFrameImageUrl()
+    );
+
+    articleForm.setImagePreviewUrl(
+            article.getImageUrl()
+    );
+
+    articleForm.setMainUrl(
+            article.getMainUrl()
+    );
+
+    articleForm.setSubUrl1(
+            article.getSubUrl1()
+    );
+
+    articleForm.setSubUrl2(
+            article.getSubUrl2()
+    );
+
+    articleForm.setSubUrl3(
+            article.getSubUrl3()
+    );
+
+    articleForm.setSubUrl4(
+            article.getSubUrl4()
+    );
+
+    articleForm.setCaption(
+            article.getCaption()
+    );
+
+
+    // =========================================================
+    // SEO
+    // =========================================================
+
+    articleForm.setSeoTitle(
+            article.getSeoTitle()
+    );
+
+    articleForm.setSeoDescription(
+            article.getSeoDescription()
+    );
+
+    articleForm.setKeywords(
+            article.getKeywords()
+    );
+
+    articleForm.setCanonicalUrl(
+            article.getCanonicalUrl()
+    );
+
+    articleForm.setMetaRobots(
+            article.getMetaRobots()
+    );
+
+
+    // =========================================================
+    // DEBUG
+    // =========================================================
+
+    System.out.println(
+            "FORM CategoryId = "
+            + articleForm.getCategoryId()
+    );
+
+    System.out.println(
+            "FORM SubCategoryId = "
+            + articleForm.getSubCategoryId()
+    );
+
+
+    // =========================================================
+    // MODEL
+    // =========================================================
+
+    model.addAttribute("articleForm",articleForm);
+
+    model.addAttribute("categories",categoryService.getAll());
+    
+    model.addAttribute("subCategories",subCategoryService.getAll());
+
+    model.addAttribute("id",id);
+
+
+    return "editor/article-update";
+}
+
+
+	// =========================================================
+	// UPDATE ARTICLE
+	// POST /editor/article/update
+	// =========================================================
+
+	@PostMapping("article/update/{id}")
+    public String updateArticle(
+					    		@Valid @ModelAttribute("articleForm") ArticleForm articleForm,
+					    		@PathVariable Long id,
+					            BindingResult bindingResult,
+					            HttpSession session,
+					            Authentication authentication,Model model) throws IOException {
+
+if (bindingResult.hasErrors()) {
+    session.setAttribute(
+            "message",
+            Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build() );
+    
+    return "editor/article-add";
+}
+
+    Article article = articleService.getArticleById(id);
+
+    String fileName = UUID.randomUUID().toString();
+
+
+    // =====================================================
+    // SUBCATEGORY
+    // =====================================================
+    ContentSubCategory subCategory =subCategoryService.getById(articleForm.getSubCategoryId())
+                    .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+
+                      article.setSubCategory(subCategory);
+
+    // =====================================================
+    // AUTHOR
+    // =====================================================
+
+    if (authentication != null && authentication.isAuthenticated()) {
+
+        EmployeeDetails employee = employeeService.getEmployeeByEmail(authentication.getName())
+                        .orElseThrow(() -> new RuntimeException("Employee not found") );
+
+        article.setAuthor(employee);
+    }
+
+
+    // =====================================================
+    // ARTICLE
+    // =====================================================
+
+    article.setTitle(articleForm.getTitle());
+
+    article.setShortDescription(articleForm.getShortDescription());
+
+    article.setContentType(articleForm.getContentType());
+
+    article.setContent(articleForm.getContent());
+
+
+    // =====================================================
+    // SLUG
+    // =====================================================
+
+    if (articleForm.getSlug() == null || articleForm.getSlug().isBlank()) {
+
+        article.setSlug(generateSlug(articleForm.getTitle()) );
+
+    } else {
+        article.setSlug(articleForm.getSlug() );
+    }
+
+
+    // =====================================================
+    // STATUS
+    // =====================================================
+
+    article.setStatus(articleForm.getStatus());
+
+    // =====================================================
+    // UPDATED DATE
+    // =====================================================
+    LocalDateTime now = LocalDateTime.now();
+
+    article.setUpdatedAt(now);
+ 
+
+
+    // =====================================================
+    // BREAKING NEWS
+    // =====================================================
+
+    article.setBreakingNews(Boolean.TRUE.equals( articleForm.getBreakingNews()));
+
+
+    // =====================================================
+    // FEATURED
+    // =====================================================
+
+    article.setFeatured(Boolean.TRUE.equals( articleForm.getFeatured()));
+    
+    // =====================================================
+    // MAIN FRAME IMAGE
+    // =====================================================
+
+    if (articleForm.getMainFrameImageFile() != null
+            && !articleForm.getMainFrameImageFile().isEmpty()) {
+    	
+    	cloudinaryService.deleteCloudinaryFile(article.getMainFrameCloudinaryid(),"IMAGE");
+    	
+        String imageId = "mainFrameImage_" + fileName;
+        
+        String fileUrl = cloudinaryService.uploadFile(articleForm.getMainFrameImageFile(),imageId);
+        article.setMainFrameCloudinaryid(imageId);
+
+        article.setMainFrameImageUrl(fileUrl);
+
+    }
+
+
+    // =====================================================
+    // IMAGE
+    // =====================================================
+
+    if (articleForm.getImageFile() != null && !articleForm.getImageFile().isEmpty()) {
+    	
+    	cloudinaryService.deleteCloudinaryFile(article.getImageCloudinaryId(), article.getMediaType());
+        String imageId ="image_" + fileName;
+
+        String fileUrl = cloudinaryService.uploadFile(articleForm.getImageFile(),imageId);
+
+        article.setImageCloudinaryId(imageId);
+
+        article.setMediaType("IMAGE");
+
+        article.setImageUrl(fileUrl);
+
+        article.setCaption( articleForm.getCaption());
+    }
+
+
+    // =====================================================
+    // URLS
+    // =====================================================
+
+    article.setMainUrl(articleForm.getMainUrl());
+    
+    article.setEmbedMainUrl(SocialMediaUrlUtil.youtubeEmbedUrl(articleForm.getMainUrl()));
+
+    article.setSubUrl1(articleForm.getSubUrl1());
+
+    article.setSubUrl2(articleForm.getSubUrl2());
+
+    article.setSubUrl3(articleForm.getSubUrl3());
+
+    article.setSubUrl4(articleForm.getSubUrl4());
+
+
+    // =====================================================
+    // SEO
+    // =====================================================
+
+    article.setSeoTitle(articleForm.getSeoTitle());
+
+    article.setSeoDescription(articleForm.getSeoDescription());
+
+    article.setKeywords(articleForm.getKeywords());
+
+    article.setCanonicalUrl(articleForm.getCanonicalUrl());
+
+    article.setMetaRobots(articleForm.getMetaRobots());
+
+
+
+
+    // =====================================================
+    // SAVE
+    // =====================================================
+
+    try {
+
+        articleService.updateArticle(id, article);
+
+        session.setAttribute(
+                "message",
+                Message.builder()
+                        .content("Article Updated Successfully")
+                        .type(MessageType.green)
+                        .build()
+        );
+
+        return "redirect:/editor/article/list";
+
+    } catch (Exception e) {
+
+
+        List<ContentCategory> categories =categoryService.getAll();
+
+        model.addAttribute("categories",categories);
+        
+        model.addAttribute("subCategories",subCategoryService.getAll());
+
+        model.addAttribute("error",e.getMessage());
+
+        model.addAttribute("articleForm",articleForm);
+
+        return "editor/article-update";
+    }
+    
+    
+    
+    }
+
+
+    // =========================================================
+    // DELETE
+    // POST /editor/article/delete/{id}
+    // =========================================================
+
+    @RequestMapping("article/delete/{id}")
+    public String deleteArticle(@PathVariable Long id,HttpSession session,Model model) {
+	    
+    	Article article=articleService.getArticleById(id);
+    	
+    	if (article.getMainFrameImageUrl() != null && !article.getMainFrameImageUrl().isEmpty()) {
+    		
+    		try {
+    			cloudinaryService.deleteCloudinaryFile(article.getMainFrameCloudinaryid(),"IMAGE");
+    		} catch (IOException e) {
+    			model.addAttribute("error",e.getMessage());
+    		}
+    	} 	
+  
+    	
+        if (article.getImageUrl() != null && !article.getImageUrl().isEmpty()) {
+        	
+        	try {
+				cloudinaryService.deleteCloudinaryFile(article.getImageCloudinaryId(), article.getMediaType());
+			} catch (IOException e) {
+				model.addAttribute("error",e.getMessage());
+			}
+        } 	
+    	
+    	articleService.deleteArticle(id);
+
+        session.setAttribute(
+                "message",
+                Message.builder()
+                        .content("Article Deleted Successfully")
+                        .type(MessageType.green)
+                        .build());
+
+        return "redirect:/editor/article/list";
+    }
+
+
+    // =========================================================
+    // PUBLIC ARTICLE
+    // GET /article/{slug}
+    // =========================================================
+
+    @GetMapping("article/public/{slug}")
+    public String publicArticle(
+
+            @PathVariable String slug,
+
+            Model model) {
+
+
+        Article article =
+                articleService
+                    .getArticleBySlug(slug);
+
+
+        if ("PUBLISHED".equalsIgnoreCase(
+                article.getStatus())) {
+
+            articleService.increaseViewCount(
+                    article.getId()
+            );
+        }
+
+
+        model.addAttribute(
+                "article",
+                article
+        );
+
+
+        return "article/article-detail";
+    }
+
+
+    // =========================================================
+    // SLUG GENERATOR
+    // =========================================================
+
+    private String generateSlug(
+            String title) {
+
+
+        if (title == null) {
+
+            return "article-" +
+                    System.currentTimeMillis();
+        }
+
+
+        return title
+                .toLowerCase()
+                .trim()
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("-+", "-");
+    }
+
+
+
+
+
+
+
 }

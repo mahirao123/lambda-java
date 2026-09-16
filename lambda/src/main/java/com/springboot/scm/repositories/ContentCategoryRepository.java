@@ -10,9 +10,11 @@ import com.springboot.scm.entities.ContentCategory;
 public interface ContentCategoryRepository
         extends JpaRepository<ContentCategory, Long> {
 
-   
+	 boolean existsByDate(Date date);
     
     ContentCategory findByDate(Date date);
+    
+    List<ContentCategory> findAllByOrderByDateAsc();
     
     List<ContentCategory> findByDayIgnoreCase(String day);
     

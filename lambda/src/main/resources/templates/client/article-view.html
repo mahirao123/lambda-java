@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+
+	<title th:text="${article.title} + ' | Gen-Z Media'">
+		Article | Gen-Z Media
+	</title>
+
+</head>
+
+<body>
+
+	<div id="content" class="bg-gray-50 min-h-screen pt-[0px] ">
+
+		<!---   Main Slider Fragment -->
+		<div th:replace="~{fragments/language :: changeLanguage}"></div>
+		
+		<!-- ========================================================= -->
+		<!-- BREAKING NEWS BAR                                         -->
+		<!-- ========================================================= -->
+		<div th:if="${article.breakingNews}" class="bg-blue-700 text-white">
+
+			<div class="max-w-7xl mx-auto px-4 py-2">
+
+				<div class="flex items-center gap-3">
+
+					<span class="relative flex h-3 w-3">
+						<span class="animate-ping absolute inline-flex h-full w-full
+                                 rounded-full bg-white opacity-75"></span>
+
+						<span class="relative inline-flex rounded-full
+                                 h-3 w-3 bg-white"></span>
+					</span>
+
+					<span class="font-bold uppercase tracking-wide text-sm">
+						Breaking News
+					</span>
+
+					<span class="hidden sm:block">
+						—
+					</span>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<!-- ========================================================= -->
+		<!-- ARTICLE CONTAINER                                         -->
+		<!-- ========================================================= -->
+
+		<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+			<!-- ===================================================== -->
+			<!-- BREADCRUMB                                            -->
+			<!-- ===================================================== -->
+			<div class="flex flex-wrap items-center justify-between gap-4">
+
+				<div>
+					<span class="mb-6" aria-label="Breadcrumb">
+
+						<ol class="flex flex-wrap items-center gap-2
+                       text-sm text-gray-500">
+
+							<li>
+								<a th:href="@{/}" class="hover:text-red-600 transition">
+									Home
+								</a>
+							</li>
+
+							<li>/</li>
+
+							<li th:if="${article.subCategory != null}">
+
+								<span th:text="${article.subCategory.category != null
+                            ? article.subCategory.category.day
+                            : 'Category'}">
+									Category
+								</span>
+
+							</li>
+
+							<li>/</li>
+
+							<li th:if="${article.subCategory != null}">
+
+								<span class="font-medium text-gray-700" th:text="${article.subCategory.name}">
+									Sub Category
+								</span>
+
+							</li>
+
+						</ol>
+					</span>
+				</div>
+				<!-- PUBLISHED -->
+				<div class="flex items-center gap-2">
+					<span class=" uppercase tracking-wide text-sm" th:text="${#temporals.format(
+			          article.publishedAt,
+			          'dd MMMM yyyy, hh:mm a')}">
+						10 September 2026
+					</span>
+
+
+					<span class="flex items-center gap-1 font-bold uppercase tracking-wide text-sm">
+
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+							stroke="currentColor">
+
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0
+				                 3 3 0 016 0z" />
+
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943
+				                 7.523 5 12 5c4.477 0
+				                 8.268 2.943 9.542 7
+				                 -1.274 4.057-5.065
+				                 7-9.542 7-4.477 0
+				                 -8.268-2.943-9.542-7z" />
+
+						</svg>
+
+						<span th:text="${article.viewCount ?: 0}">
+							0
+						</span>
+
+						views
+
+					</span>
+				</div>
+			</div>
+			<!-- ===================================================== -->
+			<!-- MAIN GRID                                             -->
+			<!-- ===================================================== -->
+
+			<div class="grid grid-cols-1">
+
+
+				<!-- ================================================= -->
+				<!-- ARTICLE                                            -->
+				<!-- ================================================= -->
+
+				<article class="lg:col-span-8 mb-3">
+
+					<div class="bg-white rounded-2xl shadow-sm
+                            border border-gray-200 overflow-hidden">
+
+						<!-- ================================================= -->
+						<!-- MAIN MEDIA                                          -->
+						<!-- ================================================= -->
+
+						<div class="w-full bg-black">
+
+							<!-- IMAGE -->
+
+							<img th:if="${article.mediaType == 'IMAGE'}" th:src="${article.imageUrl}"
+								th:alt="${article.title}" class="w-full max-h-[650px]
+                                    object-contain mx-auto">
+
+
+							<!-- VIDEO -->
+
+							<video th:if="${article.mediaType == 'VIDEO'}" class="w-full max-h-[650px]" controls
+								preload="metadata" playsinline>
+
+								<source th:src="${article.mainFrameImageUrl}" type="video/mp4">
+
+								Your browser does not support video.
+							</video>
+
+						</div>
+
+
+						<!-- ================================================= -->
+						<!-- CAPTION                                             -->
+						<!-- ================================================= -->
+
+						<div th:if="${article.caption != null
+                                 and !#strings.isEmpty(article.caption)}" class="px-5 sm:px-7 lg:px-9 py-3
+                                bg-gray-50 border-b
+                                border-gray-200">
+
+							<p class="text-sm italic text-gray-500" th:text="${article.caption}">
+								Image caption
+							</p>
+
+						</div>
+
+
+						<!-- ================================================= -->
+						<!-- SHARE BAR                                           -->
+						<!-- ================================================= -->
+
+						<div class="px-5 sm:px-7 lg:px-9 pt-6">
+
+							<div class="flex flex-wrap items-center
+                                    justify-between gap-4">
+
+									<div>
+
+									    <!-- Share button -->
+									    <button type="button"
+									            onclick="openSharePopup()"
+									            class="h-9 w-9 rounded-full
+									                   bg-blue-600 text-white
+									                   flex items-center justify-center
+									                   hover:opacity-90">
+
+									        <i class="fa-regular fa-share-from-square"></i>
+
+									    </button>
+
+									    <span>Share</span>
+
+									</div>
+
+
+									<!-- Share Popup -->
+									<div id="sharePopup"
+									     class="share-popup-overlay">
+
+									    <div class="share-popup">
+
+									        <div class="share-popup-header">
+									            <h3>Share Article</h3>
+
+									            <button type="button"
+									                    onclick="closeSharePopup()"
+									                    class="close-share-btn">
+									                &times;
+									            </button>
+									        </div>
+
+									        <p class="share-popup-text">
+									            Share this article with your friends
+									        </p>
+
+									        <div class="share-options">
+
+									            <!-- Facebook -->
+									            <button type="button"
+									                    onclick="shareFacebook()"
+									                    class="share-option facebook">
+									                <i class="fa-brands fa-facebook-f"></i>
+									                <span>Facebook</span>
+									            </button>
+
+									            <!-- X -->
+									            <button type="button"
+									                    onclick="shareTwitter()"
+									                    class="share-option twitter">
+									                <i class="fa-brands fa-x-twitter"></i>
+									                <span>X</span>
+									            </button>
+
+									            <!-- WhatsApp -->
+									            <button type="button"
+									                    onclick="shareWhatsApp()"
+									                    class="share-option whatsapp">
+									                <i class="fa-brands fa-whatsapp"></i>
+									                <span>WhatsApp</span>
+									            </button>
+
+									            <!-- Instagram -->
+									            <button type="button"
+									                    onclick="shareInstagram()"
+									                    class="share-option instagram">
+									                <i class="fa-brands fa-instagram"></i>
+									                <span>Instagram</span>
+									            </button>
+
+									           
+
+									        </div>
+
+									       
+
+									    </div>
+
+									</div>
+									
+									<!---Social Media Page -->
+									<div th:replace="~{fragments/socialMediaPage :: socialMediaPage}"></div>
+							</div>
+
+						</div>
+
+
+						<!-- ================================================= -->
+						<!-- ARTICLE CONTENT                                     -->
+						<!-- ================================================= -->
+
+
+						<!-- ===================================== -->
+						<!-- TITLE                                  -->
+						<!-- ===================================== -->
+
+						<h1 th:text="${article.title}" class="text-3xl sm:text-4xl lg:text-5xl px-5 sm:px-7 lg:px-9
+					           font-extrabold leading-tight
+					           tracking-tight text-gray-900">
+							Article headline
+						</h1>
+
+
+						<!-- ===================================== -->
+						<!-- SHORT DESCRIPTION                       -->
+						<!-- ===================================== -->
+
+						<p th:if="${article.shortDescription != null
+					           and !#strings.isEmpty(article.shortDescription)}" th:text="${article.shortDescription}" class="mt-5 text-lg sm:text-xl px-5 sm:px-7 lg:px-9
+					          leading-8 text-gray-600">
+							Short description
+						</p>
+
+						<div class="px-5 sm:px-7 lg:px-9 py-8">
+
+
+							<div th:if="${article.content != null and !#strings.isEmpty(article.content)}"
+								th:utext="${article.content}" class="article-content">
+
+							</div>
+
+
+							<div th:if="${article.content == null  or #strings.isEmpty(article.content)}"
+								class="text-gray-500 italic">
+
+								Article content is not available.
+
+							</div>
+
+						</div>
+
+
+						<!-- ================================================= -->
+						<!-- MEDIA LINKS                                          -->
+						<!-- ================================================= -->
+
+						<div class="px-5 sm:px-7 lg:px-9 pb-9">
+
+							<div th:if="${article.mainUrl != null
+                                     or article.subUrl1 != null
+                                     or article.subUrl2 != null
+                                     or article.subUrl3 != null
+                                     or article.subUrl4 != null}" class="border-t border-gray-200 pt-7">
+
+
+								<h2 class="text-xl font-bold bg-blue-600 text-center py-5
+                                       text-white mb-5">
+
+									Watch Article
+
+								</h2>
+								
+								<!-- Video Card -->
+									<div class="grid grid-cols-1 md:grid-cols-4 justify-center  gap-4 w-full h-100 p-3">
+									
+									<div 
+									th:if="${article.mainUrl != null and !#strings.isEmpty(article.mainUrl)}"
+										class="bg-gray rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 mb-3">
+
+										<!-- YouTube -->
+
+										<!-- Content -->
+										<div class="relative">
+
+											<!--Youtube Video -->
+											<div 
+												class="aspect-video rounded-lg overflow-hidden">
+												<iframe class="w-full h-full " th:src="${article.embedMainUrl}"
+													title="YouTube video player" frameborder="0"
+													allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+													allowfullscreen>
+												</iframe>
+											</div>
+
+										</div>
+
+									</div>
+
+									<div></div>
+									
+									<div class="grid grid-cols-4 pb-5 mb-3">
+
+
+										<h2	class="text-blue-600 ">
+										<a th:if="${article.subUrl1 != null
+										       and !#strings.isEmpty(article.subUrl1)}" th:href="${article.subUrl1}"
+											target="_blank" rel="noopener noreferrer" class="h-9 w-9 rounded-full
+											                                             bg-blue-600 text-white
+											                                             flex items-center justify-center
+											                                             hover:opacity-90">									
+											<i class="fa-brands fa-facebook"></i>
+										</a>
+										</h2>
+
+
+										<h2	class="text-blue-600 ">
+										<a th:if="${article.subUrl2 != null
+										       and !#strings.isEmpty(article.subUrl2)}" th:href="${article.subUrl2}"
+											target="_blank" rel="noopener noreferrer"
+											 class="instagram-btn h-9 w-9 rounded-full
+											 text-white flex items-center justify-center
+											 hover:opacity-90 transition">	
+											 								
+											<i class="fa-brands fa-instagram"></i>
+										</a>
+										</h2>
+
+
+										<h2	class="text-blue-600 ">
+										<a th:if="${article.subUrl3 != null
+										       and !#strings.isEmpty(article.subUrl3)}" th:href="${article.subUrl3}"
+											target="_blank" rel="noopener noreferrer"class="h-9 w-9 rounded-full
+											                                             bg-red-600 text-white
+											                                             flex items-center justify-center
+											                                             hover:opacity-90">									
+											<i class="fa-brands fa-youtube"></i>
+										</a>
+										</h2>
+
+										<h2	class="text-blue-600 ">
+										<a th:if="${article.subUrl4 != null
+									           and !#strings.isEmpty(article.subUrl4)}" th:href="${article.subUrl4}"
+											target="_blank" rel="noopener noreferrer" class="media-link hover:underline">									
+											Other
+										</a>
+										</h2>
+									</div>
+
+									
+								</div>
+
+
+							</div>
+
+						</div>
+
+
+					</div>
+
+				</article>
+
+
+				<!-- ================================================= -->
+				<!-- RIGHT SIDEBAR                                     -->
+				<!-- ================================================= -->
+
+				<aside class="lg:col-span-4">
+
+					<div class="lg:sticky lg:top-24 ">
+
+						<!-- ========================================= -->
+						<!-- AUTHOR CARD                                -->
+						<!-- ========================================= -->
+
+						<div class="bg-white rounded-2xl
+                                border border-gray-200
+                                shadow-sm p-6">
+
+							<h2 class="text-lg font-bold
+                                   text-gray-900 mb-1">
+
+								About the Author
+
+							</h2>
+
+
+							<div class="flex items-center gap-4">
+
+								<div class="h-14 w-14
+                                        rounded-full
+                                        overflow-hidden
+                                        bg-gray-200
+                                        flex-shrink-0">
+
+									<img th:if="${article.author != null
+                                             and article.author.profilePic != null}"
+										th:src="${article.author.profilePic}" class="w-full h-full object-cover"
+										alt="Author">
+
+									<div th:if="${article.author == null
+                                             or article.author.profilePic == null}" class="w-full h-full
+                                            flex items-center
+                                            justify-center
+                                            font-bold
+                                            text-gray-500">
+
+										A
+
+									</div>
+
+								</div>
+
+
+								<div>
+
+									<h3 class="font-bold text-gray-900">
+
+
+										<!-- ===================================== -->
+										<!-- AUTHOR / DATE / VIEWS                   -->
+										<!-- ===================================== -->
+
+										<div class="mt-7 pt-5
+									            border-t border-b border-gray-200
+									            py-5">
+
+											<div class="flex flex-col sm:flex-row
+									                sm:items-center
+									                sm:justify-between gap-5">
+
+
+												<!-- AUTHOR -->
+												<div class="flex items-center gap-3">
+
+
+													<div>
+
+														<p class="text-sm
+									                          font-bold uppercase
+									                          text-gray-900">
+
+															<span th:if="${article.author != null}"
+																th:text="${article.author.name}">
+																Author
+															</span>
+
+
+														<p th:if="${article.articleId != null}">
+															ID:
+															<strong class="text-gray-700"
+																th:text="${article.author.employeeId}">
+																ART001
+															</strong>
+														</p>
+
+														<p th:if="${article.author != null}"
+															th:text="${article.author.role}"
+															class="text-sm text-gray-500">
+															Editorial Team
+														</p>
+														<span th:if="${article.author == null}">
+															Gen-Z Media
+														</span>
+
+														</p>
+														<p class="flex items-center gap-1">
+
+															<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
+																fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+																<path stroke-linecap="round" stroke-linejoin="round"
+																	stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+
+																<path stroke-linecap="round" stroke-linejoin="round"
+																	stroke-width="2" d="M2.458 12C3.732 7.943
+										                             7.523 5 12 5c4.477 0
+										                             8.268 2.943 9.542 7
+										                             -1.274 4.057-5.065
+										                             7-9.542 7-4.477 0
+										                             -8.268-2.943-9.542-7z" />
+
+															</svg>
+
+															<span th:text="${article.viewCount ?: 0}">
+																0
+															</span>
+
+															views
+
+														</p>
+													</div>
+
+												</div>
+											</div>
+
+										</div>
+										<span th:if="${article.author == null}">
+											Gen-Z Media
+										</span>
+
+									</h3>
+								</div>
+
+							</div>
+
+						</div>
+
+
+						<!-- ========================================= -->
+						<!-- NEWSLETTER / BRAND                         -->
+						<!-- ========================================= -->
+
+						<div class="rounded-2xl
+                                bg-gray-900
+                                text-white p-6">
+
+							<p class="text-sm font-semibold
+                                  uppercase tracking-wide
+                                  text-gray-300">
+
+								Gen-Z Media
+
+							</p>
+
+
+							<h2 class="mt-2 text-2xl
+                                   font-extrabold">
+
+								Stay informed.
+
+							</h2>
+
+
+							<p class="mt-3 text-sm
+                                  leading-6 text-gray-300">
+
+								Get the latest news, opinions,
+								features and stories.
+
+							</p>
+
+						</div>
+
+
+					</div>
+
+				</aside>
+
+			</div>
+
+		</main>
+
+	</div>
+
+
+	<!-- ============================================================= -->
+	<!-- CSS                                                           -->
+	<!-- ============================================================= -->
+
+	<script>
+
+
+	</script>
+
+
+</body>
+
+</html>
