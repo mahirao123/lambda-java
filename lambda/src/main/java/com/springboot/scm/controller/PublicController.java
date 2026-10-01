@@ -192,18 +192,30 @@ public String ePaper(@PathVariable Long id, Model model) {
             .filter(ContentSubCategory::isEnable)
             .toList();
 
+<<<<<<< HEAD
     Map<Long, List<Article>> articleMap = new HashMap<>();
 
     for (ContentSubCategory subCategory : subCategories) {
 
         List<Article> articles =
                 articleService.getArticlesBySubCategory(subCategory.getId());
+=======
+Map<Long, List<Article>> articleMap = new HashMap<>();
+
+    for (ContentSubCategory subCategory : subCategories) {
+    	System.out.println("SubCategories from the epaper page  "+subCategory) ;
+        List<Article> articles =articleService.getArticlesBySubCategory(subCategory.getId());
+>>>>>>> f773d2d (first commit)
 
         articleMap.put(subCategory.getId(), articles);
     }
     
+<<<<<<< HEAD
     List<ContentCategory> categories =
             categoryService.getAllCategoriesByDate();
+=======
+    List<ContentCategory> categories = categoryService.getAllCategoriesByDate();
+>>>>>>> f773d2d (first commit)
 
     model.addAttribute("categories", categories);
 

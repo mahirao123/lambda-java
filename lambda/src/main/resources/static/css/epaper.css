@@ -82,3 +82,858 @@
     }
 
 }
+<<<<<<< HEAD
+=======
+
+
+/* =========================================================
+   NEWSPAPER
+   ========================================================= */
+
+.newspaper-page {
+  
+    padding: 1px 2px 3px;
+}
+
+.newspaper-paper {
+    width: 100%;
+    max-width: 1350px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #cfcfcf;
+    box-shadow: 0 3px 14px rgba(0,0,0,.16);
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TOP ADVERTISEMENT
+   ========================================================= */
+   .paper-edition {
+      
+       margin-top: 6px;
+       font-size: 10px;
+       font-weight: 700;
+   }
+   
+.paper-top-ad {
+    display: grid;
+    grid-template-columns: 2fr 2.15fr 2fr;
+    
+    padding: 8px 12px;
+  margin: 25px 13px;
+}
+
+.paper-ad-item {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+   
+    overflow: hidden;
+}
+
+.paper-ad-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+.paper-ad-text {
+    font-size: 11px;
+    text-align: center;
+    color: #555;
+}
+
+
+/* =========================================================
+   MASTHEAD
+   ========================================================= */
+
+.paper-masthead {
+    padding: 5px 4px 3px;
+    border-bottom: 4px solid #111;
+}
+
+.paper-top-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    color: #444;
+    margin-bottom: 2px;
+}
+
+.paper-brand {
+    text-align: center;
+    line-height: .85;
+}
+
+.paper-brand-main {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 8vw, 92px);
+    font-weight: 900;
+    letter-spacing: -6px;
+    color: #e90025;
+}
+
+.paper-brand-sub {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+
+
+/* =========================================================
+   BREAKING NEWS
+   ========================================================= */
+
+.breaking-box {
+    margin: 10px 12px;
+    border: 1px solid #a6ced0;
+    background: #edfafa;
+    padding: 7px 10px;
+}
+
+.breaking-heading {
+    color: #e90025;
+    font-size: 11px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.breaking-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.breaking-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.breaking-number {
+    flex: 0 0 27px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: #6c999b;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+
+
+
+/* =========================================================
+   NEWSPAPER CONTENT
+   ========================================================= */
+
+.paper-content {
+    padding: 0 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN GRID
+   ========================================================= */
+
+.paper-main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3px;
+    align-items: stretch;
+    width: 100%;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.lead-section {
+    border-right: 2px solid #222;
+    padding-right: 12px;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SECTION LABEL
+   ========================================================= */
+
+.section-label {
+    display: inline-block;
+    background: #e90025;
+    color: #fff;
+    padding: 3px 7px;
+    font-size: 9px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   LEAD TITLE
+   ========================================================= */
+
+.lead-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: .95;
+    letter-spacing: -2px;
+    font-weight: 900;
+    color: #111;
+    margin: 0 0 7px;
+}
+
+
+/* =========================================================
+   LEAD SUBTITLE
+   ========================================================= */
+
+.lead-subtitle {
+    font-size: 12px;
+    line-height: 1.35;
+    color: #444;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   MAIN LEAD IMAGE
+   ========================================================= */
+
+.lead-image-box {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #eee;
+}
+
+
+.lead-image-box img {
+    display: block;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+
+.lead-image-box:hover img {
+    transform: scale(1.015);
+}
+
+
+/* =========================================================
+   VIDEO PLAY
+   ========================================================= */
+
+.video-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e90025;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   LEAD IMAGE NEWS
+   ARTICLE 1 + ARTICLE 2
+   ========================================================= */
+
+.lead-image-news {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   SMALL STORY
+   ========================================================= */
+
+.lead-small-story {
+    border-top: 3px solid #111;
+    padding-top: 5px;
+    min-width: 0;
+}
+
+
+.lead-small-story img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   SMALL STORY TITLE
+   ========================================================= */
+
+.lead-small-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 1.05;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   SMALL STORY DESCRIPTION
+   ========================================================= */
+
+.lead-small-description {
+    font-size: 10px;
+    line-height: 1.3;
+    color: #555;
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ARTICLE 3 + ARTICLE 4
+   ========================================================= */
+
+.right-news {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    min-width: 0;
+    height: 100%;
+}
+
+
+/* =========================================================
+   RIGHT STORY
+   ========================================================= */
+
+.right-story {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #222;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ARTICLE 3
+   ========================================================= */
+
+.right-story-small {
+    min-height: 0;
+}
+
+
+.right-image-small {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   ARTICLE 4
+   ========================================================= */
+
+.right-story-large {
+    min-height: 0;
+}
+
+
+.right-image-large {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   RIGHT TITLES
+   ========================================================= */
+
+.right-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.08;
+    font-weight: 900;
+    margin: 0 0 5px;
+    color: #111;
+}
+
+
+.right-large-title {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   RIGHT DESCRIPTION
+   ========================================================= */
+
+.right-description {
+    font-size: 11px;
+    line-height: 1.35;
+    color: #555;
+    margin: 0;
+}
+
+
+/* =========================================================
+   LOWER NEWS
+   ========================================================= */
+
+.lower-news {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 3px solid #111;
+    align-items: start;
+}
+
+
+/* =========================================================
+   LOWER STORY
+   ========================================================= */
+
+.lower-story {
+    min-width: 0;
+    border-right: 1px solid #aaa;
+    padding-right: 8px;
+    box-sizing: border-box;
+}
+
+
+.lower-story:last-child {
+    border-right: none;
+}
+
+
+/* =========================================================
+   LOWER IMAGE
+   ========================================================= */
+
+.lower-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   LOWER CATEGORY
+   ========================================================= */
+
+.lower-category {
+    color: #e90025;
+    font-size: 8px;
+    font-weight: 900;
+    margin-bottom: 3px;
+}
+
+
+/* =========================================================
+   LOWER TITLE
+   ========================================================= */
+
+.lower-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 1.05;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   LOWER DESCRIPTION
+   ========================================================= */
+
+.lower-description {
+    font-size: 9px;
+    line-height: 1.3;
+    color: #555;
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   ADVERTISEMENT
+   ========================================================= */
+
+.paper-ad-column {
+    margin-top: 10px;
+    border-top: 2px solid #111;
+    padding-top: 8px;
+}
+
+
+.paper-ad-column img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.ad-placeholder {
+    height: 150px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 10px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   COLORED DOTS
+   ========================================================= */
+
+.paper-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 0;
+    margin-top: 8px;
+}
+
+
+.paper-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+
+.paper-dot1 {
+    background: #aaa;
+}
+
+
+.paper-dot2 {
+    background: #e90025;
+}
+
+
+.paper-dot3 {
+    background: #f5c400;
+}
+
+
+.paper-dot4 {
+    background: #20a45a;
+}
+
+
+.paper-dot5 {
+    background: #3194d8;
+}
+
+
+.paper-dot6 {
+    background: #111;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.paper-footer {
+    border-top: 3px solid #111;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    color: #444;
+}
+
+
+/* =========================================================
+   ARTICLE NO 5
+   MULTIPLE ARTICLES
+   ========================================================= */
+
+.lower-news .lower-story {
+    overflow: hidden;
+}
+
+
+/*
+   If several articles have articleNo = 5,
+   each article remains an independent story.
+*/
+
+.lower-news .lower-story img {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   MEDIUM SCREEN
+   SAME NEWSPAPER STRUCTURE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .paper-main-grid {
+        grid-template-columns: 2fr 1fr;
+        gap: 8px;
+    }
+
+
+    .lead-section {
+        padding-right: 8px;
+    }
+
+
+    .lead-image-box {
+        height: auto;
+    }
+    .lead-image-box img {
+        height: 350px;
+    }
+
+
+    .lead-image-news {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .lead-small-story img {
+        height: 130px;
+    }
+
+
+    .right-news {
+        grid-template-rows: 1fr 1fr;
+        gap: 8px;
+    }
+
+
+    .right-image-small {
+        height: 75px;
+    }
+
+
+    .right-title {
+        font-size: 15px;
+    }
+
+
+    .right-description {
+        font-size: 9px;
+    }
+
+
+    .lower-news {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+
+    .lower-image {
+        height: 110px;
+    }
+
+
+    .lower-title {
+        font-size: 14px;
+    }
+
+
+    .lower-description {
+        font-size: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   SAME STRUCTURE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .newspaper-page {
+        padding: 4px;
+    }
+
+
+    .paper-content {
+        padding: 0 4px 8px;
+    }
+
+
+    /*
+       KEEP SAME STRUCTURE
+
+       LEFT = 2fr
+       RIGHT = 1fr
+    */
+
+    .paper-main-grid {
+        grid-template-columns: 2fr 1fr;
+        gap: 5px;
+    }
+
+
+    .lead-section {
+        padding-right: 5px;
+    }
+
+
+    .lead-title {
+        font-size: 24px;
+        letter-spacing: -1px;
+    }
+
+
+    .lead-subtitle {
+        font-size: 9px;
+    }
+
+	.lead-image-box{
+		height:auto;
+	}
+    .lead-image-box img {
+        height: 230px;
+    }
+
+
+    .lead-image-news {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+
+
+    .lead-small-story img {
+        height: 80px;
+    }
+
+
+    .lead-small-title {
+        font-size: 11px;
+    }
+
+
+    .lead-small-description {
+        font-size: 7px;
+    }
+
+
+    .right-news {
+        grid-template-rows: 1fr 1fr;
+        gap: 5px;
+    }
+
+
+    .right-image-small {
+        height: 55px;
+    }
+
+
+    .right-image-large {
+        height: 230px;
+    }
+
+
+    .right-title {
+        font-size: 11px;
+        line-height: 1.05;
+    }
+
+
+    .right-description {
+        font-size: 7px;
+        line-height: 1.2;
+    }
+
+
+    /*
+       LOWER AREA
+
+       Keep four-column newspaper structure.
+       Multiple articleNo = 5 articles can flow
+       into the available lower grid cells.
+    */
+
+    .lower-news {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+    }
+
+
+    .lower-story {
+        padding-right: 4px;
+    }
+
+
+    .lower-image {
+        height: 80px;
+    }
+
+
+    .lower-title {
+        font-size: 10px;
+        line-height: 1.05;
+    }
+
+
+    .lower-description {
+        font-size: 7px;
+        line-height: 1.2;
+    }
+
+
+    .paper-dot {
+        width: 9px;
+        height: 9px;
+    }
+
+}
+>>>>>>> f773d2d (first commit)

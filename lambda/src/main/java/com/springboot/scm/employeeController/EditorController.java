@@ -1188,6 +1188,11 @@ if (bindingResult.hasErrors()) {
 if(articleForm.getContent()!=null && !articleForm.getContent().isEmpty()) {
     article.setArticleId("ART-" + System.currentTimeMillis() );
 
+<<<<<<< HEAD
+=======
+    article.setArticleNo(articleForm.getArticleNo());
+    
+>>>>>>> f773d2d (first commit)
     article.setTitle(articleForm.getTitle() );
 
     article.setShortDescription(articleForm.getShortDescription());
@@ -1430,7 +1435,11 @@ public String updateArticleForm(
     // =========================================================
     // BASIC INFORMATION
     // =========================================================
+<<<<<<< HEAD
 
+=======
+    articleForm.setArticleNo(article.getArticleNo());
+>>>>>>> f773d2d (first commit)
     articleForm.setTitle(article.getTitle());
     articleForm.setSlug(article.getSlug());
     articleForm.setContentType(article.getContentType());
@@ -1594,7 +1603,12 @@ if (bindingResult.hasErrors()) {
     // =====================================================
     // ARTICLE
     // =====================================================
+<<<<<<< HEAD
 
+=======
+    article.setArticleNo(articleForm.getArticleNo());
+    
+>>>>>>> f773d2d (first commit)
     article.setTitle(articleForm.getTitle());
 
     article.setShortDescription(articleForm.getShortDescription());

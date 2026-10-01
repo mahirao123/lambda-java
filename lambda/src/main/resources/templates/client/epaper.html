@@ -169,6 +169,7 @@
 
 
 						<!-- ================================================= -->
+<<<<<<< HEAD
 						<!-- Chabge Language  -->
 						<!-- ================================================= -->
 						<!-- ===================================================== -->
@@ -602,6 +603,10 @@
 						    </div>
 
 						</div>
+=======
+						<!-- Change Language  -->
+						<!-- ================================================= -->
+>>>>>>> f773d2d (first commit)
 
 
 					</div>
@@ -655,6 +660,13 @@
 		</div>
 
 
+<<<<<<< HEAD
+=======
+		<!---  Advertisement -->
+
+
+
+>>>>>>> f773d2d (first commit)
 		<!-- ===================================================== -->
 		<!-- EMPTY STATE -->
 		<!-- ===================================================== -->
@@ -714,6 +726,7 @@
 						<!-- NEWSPAPER FRAME -->
 						<!-- ===================================== -->
 
+<<<<<<< HEAD
 						<div class="bg-white border shadow-xl min-h-[calc(100vh-170px)]">
 
 
@@ -890,6 +903,910 @@
 							</div>
 
 						</div>
+=======
+<!-- =========================================================
+     NEWSPAPER FRAME
+     ARTICLE PLACEMENT IS CONTROLLED BY articleNo
+     
+     articleNo:
+     0 = Lead article
+     1 = Lead bottom-left
+     2 = Lead bottom-right
+     3 = Right top
+     4 = Right bottom
+     5 = Lower column 1
+     6 = Lower column 2
+     7 = Lower column 3
+     8 = Lower column 4
+     9 = Lower column 5
+
+     IMPORTANT:
+     Multiple articles can have articleNo = 5.
+     All of them will be displayed in the Article 5 area.
+     ========================================================= -->
+
+<div class="newspaper-page">
+
+    <div class="newspaper-paper relative border-2 border-gray-800">
+
+        <!-- =====================================================
+             TOP ADVERTISEMENT
+             ===================================================== -->
+
+        <div class="paper-top-ad">
+
+            <div class="paper-edition">
+
+                <span th:text="${category.day}">
+                    Tuesday
+                </span>
+
+                &nbsp; | &nbsp;
+
+                <span th:text="${#dates.format(category.date,
+                         'dd MMMM yyyy')}">
+                    29 September 2026
+                </span>
+
+                &nbsp; | &nbsp;
+
+                Page
+                <span th:text="${stat.index + 1}">
+                    1
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SUBCATEGORY
+             ===================================================== -->
+
+        <div class="relative border-b-2 border-gray-800">
+
+            <div class="absolute left-1/2 top-0
+                        -translate-x-1/2 -translate-y-1/2
+                        bg-white m-15 px-6 rounded-full
+                        text-blue-500 font-bold text-2xl
+                        whitespace-nowrap">
+
+                <span th:text="${subCategory.name}">
+                    National
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             MASTHEAD
+             ===================================================== -->
+
+        <div class="paper-top-ad paper-masthead">
+
+            <div class="paper-ad-item">
+
+                <div class="paper-ad-text">
+                    <strong>आपका विज्ञापन</strong><br>
+                    Promote Your Brand Here
+                </div>
+
+            </div>
+
+
+            <div class="paper-brand">
+
+                <div class="paper-brand-main">
+                    Genz-CM
+                </div>
+
+            </div>
+
+
+            <div class="paper-ad-item">
+
+                <div class="paper-ad-text">
+                    <strong>Advertisement</strong><br>
+                    Your Brand Here
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             BREAKING NEWS
+             ===================================================== -->
+
+        <div class="breaking-box">
+
+            <div class="breaking-heading">
+                आज की बड़ी खबरें
+            </div>
+
+
+            <div class="breaking-items">
+
+                <div class="breaking-item">
+
+                    <span class="breaking-number">
+                        1
+                    </span>
+
+                    <span>
+                        देश-दुनिया की महत्वपूर्ण खबरें
+                    </span>
+
+                </div>
+
+
+                <div class="breaking-item">
+
+                    <span class="breaking-number">
+                        2
+                    </span>
+
+                    <span>
+                        राजनीति और समाज की बड़ी खबरें
+                    </span>
+
+                </div>
+
+
+                <div class="breaking-item">
+
+                    <span class="breaking-number">
+                        3
+                    </span>
+
+                    <span>
+                        प्रदेश की ताजा और प्रमुख खबरें
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ARTICLE CONTENT
+             ===================================================== -->
+
+        <div class="paper-content">
+
+
+            <!-- =================================================
+                 NO ARTICLE
+                 ================================================= -->
+
+            <div th:if="${articleMap[subCategory.id] == null
+                        or #lists.isEmpty(articleMap[subCategory.id])}"
+                 class="py-24 text-center">
+
+                <div class="text-5xl mb-4">
+                    📰
+                </div>
+
+                <h3 class="text-2xl font-bold">
+                    No Article Available
+                </h3>
+
+                <p class="text-gray-500 mt-2">
+                    This section has no published article.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 ARTICLE NEWSPAPER
+                 ================================================= -->
+
+            <div th:if="${articleMap[subCategory.id] != null
+                        and !#lists.isEmpty(articleMap[subCategory.id])}"
+                 class="paper-main-grid">
+
+
+                <!-- =================================================
+                     LEFT SIDE
+                     ================================================= -->
+
+                <div class="lead-section">
+
+
+                    <!-- =================================================
+                         ARTICLE NO 0
+                         LEAD ARTICLE
+                         ================================================= -->
+
+                    <th:block th:each="article :
+                                ${articleMap[subCategory.id]}"
+                              th:if="${article.articleNo == '0'}">
+
+                        <th:block th:with="lead=${article}">
+
+                            <div class="section-label">
+                                Breaking news
+                            </div>
+
+
+                            <!-- LEAD TITLE -->
+
+                            <a th:if="${lead.articleId != null
+                                       and !#strings.isEmpty(lead.articleId)}"
+                               th:href="@{'/public/epaper/article/' + ${lead.articleId}}">
+
+                                <h1 class="lead-title"
+                                    th:text="${lead.title}">
+                                    Lead Article
+                                </h1>
+
+                            </a>
+
+
+                            <h1 th:unless="${lead.articleId != null
+                                            and !#strings.isEmpty(lead.articleId)}"
+                                class="lead-title"
+                                th:text="${lead.title}">
+
+                                Lead Article
+
+                            </h1>
+
+
+                            <!-- SUB TITLE -->
+
+                            <p class="lead-subtitle"
+                               th:if="${lead.shortDescription != null}"
+                               th:text="${lead.shortDescription}">
+
+                            </p>
+
+
+                            <!-- MAIN IMAGE -->
+
+                            <div class="lead-image-box">
+
+                                <a th:if="${lead.articleId != null
+                                           and !#strings.isEmpty(lead.articleId)}"
+                                   th:href="@{'/public/epaper/article/' + ${lead.articleId}}">
+
+                                    <img th:src="${lead.mainFrameImageUrl != null
+                                                  and !#strings.isEmpty(lead.mainFrameImageUrl)
+                                                  ? lead.mainFrameImageUrl
+                                                  : lead.imageUrl}"
+                                         th:alt="${lead.title}">
+
+                                </a>
+
+
+                                <img th:unless="${lead.articleId != null
+                                                 and !#strings.isEmpty(lead.articleId)}"
+                                     th:src="${lead.mainFrameImageUrl != null
+                                              and !#strings.isEmpty(lead.mainFrameImageUrl)
+                                              ? lead.mainFrameImageUrl
+                                              : lead.imageUrl}"
+                                     th:alt="${lead.title}">
+
+
+                                <!-- VIDEO ICON -->
+
+                                <span class="video-play"
+                                      th:if="${lead.mainUrl != null}">
+                                    ▶
+                                </span>
+
+                            </div>
+
+                        </th:block>
+
+                    </th:block>
+
+
+                    <!-- =================================================
+                         ARTICLES NO 1 AND 2
+                         TWO STORIES UNDER LEAD
+                         ================================================= -->
+
+                    <div class="lead-image-news">
+
+
+                        <!-- =================================================
+                             ARTICLE NO 1
+                             ================================================= -->
+
+                        <th:block th:each="article :
+                                    ${articleMap[subCategory.id]}"
+                                  th:if="${article.articleNo == '1'}">
+
+                            <article class="lead-small-story">
+
+                                <a th:if="${article.articleId != null
+                                           and !#strings.isEmpty(article.articleId)}"
+                                   th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                                    <img th:src="${article.mainFrameImageUrl}"
+                                         th:alt="${article.title}">
+
+                                    <h2 class="lead-small-title"
+                                        th:text="${article.title}">
+                                        Important News
+                                    </h2>
+
+                                </a>
+
+
+                                <th:block th:unless="${article.articleId != null
+                                                       and !#strings.isEmpty(article.articleId)}">
+
+                                    <img th:src="${article.mainFrameImageUrl}"
+                                         th:alt="${article.title}">
+
+                                    <h2 class="lead-small-title"
+                                        th:text="${article.title}">
+                                        Important News
+                                    </h2>
+
+                                </th:block>
+
+
+                                <p class="lead-small-description"
+                                   th:if="${article.shortDescription != null}"
+                                   th:text="${article.shortDescription}">
+                                    News information
+                                </p>
+
+                            </article>
+
+                        </th:block>
+
+
+                        <!-- =================================================
+                             ARTICLE NO 2
+                             ================================================= -->
+
+                        <th:block th:each="article :
+                                    ${articleMap[subCategory.id]}"
+                                  th:if="${article.articleNo == '2'}">
+
+                            <article class="lead-small-story">
+
+                                <a th:if="${article.articleId != null
+                                           and !#strings.isEmpty(article.articleId)}"
+                                   th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                                    <img th:src="${article.mainFrameImageUrl}"
+                                         th:alt="${article.title}">
+
+                                    <h2 class="lead-small-title"
+                                        th:text="${article.title}">
+                                        Important News
+                                    </h2>
+
+                                </a>
+
+
+                                <th:block th:unless="${article.articleId != null
+                                                       and !#strings.isEmpty(article.articleId)}">
+
+                                    <img th:src="${article.mainFrameImageUrl}"
+                                         th:alt="${article.title}">
+
+                                    <h2 class="lead-small-title"
+                                        th:text="${article.title}">
+                                        Important News
+                                    </h2>
+
+                                </th:block>
+
+
+                                <p class="lead-small-description"
+                                   th:if="${article.shortDescription != null}"
+                                   th:text="${article.shortDescription}">
+                                    News information
+                                </p>
+
+                            </article>
+
+                        </th:block>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     RIGHT SIDE
+                     ARTICLE NO 3 + ARTICLE NO 4
+                     ================================================= -->
+
+                <aside class="right-news">
+
+
+                    <!-- =================================================
+                         ARTICLE NO 3
+                         ================================================= -->
+
+                    <th:block th:each="article :
+                                ${articleMap[subCategory.id]}"
+                              th:if="${article.articleNo == '3'}">
+
+                        <article class="right-story right-story-small">
+
+                            <a th:if="${article.articleId != null
+                                       and !#strings.isEmpty(article.articleId)}"
+                               th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                                <h2 class="right-title"
+                                    th:text="${article.title}">
+                                    Article 3
+                                </h2>
+
+                                <img th:src="${article.mainFrameImageUrl}"
+                                     th:alt="${article.title}"
+                                     class="right-image-small">
+
+                            </a>
+
+
+                            <th:block th:unless="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}">
+
+                                <h2 class="right-title"
+                                    th:text="${article.title}">
+                                    Article 3
+                                </h2>
+
+                                <img th:src="${article.mainFrameImageUrl}"
+                                     th:alt="${article.title}"
+                                     class="right-image-small">
+
+                            </th:block>
+
+
+                            <p class="right-description"
+                               th:if="${article.shortDescription != null}"
+                               th:text="${article.shortDescription}">
+                            </p>
+
+                        </article>
+
+                    </th:block>
+
+
+                    <!-- =================================================
+                         ARTICLE NO 4
+                         ================================================= -->
+
+                    <th:block th:each="article :
+                                ${articleMap[subCategory.id]}"
+                              th:if="${article.articleNo == '4'}">
+
+                        <article class="right-story right-story-large">
+
+                            <a th:if="${article.articleId != null
+                                       and !#strings.isEmpty(article.articleId)}"
+                               th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                                <h2 class="right-title right-large-title"
+                                    th:text="${article.title}">
+                                    Article 4
+                                </h2>
+
+                                <img th:src="${article.mainFrameImageUrl}"
+                                     th:alt="${article.title}"
+                                     class="right-image-large">
+
+                            </a>
+
+
+                            <th:block th:unless="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}">
+
+                                <h2 class="right-title right-large-title"
+                                    th:text="${article.title}">
+                                    Article 4
+                                </h2>
+
+                                <img th:src="${article.mainFrameImageUrl}"
+                                     th:alt="${article.title}"
+                                     class="right-image-large">
+
+                            </th:block>
+
+
+                            <p class="right-description"
+                               th:if="${article.shortDescription != null}"
+                               th:text="${article.shortDescription}">
+                            </p>
+
+                        </article>
+
+                    </th:block>
+
+
+                </aside>
+
+            </div>
+
+
+            <!-- =====================================================
+                 LOWER NEWS
+                 ARTICLE NO 5 - 9
+
+                 IMPORTANT:
+                 articleNo = 5 is NOT limited to one article.
+                 If database contains:
+
+                 Article A -> articleNo 5
+                 Article B -> articleNo 5
+                 Article C -> articleNo 5
+
+                 ALL THREE will appear in this section.
+                 ===================================================== -->
+
+            <div class="lower-news"
+                 th:if="${articleMap[subCategory.id] != null}">
+
+
+                <!-- =================================================
+                     ARTICLE NO 5
+                     MULTIPLE ARTICLES ALLOWED
+                     ================================================= -->
+
+                <th:block th:each="article :
+                            ${articleMap[subCategory.id]}"
+                          th:if="${article.articleNo == '5'}">
+
+                    <article class="lower-story">
+
+                        <a th:if="${article.articleId != null
+                                   and !#strings.isEmpty(article.articleId)}"
+                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 5
+                            </h3>
+
+                        </a>
+
+
+                        <th:block th:unless="${article.articleId != null
+                                               and !#strings.isEmpty(article.articleId)}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 5
+                            </h3>
+
+                        </th:block>
+
+
+                        <p class="lower-description"
+                           th:if="${article.shortDescription != null}"
+                           th:text="${article.shortDescription}">
+                        </p>
+
+                    </article>
+
+                </th:block>
+
+
+                <!-- =================================================
+                     ARTICLE NO 6
+                     MULTIPLE ARTICLES ALSO ALLOWED
+                     ================================================= -->
+
+                <th:block th:each="article :
+                            ${articleMap[subCategory.id]}"
+                          th:if="${article.articleNo == '6'}">
+
+                    <article class="lower-story">
+
+                        <a th:if="${article.articleId != null
+                                   and !#strings.isEmpty(article.articleId)}"
+                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 6
+                            </h3>
+
+                        </a>
+
+
+                        <th:block th:unless="${article.articleId != null
+                                               and !#strings.isEmpty(article.articleId)}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 6
+                            </h3>
+
+                        </th:block>
+
+
+                        <p class="lower-description"
+                           th:if="${article.shortDescription != null}"
+                           th:text="${article.shortDescription}">
+                        </p>
+
+                    </article>
+
+                </th:block>
+
+
+                <!-- =================================================
+                     ARTICLE NO 7
+                     ================================================= -->
+
+                <th:block th:each="article :
+                            ${articleMap[subCategory.id]}"
+                          th:if="${article.articleNo == '7'}">
+
+                    <article class="lower-story">
+
+                        <a th:if="${article.articleId != null
+                                   and !#strings.isEmpty(article.articleId)}"
+                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 7
+                            </h3>
+
+                        </a>
+
+
+                        <th:block th:unless="${article.articleId != null
+                                               and !#strings.isEmpty(article.articleId)}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 7
+                            </h3>
+
+                        </th:block>
+
+
+                        <p class="lower-description"
+                           th:if="${article.shortDescription != null}"
+                           th:text="${article.shortDescription}">
+                        </p>
+
+                    </article>
+
+                </th:block>
+
+
+                <!-- =================================================
+                     ARTICLE NO 8
+                     ================================================= -->
+
+                <th:block th:each="article :
+                            ${articleMap[subCategory.id]}"
+                          th:if="${article.articleNo == '8'}">
+
+                    <article class="lower-story">
+
+                        <a th:if="${article.articleId != null
+                                   and !#strings.isEmpty(article.articleId)}"
+                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 8
+                            </h3>
+
+                        </a>
+
+
+                        <th:block th:unless="${article.articleId != null
+                                               and !#strings.isEmpty(article.articleId)}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 8
+                            </h3>
+
+                        </th:block>
+
+
+                        <p class="lower-description"
+                           th:if="${article.shortDescription != null}"
+                           th:text="${article.shortDescription}">
+                        </p>
+
+                    </article>
+
+                </th:block>
+
+
+                <!-- =================================================
+                     ARTICLE NO 9
+                     ================================================= -->
+
+                <th:block th:each="article :
+                            ${articleMap[subCategory.id]}"
+                          th:if="${article.articleNo == '9'}">
+
+                    <article class="lower-story">
+
+                        <div class="lower-category">
+                        </div>
+
+
+                        <a th:if="${article.articleId != null
+                                   and !#strings.isEmpty(article.articleId)}"
+                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 9
+                            </h3>
+
+                        </a>
+
+
+                        <th:block th:unless="${article.articleId != null
+                                               and !#strings.isEmpty(article.articleId)}">
+
+                            <img th:src="${article.mainFrameImageUrl}"
+                                 th:alt="${article.title}"
+                                 class="lower-image">
+
+                            <h3 class="lower-title"
+                                th:text="${article.title}">
+                                Article 9
+                            </h3>
+
+                        </th:block>
+
+
+                        <p class="lower-description"
+                           th:if="${article.shortDescription != null}"
+                           th:text="${article.shortDescription}">
+                        </p>
+
+                    </article>
+
+                </th:block>
+
+
+            </div>
+
+
+            <!-- =====================================================
+                 ADVERTISEMENT
+                 ===================================================== -->
+
+            <div class="paper-ad-column">
+
+                <div class="ad-placeholder">
+                    Advertisement
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 COLORED DOTS
+                 ===================================================== -->
+
+            <div class="grid grid-cols-3 gap-8">
+
+                <div class="paper-dots">
+
+                    <span class="paper-dot paper-dot1"></span>
+                    <span class="paper-dot paper-dot2"></span>
+                    <span class="paper-dot paper-dot3"></span>
+                    <span class="paper-dot paper-dot4"></span>
+                    <span class="paper-dot paper-dot5"></span>
+                    <span class="paper-dot paper-dot6"></span>
+
+                </div>
+
+
+                <div class="paper-dots">
+
+                    <span class="paper-dot paper-dot1"></span>
+                    <span class="paper-dot paper-dot2"></span>
+                    <span class="paper-dot paper-dot3"></span>
+                    <span class="paper-dot paper-dot4"></span>
+                    <span class="paper-dot paper-dot5"></span>
+                    <span class="paper-dot paper-dot6"></span>
+
+                </div>
+
+
+                <div class="paper-dots">
+
+                    <span class="paper-dot paper-dot1"></span>
+                    <span class="paper-dot paper-dot2"></span>
+                    <span class="paper-dot paper-dot3"></span>
+                    <span class="paper-dot paper-dot4"></span>
+                    <span class="paper-dot paper-dot5"></span>
+                    <span class="paper-dot paper-dot6"></span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <div class="paper-footer">
+
+            <span th:text="${category.day}">
+                Tuesday
+            </span>
+
+            <span>
+                E-PAPER
+            </span>
+
+            <span>
+                Page
+                <span th:text="${stat.index + 1}">
+                    1
+                </span>
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+>>>>>>> f773d2d (first commit)
 
 				</section>
 

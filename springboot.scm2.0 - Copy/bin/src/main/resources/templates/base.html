@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="parent(content, title)" xmlns:th="http://www.thymeleaf.org" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Base</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{/css/output.css}">
+    <link rel="stylesheet" data-th-href="@{/css/style.css}">
+	
+</head>
+
+<body class="bg-gray-100"> 
+
+    <!-- Navbar -->
+
+    <!-- it will show when user loggedin -->
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{user/user_loggedIn :: user_navbar}">        
+        </div>
+    </div>
+
+    
+    <!-- it will show when user not loggedin -->
+   <div th:unless="${loggedInUser}">
+        <div th:replace="~{navbar :: navbar}">
+        </div>
+    </div>
+	
+    <!-- Page content -->
+	
+		<main class="pt-[80px] ">
+		    <section th:replace="${content}"></section>
+		</main>
+
+
+	
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>

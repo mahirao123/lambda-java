@@ -16,7 +16,13 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+<<<<<<< HEAD
 import lombok.NoArgsConstructor;
+=======
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+>>>>>>> f773d2d (first commit)
 
 @Entity
 @Data
@@ -31,6 +37,7 @@ public class ContentSubCategory {
 
     private String name;
 
+<<<<<<< HEAD
     private boolean enable=false;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,4 +51,38 @@ public class ContentSubCategory {
             orphanRemoval = true
     )
     private List<Article> articles = new ArrayList<>();
+=======
+    @Builder.Default
+    private boolean enable = false;
+
+
+    // =========================================================
+    // CATEGORY
+    // =========================================================
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+        name = "category_id",
+        nullable = false
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private ContentCategory category;
+
+
+    // =========================================================
+    // ARTICLES
+    // =========================================================
+
+    @Builder.Default
+    @OneToMany(
+        mappedBy = "subCategory",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Article> articles = new ArrayList<>();
+
+>>>>>>> f773d2d (first commit)
 }

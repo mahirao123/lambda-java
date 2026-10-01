@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 <!-- Header -->
 
 <div class="flex flex-col md:flex-row
@@ -374,3 +375,1414 @@
     </div>
 
 </div>
+=======
+/* =========================================================
+   NEWSPAPER CONTENT
+   ========================================================= */
+
+.paper-content {
+    padding: 0 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN GRID
+   ========================================================= */
+
+.paper-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(350px, .85fr);
+    gap: 12px;
+}
+
+
+/* =========================================================
+   LEAD SECTION
+   ========================================================= */
+
+.lead-section {
+    border-right: 2px solid #222;
+    padding-right: 12px;
+}
+
+.section-label {
+    display: inline-block;
+    background: #e90025;
+    color: #fff;
+    padding: 3px 7px;
+    font-size: 9px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.lead-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: .95;
+    letter-spacing: -2px;
+    font-weight: 900;
+    color: #111;
+    margin: 0 0 7px;
+}
+
+.lead-subtitle {
+    font-size: 12px;
+    line-height: 1.35;
+    color: #444;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* =========================================================
+   MAIN NEWSPAPER GRID
+   SAME STRUCTURE ON ALL SCREEN SIZES
+   ========================================================= */
+
+.paper-main-grid {
+
+    display: grid;
+
+    /*
+       LEFT = main article + article 1 + article 2
+       RIGHT = article 3 + article 4
+    */
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 12px;
+
+    align-items: stretch;
+
+    width: 100%;
+
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.lead-section {
+
+    border-right: 2px solid #222;
+
+    padding-right: 12px;
+
+    min-width: 0;
+
+    height: 100%;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   MAIN ARTICLE IMAGE
+   ========================================================= */
+
+.lead-image-box {
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #eee;
+
+}
+
+
+.lead-image-box img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 500px;
+
+    object-fit: cover;
+
+    transition: transform .4s ease;
+
+}
+
+
+.lead-image-box:hover img {
+
+    transform: scale(1.015);
+
+}
+
+
+.video-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e90025;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   LEAD IMAGE CAPTION / TWO STORIES
+   ========================================================= */
+
+.lead-image-news {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.lead-small-story {
+    border-top: 3px solid #111;
+    padding-top: 5px;
+}
+
+.lead-small-story img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.lead-small-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 1.05;
+    font-weight: 900;
+}
+
+.lead-small-description {
+    font-size: 10px;
+    line-height: 1.3;
+    color: #555;
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ARTICLE 3 + ARTICLE 4
+   ========================================================= */
+
+.right-news {
+
+    display: grid;
+
+    grid-template-rows: 1fr 1fr;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    height: 100%;
+
+}
+
+
+/* =========================================================
+   RIGHT ARTICLE COMMON
+   ========================================================= */
+
+.right-story {
+
+    min-width: 0;
+
+    min-height: 0;
+
+    overflow: hidden;
+
+    padding-bottom: 8px;
+
+    border-bottom: 2px solid #222;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   ARTICLE 3
+   ========================================================= */
+
+.right-story-small {
+
+    min-height: 0;
+
+}
+
+
+.right-image-small {
+
+    width: 100%;
+
+    height: 200px;
+
+    object-fit: cover;
+
+    display: block;
+
+    margin-bottom: 5px;
+
+}
+
+
+/* =========================================================
+   ARTICLE 4
+   ========================================================= */
+
+.right-story-large {
+
+    min-height: 0;
+
+}
+
+
+.right-image-large {
+
+    width: 100%;
+
+    height: 100%;
+
+   
+
+    object-fit: cover;
+
+    display: block;
+
+    margin-bottom: 5px;
+
+}
+
+
+/* =========================================================
+   RIGHT TITLES
+   ========================================================= */
+
+.right-title {
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 18px;
+
+    line-height: 1.08;
+
+    font-weight: 900;
+
+    margin: 0 0 5px;
+
+    color: #111;
+
+}
+
+
+.right-large-title {
+
+    font-size: 18px;
+
+}
+
+
+/* =========================================================
+   RIGHT DESCRIPTION
+   ========================================================= */
+
+.right-description {
+
+    font-size: 11px;
+
+    line-height: 1.35;
+
+    color: #555;
+
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   LOWER NEWSPAPER AREA
+   ========================================================= */
+
+.lower-news {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 3px solid #111;
+}
+
+.lower-story {
+    min-width: 0;
+    border-right: 1px solid #aaa;
+    padding-right: 8px;
+}
+
+.lower-story:last-child {
+    border-right: none;
+}
+
+.lower-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.lower-category {
+    color: #e90025;
+    font-size: 8px;
+    font-weight: 900;
+    margin-bottom: 3px;
+}
+
+.lower-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 1.05;
+    font-weight: 900;
+}
+
+.lower-description {
+    font-size: 9px;
+    line-height: 1.3;
+    color: #555;
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   ADVERTISEMENT COLUMN
+   ========================================================= */
+
+.paper-ad-column {
+    margin-top: 10px;
+    border-top: 2px solid #111;
+    padding-top: 8px;
+}
+
+.paper-ad-column img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.ad-placeholder {
+    height: 150px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 10px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   COLORED DOTS
+   ========================================================= */
+
+.paper-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 0;
+
+    margin-top: 8px;
+}
+
+.paper-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.paper-dot1 {
+    background: #aaa;
+}
+.paper-dot2 {
+    background: #e90025;
+}
+
+.paper-dot3 {
+    background: #f5c400;
+}
+
+.paper-dot4 {
+    background: #20a45a;
+}
+
+.paper-dot5 {
+    background: #3194d8;
+}
+
+.paper-dot6 {
+    background: #111;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.paper-footer {
+    border-top: 3px solid #111;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    color: #444;
+}
+
+
+@media (max-width: 900px) {
+
+    /*
+       SAME DESKTOP STRUCTURE
+    */
+
+    .paper-main-grid {
+
+        grid-template-columns: 2fr 1fr;
+
+        gap: 8px;
+
+    }
+
+    .lead-section {
+
+        padding-right: 8px;
+
+    }
+
+    .lead-image-box img {
+
+        height: 350px;
+
+    }
+
+    .lead-image-news {
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+    .lead-small-story img {
+
+        height: 130px;
+
+    }
+
+    .right-news {
+
+        grid-template-rows: 1fr 1fr;
+
+        gap: 8px;
+
+    }
+
+    .right-image-small {
+
+        height: 75px;
+
+    }
+
+    .right-title {
+
+        font-size: 15px;
+
+    }
+
+    .right-description {
+
+        font-size: 9px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   SAME STRUCTURE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .newspaper-page {
+
+        padding: 4px;
+
+    }
+
+    .paper-content {
+
+        padding: 0 4px 8px;
+
+    }
+
+    /*
+       KEEP THREE-COLUMN NEWSPAPER STRUCTURE:
+       
+       LEFT 2/3
+       RIGHT 1/3
+    */
+
+    .paper-main-grid {
+
+        grid-template-columns: 2fr 1fr;
+
+        gap: 5px;
+
+    }
+
+    .lead-section {
+
+        padding-right: 5px;
+
+    }
+
+    .lead-title {
+
+        font-size: 24px;
+
+        letter-spacing: -1px;
+
+    }
+
+    .lead-subtitle {
+
+        font-size: 9px;
+
+    }
+
+    .lead-image-box img {
+
+        height: 230px;
+
+    }
+
+    .lead-image-news {
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 4px;
+
+    }
+
+    .lead-small-story img {
+
+        height: 80px;
+
+    }
+
+    .lead-small-title {
+
+        font-size: 11px;
+
+    }
+
+    .lead-small-description {
+
+        font-size: 7px;
+
+    }
+
+    .right-news {
+
+        grid-template-rows: 1fr 1fr;
+
+        gap: 5px;
+
+    }
+
+    .right-image-small {
+
+        height: 55px;
+
+    }
+
+    .right-image-large {
+
+        max-height: 230px;
+
+    }
+
+    .right-title {
+
+        font-size: 11px;
+
+        line-height: 1.05;
+
+    }
+
+    .right-description {
+
+        font-size: 7px;
+
+        line-height: 1.2;
+
+    }
+
+}
+
+
+
+
+
+
+
+
+		<!-- ===================================== -->
+		<!-- NEWSPAPER FRAME -->
+		<!-- ===================================== -->
+
+
+		<div class="newspaper-page">
+
+			<div class="newspaper-paper relative border-2 border-gray-800">
+
+				<!-- SUBCATEGORY NAME -->
+
+				<!-- =====================================================
+								  TOP ADVERTISEMENT
+===================================================== -->
+
+				<div class="paper-top-ad">
+
+					<div class="paper-edition">
+
+						<span th:text="${category.day}">
+							Tuesday
+						</span>
+
+						&nbsp; | &nbsp;
+
+						<span th:text="${#dates.format(category.date,
+                         'dd MMMM yyyy')}">
+							29 September 2026
+						</span>
+
+						&nbsp; | &nbsp;
+
+						Page
+						<span th:text="${stat.index + 1}">
+							1
+						</span>
+
+					</div>
+
+
+				</div>
+
+				<div class="relative border-b-2 border-gray-800">
+
+					<div class="absolute left-1/2 top-0
+           -translate-x-1/2 -translate-y-1/2
+           bg-white m-15 px-6 rounded-full
+           text-blue-500 font-bold text-2xl
+           whitespace-nowrap">
+
+						<span th:text="${subCategory.name}">
+							National
+						</span>
+
+					</div>
+
+
+
+				</div>
+
+				<!-- =====================================================
+MASTHEAD
+===================================================== -->
+
+				<div class="paper-top-ad paper-masthead ">
+
+					<div class="paper-ad-item">
+
+						<div class="paper-ad-text">
+							<strong>आपका विज्ञापन</strong><br>
+							Promote Your Brand Here
+						</div>
+
+					</div>
+
+
+					<div class="paper-brand">
+
+						<div class="paper-brand-main">
+							Genz-CM
+						</div>
+
+
+					</div>
+
+					<div class="paper-ad-item">
+
+						<div class="paper-ad-text">
+							<strong>Advertisement</strong><br>
+							Your Brand Here
+						</div>
+
+					</div>
+
+
+
+				</div>
+
+
+				<!-- =====================================================
+BREAKING NEWS
+===================================================== -->
+
+				<div class="breaking-box">
+
+					<div class="breaking-heading">
+						आज की बड़ी खबरें
+					</div>
+
+
+					<div class="breaking-items">
+
+						<div class="breaking-item">
+
+							<span class="breaking-number">
+								1
+							</span>
+
+							<span>
+								देश-दुनिया की महत्वपूर्ण खबरें
+							</span>
+
+						</div>
+
+
+						<div class="breaking-item">
+
+							<span class="breaking-number">
+								2
+							</span>
+
+							<span>
+								राजनीति और समाज की बड़ी खबरें
+							</span>
+
+						</div>
+
+
+						<div class="breaking-item">
+
+							<span class="breaking-number">
+								3
+							</span>
+
+							<span>
+								प्रदेश की ताजा और प्रमुख खबरें
+							</span>
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+				<!-- =====================================================
+ARTICLE CONTENT
+===================================================== -->
+
+				<div class="paper-content">
+
+
+					<!-- =================================================
+    NO ARTICLE
+    ================================================= -->
+
+					<div th:if="${articleMap[subCategory.id] == null
+            or #lists.isEmpty(articleMap[subCategory.id])}" class="py-24 text-center">
+
+						<div class="text-5xl mb-4">
+							📰
+						</div>
+
+						<h3 class="text-2xl font-bold">
+							No Article Available
+						</h3>
+
+						<p class="text-gray-500 mt-2">
+							This section has no published article.
+						</p>
+
+					</div>
+
+
+					<!-- =================================================
+    ARTICLE NEWSPAPER
+    ================================================= -->
+
+					<div th:if="${articleMap[subCategory.id] != null
+            and !#lists.isEmpty(articleMap[subCategory.id])}" class="paper-main-grid">
+
+
+						<!-- =================================================
+        LEFT / MAIN NEWS
+        ARTICLE 0
+        ================================================= -->
+
+						<div class="lead-section">
+
+							<th:block th:with="lead=${articleMap[subCategory.id][0]}">
+
+
+								<div class="section-label">
+									Breaking news
+								</div>
+
+
+								<!-- LEAD TITLE -->
+
+								<a th:if="${lead.articleId != null
+                     and !#strings.isEmpty(lead.articleId)}"
+									th:href="@{'/public/epaper/article/' + ${lead.articleId}}">
+
+									<h1 class="lead-title" th:text="${lead.title}">
+
+
+									</h1>
+
+								</a>
+
+
+								<h1 th:unless="${lead.articleId != null
+                           and !#strings.isEmpty(lead.articleId)}" class="lead-title"
+									th:text="${lead.title}">
+
+								</h1>
+
+
+								<!-- SUB TITLE -->
+
+								<p class="lead-subtitle" th:if="${lead.shortDescription != null}"
+									th:text="${lead.shortDescription}">
+
+								</p>
+
+
+								<!-- MAIN IMAGE -->
+
+		<div 
+		th:if="${lead.articleNo=='1'}"
+		class="lead-image-box" >
+
+		<a th:if="${lead.articleId != null   and !#strings.isEmpty(lead.articleId)}"
+           th:href="@{'/public/epaper/article/' + ${lead.articleId}}">
+
+	     <img th:src="${lead.mainFrameImageUrl != null and !#strings.isEmpty(lead.mainFrameImageUrl)
+                                ? lead.mainFrameImageUrl : lead.imageUrl}" th:alt="${lead.title}"
+							class="w-full h-full object-cover transition-all duration-300 hover:blue-100">
+
+	    </a>
+
+
+									<img th:unless="${lead.articleId != null
+                                and !#strings.isEmpty(lead.articleId)}" th:src="${lead.mainFrameImageUrl != null
+                             and !#strings.isEmpty(lead.mainFrameImageUrl)
+                             ? lead.mainFrameImageUrl
+                             : lead.imageUrl}" th:alt="${lead.title}">
+
+
+									<!-- VIDEO ICON -->
+
+									<span class="video-play" th:if="${lead.mainUrl != null}">
+										▶
+									</span>
+
+								</div>
+
+
+								<!-- =================================================
+                TWO STORIES UNDER MAIN IMAGE
+                ARTICLES 1 & 2
+                ================================================= -->
+
+								<div class="lead-image-news">
+
+
+									<!-- ARTICLE 1 -->
+
+									<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 1}"
+										th:with="article1=${articleMap[subCategory.id][1]}">
+
+										<article class="lead-small-story">
+
+
+											<a th:if="${article1.articleId != null
+                                 and !#strings.isEmpty(article1.articleId)}"
+												th:href="@{'/public/epaper/article/' + ${article1.articleId}}">
+
+												<img th:src="${article1.mainFrameImageUrl}"
+													th:alt="${article1.title}">
+
+												<h2 class="lead-small-title"
+													th:text="${article1.title}">
+													महत्वपूर्ण खबर
+												</h2>
+
+											</a>
+
+
+											<th:block th:unless="${article1.articleId != null
+                                       and !#strings.isEmpty(article1.articleId)}">
+
+												<img th:src="${article1.mainFrameImageUrl}"
+													th:alt="${article1.title}">
+
+												<h2 class="lead-small-title"
+													th:text="${article1.title}">
+													महत्वपूर्ण खबर
+												</h2>
+
+											</th:block>
+
+
+											<p class="lead-small-description"
+												th:if="${article1.shortDescription != null}"
+												th:text="${article1.shortDescription}">
+												खबर की जानकारी
+											</p>
+
+										</article>
+
+									</th:block>
+
+
+									<!-- ARTICLE 2 -->
+
+									<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 2}"
+										th:with="article2=${articleMap[subCategory.id][2]}">
+
+										<article class="lead-small-story">
+
+
+											<a th:if="${article2.articleId != null
+                                 and !#strings.isEmpty(article2.articleId)}"
+												th:href="@{'/public/epaper/article/' + ${article2.articleId}}">
+
+												<img th:src="${article2.mainFrameImageUrl}"
+													th:alt="${article2.title}">
+
+												<h2 class="lead-small-title"
+													th:text="${article2.title}">
+													महत्वपूर्ण खबर
+												</h2>
+
+											</a>
+
+
+											<th:block th:unless="${article2.articleId != null
+                                       and !#strings.isEmpty(article2.articleId)}">
+
+												<img th:src="${article2.mainFrameImageUrl}"
+													th:alt="${article2.title}">
+
+												<h2 class="lead-small-title"
+													th:text="${article2.title}">
+													महत्वपूर्ण खबर
+												</h2>
+
+											</th:block>
+
+
+											<p class="lead-small-description"
+												th:if="${article2.shortDescription != null}"
+												th:text="${article2.shortDescription}">
+												खबर की जानकारी
+											</p>
+
+										</article>
+
+									</th:block>
+
+
+								</div>
+
+							</th:block>
+
+						</div>
+
+						<!-- =================================================
+	      RIGHT SIDE NEWS
+	      ARTICLE 3 SMALL
+	      ARTICLE 4 LARGE
+	      ================================================= -->
+
+						<aside class="right-news">
+
+							<!-- ==============================
+	          ARTICLE 3 - SMALL
+	          ============================== -->
+
+							<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 3}"
+								th:with="article3=${articleMap[subCategory.id][3]}">
+
+								<article class="right-story right-story-small">
+
+									<a th:if="${article3.articleId != null
+	                       and !#strings.isEmpty(article3.articleId)}"
+										th:href="@{'/public/epaper/article/' + ${article3.articleId}}">
+
+										<h2 class="right-title" th:text="${article3.title}">
+										</h2>
+
+										<img th:src="${article3.mainFrameImageUrl}" th:alt="${article3.title}"
+											class="right-image-small">
+
+									</a>
+
+									<th:block th:unless="${article3.articleId != null
+	                            and !#strings.isEmpty(article3.articleId)}">
+
+										<h2 class="right-title" th:text="${article3.title}">
+										</h2>
+
+										<img th:src="${article3.mainFrameImageUrl}" th:alt="${article3.title}"
+											class="right-image-small">
+
+									</th:block>
+
+									<p class="right-description"
+										th:if="${article3.shortDescription != null}"
+										th:text="${article3.shortDescription}">
+									</p>
+
+								</article>
+
+							</th:block>
+
+
+							<!-- ==============================
+	          ARTICLE 4 - LARGE
+	          ============================== -->
+
+							<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 4}"
+								th:with="article4=${articleMap[subCategory.id][4]}">
+
+								<article class="right-story right-story-large">
+
+									<a th:if="${article4.articleId != null
+	                       and !#strings.isEmpty(article4.articleId)}"
+										th:href="@{'/public/epaper/article/' + ${article4.articleId}}">
+
+										<h2 class="right-title right-large-title"
+											th:text="${article4.title}">
+										</h2>
+
+										<img th:src="${article4.mainFrameImageUrl}" th:alt="${article4.title}"
+											class="right-image-large">
+
+									</a>
+
+									<th:block th:unless="${article4.articleId != null
+	                            and !#strings.isEmpty(article4.articleId)}">
+
+										<h2 class="right-title right-large-title"
+											th:text="${article4.title}">
+										</h2>
+
+										<img th:src="${article4.mainFrameImageUrl}" th:alt="${article4.title}"
+											class="right-image-large">
+
+									</th:block>
+
+									<p class="right-description"
+										th:if="${article4.shortDescription != null}"
+										th:text="${article4.shortDescription}">
+									</p>
+
+								</article>
+
+							</th:block>
+
+						</aside>
+
+					</div>
+
+
+					<!-- =====================================================
+    LOWER 4 NEWS COLUMNS
+    ARTICLES 5 - 9
+    ===================================================== -->
+
+					<div class="lower-news" th:if="${#lists.size(articleMap[subCategory.id]) > 5}">
+
+
+						<!-- ARTICLE 5 -->
+
+						<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 5}"
+							th:with="article5=${articleMap[subCategory.id][5]}">
+
+							<article class="lower-story">
+
+
+								<a th:if="${article5.articleId != null
+                     and !#strings.isEmpty(article5.articleId)}"
+									th:href="@{'/public/epaper/article/' + ${article5.articleId}}">
+
+									<img th:src="${article5.mainFrameImageUrl}" th:alt="${article5.title}"
+										class="lower-image">
+
+									<h3 class="lower-title" th:text="${article5.title}">
+
+									</h3>
+
+								</a>
+
+
+								<p class="lower-description"
+									th:if="${article5.shortDescription != null}"
+									th:text="${article5.shortDescription}">
+
+								</p>
+
+							</article>
+
+						</th:block>
+
+						<!-- ARTICLE 6 -->
+
+						<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 6}"
+							th:with="article6=${articleMap[subCategory.id][6]}">
+
+							<article class="lower-story">
+
+
+								<a th:if="${article6.articleId != null
+                     and !#strings.isEmpty(article6.articleId)}"
+									th:href="@{'/public/epaper/article/' + ${article6.articleId}}">
+
+									<img th:src="${article6.mainFrameImageUrl}" th:alt="${article6.title}"
+										class="lower-image">
+
+									<h3 class="lower-title" th:text="${article6.title}">
+
+									</h3>
+
+								</a>
+
+
+								<p class="lower-description"
+									th:if="${article6.shortDescription != null}"
+									th:text="${article6.shortDescription}">
+
+								</p>
+
+							</article>
+
+						</th:block>
+
+
+						<!-- ARTICLE 7 -->
+
+						<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 7}"
+							th:with="article7=${articleMap[subCategory.id][7]}">
+
+							<article class="lower-story">
+
+
+
+								<a th:if="${article7.articleId != null
+                     and !#strings.isEmpty(article7.articleId)}"
+									th:href="@{'/public/epaper/article/' + ${article7.articleId}}">
+
+									<img th:src="${article7.mainFrameImageUrl}" th:alt="${article7.title}"
+										class="lower-image">
+
+									<h3 class="lower-title" th:text="${article7.title}">
+
+									</h3>
+
+								</a>
+
+
+								<p class="lower-description"
+									th:if="${article7.shortDescription != null}"
+									th:text="${article7.shortDescription}">
+
+								</p>
+
+							</article>
+
+						</th:block>
+
+
+						<!-- ARTICLE 8 -->
+
+						<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 8}"
+							th:with="article8=${articleMap[subCategory.id][8]}">
+
+							<article class="lower-story">
+
+
+								<a th:if="${article8.articleId != null
+                     and !#strings.isEmpty(article8.articleId)}"
+									th:href="@{'/public/epaper/article/' + ${article8.articleId}}">
+
+									<img th:src="${article8.mainFrameImageUrl}" th:alt="${article8.title}"
+										class="lower-image">
+
+									<h3 class="lower-title" th:text="${article8.title}">
+
+									</h3>
+
+								</a>
+
+
+								<p class="lower-description"
+									th:if="${article8.shortDescription != null}"
+									th:text="${article8.shortDescription}">
+
+								</p>
+
+							</article>
+
+						</th:block>
+
+
+						<!-- ARTICLE 9 -->
+
+						<th:block th:if="${#lists.size(articleMap[subCategory.id]) > 9}"
+							th:with="article9=${articleMap[subCategory.id][9]}">
+
+							<article class="lower-story">
+
+								<div class="lower-category">
+
+								</div>
+
+
+								<a th:if="${article9.articleId != null and !#strings.isEmpty(article9.articleId)}"
+									th:href="@{'/public/epaper/article/' + ${article9.articleId}}">
+
+									<img th:src="${article9.mainFrameImageUrl}" th:alt="${article9.title}"
+										class="lower-image">
+
+									<h3 class="lower-title" th:text="${article9.title}">
+
+									</h3>
+
+								</a>
+
+
+								<p class="lower-description"
+									th:if="${article9.shortDescription != null}"
+									th:text="${article9.shortDescription}">
+
+								</p>
+
+							</article>
+
+						</th:block>
+
+					</div>
+
+
+					<!-- =====================================================
+    ADVERTISEMENT
+    ===================================================== -->
+
+					<div class="paper-ad-column">
+
+						<div class="ad-placeholder">
+
+							Advertisement
+
+						</div>
+
+					</div>
+
+
+					<!-- =====================================================
+    COLORED DOTS
+    ===================================================== -->
+
+					<div class=" grid grid-cols-3 gap-8 ">
+
+						<div class="paper-dots">
+							<span class="paper-dot paper-dot1"></span>
+							<span class="paper-dot paper-dot2"></span>
+							<span class="paper-dot paper-dot3"></span>
+							<span class="paper-dot paper-dot4"></span>
+							<span class="paper-dot paper-dot5"></span>
+							<span class="paper-dot paper-dot6"></span>
+						</div>
+
+						<div class="paper-dots">
+							<span class="paper-dot paper-dot1"></span>
+							<span class="paper-dot paper-dot2"></span>
+							<span class="paper-dot paper-dot3"></span>
+							<span class="paper-dot paper-dot4"></span>
+							<span class="paper-dot paper-dot5"></span>
+							<span class="paper-dot paper-dot6"></span>
+						</div>
+
+						<div class="paper-dots">
+							<span class="paper-dot paper-dot1"></span>
+							<span class="paper-dot paper-dot2"></span>
+							<span class="paper-dot paper-dot3"></span>
+							<span class="paper-dot paper-dot4"></span>
+							<span class="paper-dot paper-dot5"></span>
+							<span class="paper-dot paper-dot6"></span>
+						</div>
+
+					</div>
+
+				</div>
+
+
+				<!-- =====================================================
+FOOTER
+===================================================== -->
+
+				<div class="paper-footer">
+
+					<span th:text="${category.day}">
+						Tuesday
+					</span>
+
+					<span>
+						E-PAPER
+					</span>
+
+					<span>
+						Page
+						<span th:text="${stat.index + 1}">
+							1
+						</span>
+					</span>
+
+				</div>
+
+
+			</div>
+
+		</div>
+>>>>>>> f773d2d (first commit)
