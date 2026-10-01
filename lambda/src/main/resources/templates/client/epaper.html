@@ -1,1880 +1,1831 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 
 <head>
 
-	<title>E-Paper</title>
+    <title>E-Paper</title>
 
 </head>
 
 
 <body>
 
-	<div id="content" class="min-h-screen bg-gray-100">
+<div id="content" class="min-h-screen bg-gray-100">
 
-		<div th:replace="~{navbar :: navbar}">
-		</div>
-		<!-- ===================================================== -->
-		<!-- E-PAPER HEADER -->
-		<!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- NAVBAR -->
+    <!-- ===================================================== -->
 
-		<header class="bg-white border-b shadow-sm sticky top-0 z-50">
+    <div th:replace="~{navbar :: navbar}"></div>
 
-			<div class="max-w-[1600px] mx-auto px-4">
 
-				<div class="flex items-center justify-between h-20">
+    <!-- ===================================================== -->
+    <!-- E-PAPER HEADER -->
+    <!-- ===================================================== -->
 
-					<!-- LOGO -->
-					<div class="flex items-center gap-3">
+    <header class="bg-white border-b shadow-sm sticky top-0 z-50">
 
-						<div>
+        <div class="max-w-[1600px] mx-auto px-4">
 
-							<h1 class="text-xl md:text-2xl font-bold text-gray-900">
-								E-PAPER
-							</h1>
+            <div class="flex items-center justify-between h-20">
 
-							<p class="text-sm text-gray-500">
-								Digital Newspaper
-							</p>
+                <!-- ================================================= -->
+                <!-- LOGO + CALENDAR + LANGUAGE -->
+                <!-- ================================================= -->
 
-						</div>
+                <div class="flex items-center gap-3">
 
-						<!-- ===================================================== -->
-						<!-- E-PAPER CALENDAR BUTTON -->
-						<!-- ===================================================== -->
+                    <!-- ================================================= -->
+                    <!-- LOGO -->
+                    <!-- ================================================= -->
 
-						<div class="relative">
+                    <div>
 
-							<!-- CALENDAR BUTTON -->
-							<button id="calendarButton" type="button" class="flex items-center gap-3
-                   px-4 py-2
-                   bg-white
-                   border border-gray-300
-                   rounded-xl
-                   shadow-sm
-                   hover:border-red-500
-                   hover:shadow-md
-                   transition">
+                        <h1 class="text-xl md:text-2xl font-bold text-gray-900">
+                            E-PAPER
+                        </h1>
 
-								<!-- ICON -->
-								<div class="flex items-center justify-center
-                    w-10 h-10
-                    bg-red-50
-                    text-red-600
-                    rounded-lg">
+                        <p class="text-sm text-gray-500">
+                            Digital Newspaper
+                        </p>
 
-									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
-										viewBox="0 0 24 24" stroke="currentColor">
+                    </div>
 
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
 
-									</svg>
+                    <!-- ================================================= -->
+                    <!-- CALENDAR -->
+                    <!-- ================================================= -->
 
-								</div>
+                    <div class="relative">
 
+                        <button id="calendarButton"
+                                type="button"
+                                class="flex items-center gap-3
+                                       px-4 py-2
+                                       bg-white
+                                       border border-gray-300
+                                       rounded-xl
+                                       shadow-sm
+                                       hover:border-red-500
+                                       hover:shadow-md
+                                       transition">
 
-								<!-- CURRENT DATE -->
-								<div id="calendarDateContainer" class="text-left">
+                            <!-- ICON -->
 
-									<div id="calendarButtonDate" class="text-sm font-bold text-gray-900">
-										Current Date
-									</div>
+                            <div class="flex items-center justify-center
+                                        w-10 h-10
+                                        bg-red-50
+                                        text-red-600
+                                        rounded-lg">
 
-									<div id="calendarButtonDay" class="text-xs text-gray-500">
-										Today
-									</div>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="w-6 h-6"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor">
 
-								</div>
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
 
-								<!-- ARROW -->
-								<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none"
-									viewBox="0 0 24 24" stroke="currentColor">
+                                </svg>
 
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-										d="M19 9l-7 7-7-7" />
-
-								</svg>
-
-							</button>
-
-
-							<!-- ================================================= -->
-							<!-- CALENDAR POPUP -->
-							<!-- ================================================= -->
-							<div id="calendarPopup" class="hidden absolute top-full left-1/2 -translate-x-1/2 mt-3
-						            bg-white rounded-2xl
-						            shadow-2xl border border-gray-200
-						            p-6 z-[100]" style="width: 300px; max-width: calc(100vw - 2rem);">
-
-								<div class="flex items-center justify-between mb-5">
-
-									<button id="previousMonth" type="button" class="w-9 h-9 flex items-center justify-center
-                     				  rounded-full hover:bg-gray-100 text-xl">
-										‹
-									</button>
-
-									<div id="monthTitle" class="font-bold text-lg text-gray-900">
-									</div>
-
-									<button id="nextMonth" type="button" class="w-9 h-9 flex items-center justify-center
-                     					  rounded-full hover:bg-gray-100 text-xl">
-										›
-									</button>
-
-								</div>
-
-								<div class="grid grid-cols-7 text-center
-               								 text-xs font-semibold text-gray-500 mb-2">
-
-									<div>रवि</div>
-									<div>सोम</div>
-									<div>मंगल</div>
-									<div>बुध</div>
-									<div>गुरु</div>
-									<div>शुक्र</div>
-									<div>शनि</div>
-
-								</div>
-
-								<div id="calendar" class="grid grid-cols-7 gap-1 text-sm">
-								</div>
-
-								<div class="mt-5 pt-4 border-t text-xs text-gray-500">
-
-									<div class="flex items-center gap-2">
-										<span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
-										<span>E-Paper available</span>
-									</div>
-
-								</div>
-
-							</div>
-
-							<!-- ================================================= -->
-							<!-- CATEGORY DATA FROM THYMELEAF -->
-							<!-- ================================================= -->
-
-							<div id="categoryData" class="hidden">
-
-								<span th:each="category : ${categories}" class="category-data" th:attr="data-date=${category.date},
-                       data-category-id=${category.id}">
-								</span>
-
-							</div>
-
-						</div>
-
-
-						<!-- ================================================= -->
-<<<<<<< HEAD
-						<!-- Chabge Language  -->
-						<!-- ================================================= -->
-						<!-- ===================================================== -->
-						<!-- LANGUAGE BUTTON -->
-						<!-- ===================================================== -->
-
-						<div class="relative">
-
-						    <button id="languageButton"
-						            type="button"
-						            class="flex items-center gap-3
-						                   px-4 py-2
-						                   bg-white
-						                   border border-gray-300
-						                   rounded-xl
-						                   shadow-sm
-						                   hover:border-red-500
-						                   hover:shadow-md
-						                   transition">
-
-						        <!-- LANGUAGE ICON -->
-						        <div class="flex items-center justify-center
-						                    w-10 h-10
-						                    bg-red-50
-						                    text-red-600
-						                    rounded-lg">
-
-						            <svg xmlns="http://www.w3.org/2000/svg"
-						                 class="w-6 h-6"
-						                 fill="none"
-						                 viewBox="0 0 24 24"
-						                 stroke="currentColor">
-
-						                <path stroke-linecap="round"
-						                      stroke-linejoin="round"
-						                      stroke-width="2"
-						                      d="M3 5h12M9 3v2m0 0c0 4-2 7-5 9m5-9c0 3 2 6 5 8M5 21l4-4m0 0l4 4m-4-4v-5m7-9h5m-2 0v14" />
-
-						            </svg>
-
-						        </div>
-
-						        <!-- SELECTED LANGUAGE -->
-						        <div id="languageContainer"
-						             class="text-left">
-
-						            <div id="selectedLanguage"
-						                 class="text-sm font-bold text-gray-900">
-						                हिन्दी
-						            </div>
-
-									<span th:text="#{language}">
-									    Language
-									</span>
-
-						        </div>
-
-						        <!-- ARROW -->
-						        <svg id="languageButtonArrow"
-						             xmlns="http://www.w3.org/2000/svg"
-						             class="w-4 h-4 text-gray-500"
-						             fill="none"
-						             viewBox="0 0 24 24"
-						             stroke="currentColor">
-
-						            <path stroke-linecap="round"
-						                  stroke-linejoin="round"
-						                  stroke-width="2"
-						                  d="M19 9l-7 7-7-7" />
-
-						        </svg>
-
-						    </button>
-
-
-						    <!-- ================================================= -->
-						    <!-- LANGUAGE POPUP -->
-						    <!-- ================================================= -->
-
-						    <div id="languagePopup"
-						         class="hidden absolute top-full
-						                right-0
-						                mt-3
-						                bg-white
-						                rounded-2xl
-						                shadow-2xl
-						                border border-gray-200
-						                p-4
-						                z-[100]"
-						         style="width: 360px; max-width: calc(100vw - 2rem);">
-
-						        <!-- HEADER -->
-
-						        <div class="flex items-center justify-between
-						                    pb-3 mb-3 border-b">
-
-						            <div>
-
-										<h3 th:text="#{select.language}">
-										    Select Language
-										</h3>
-
-						                <p class="text-xs text-gray-500">
-						                    अपनी भाषा चुनें
-						                </p>
-
-						            </div>
-
-						            <button id="closeLanguagePopup"
-						                    type="button"
-						                    class="w-8 h-8
-						                           flex items-center justify-center
-						                           rounded-full
-						                           hover:bg-gray-100
-						                           text-gray-500
-						                           text-xl">
-
-						                ×
-
-						            </button>
-
-						        </div>
-
-
-						        <!-- LANGUAGES -->
-
-						        <div id="languageList"
-						             class="grid grid-cols-2 gap-2">
-
-						            <!-- HINDI -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-red-200
-						                           bg-red-50
-						                           hover:bg-red-100
-						                           transition"
-						                    data-language="hi"
-						                    data-name="हिन्दी">
-
-						                <span class="font-semibold text-gray-800">
-						                    हिन्दी
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    हिंदी
-						                </span>
-
-						            </button>
-
-
-						            <!-- ENGLISH -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="en"
-						                    data-name="English">
-
-						                <span class="font-semibold text-gray-800">
-						                    English
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    EN
-						                </span>
-
-						            </button>
-
-
-						            <!-- BENGALI -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="bn"
-						                    data-name="বাংলা">
-
-						                <span class="font-semibold text-gray-800">
-						                    বাংলা
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    বাংলা
-						                </span>
-
-						            </button>
-
-
-						            <!-- MARATHI -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="mr"
-						                    data-name="मराठी">
-
-						                <span class="font-semibold text-gray-800">
-						                    मराठी
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    मराठी
-						                </span>
-
-						            </button>
-
-
-						            <!-- GUJARATI -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="gu"
-						                    data-name="ગુજરાતી">
-
-						                <span class="font-semibold text-gray-800">
-						                    ગુજરાતી
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    ગુજરાતી
-						                </span>
-
-						            </button>
-
-
-						            <!-- TAMIL -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="ta"
-						                    data-name="தமிழ்">
-
-						                <span class="font-semibold text-gray-800">
-						                    தமிழ்
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    தமிழ்
-						                </span>
-
-						            </button>
-
-
-						            <!-- TELUGU -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="te"
-						                    data-name="తెలుగు">
-
-						                <span class="font-semibold text-gray-800">
-						                    తెలుగు
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    తెలుగు
-						                </span>
-
-						            </button>
-
-
-						            <!-- KANNADA -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="kn"
-						                    data-name="ಕನ್ನಡ">
-
-						                <span class="font-semibold text-gray-800">
-						                    ಕನ್ನಡ
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    ಕನ್ನಡ
-						                </span>
-
-						            </button>
-
-
-						            <!-- MALAYALAM -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="ml"
-						                    data-name="മലയാളം">
-
-						                <span class="font-semibold text-gray-800">
-						                    മലയാളം
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    മലയാളം
-						                </span>
-
-						            </button>
-
-
-						            <!-- PUNJABI -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="pa"
-						                    data-name="ਪੰਜਾਬੀ">
-
-						                <span class="font-semibold text-gray-800">
-						                    ਪੰਜਾਬੀ
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    ਪੰਜਾਬੀ
-						                </span>
-
-						            </button>
-
-
-						            <!-- ODIA -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="or"
-						                    data-name="ଓଡ଼ିଆ">
-
-						                <span class="font-semibold text-gray-800">
-						                    ଓଡ଼ିଆ
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    ଓଡ଼ିଆ
-						                </span>
-
-						            </button>
-
-
-						            <!-- ASSAMESE -->
-
-						            <button type="button"
-						                    class="language-option
-						                           flex items-center justify-between
-						                           px-3 py-3
-						                           rounded-xl
-						                           border border-gray-200
-						                           hover:border-red-300
-						                           hover:bg-red-50
-						                           transition"
-						                    data-language="as"
-						                    data-name="অসমীয়া">
-
-						                <span class="font-semibold text-gray-800">
-						                    অসমীয়া
-						                </span>
-
-						                <span class="text-xs text-gray-400">
-						                    অসমীয়া
-						                </span>
-
-						            </button>
-
-						        </div>
-
-						    </div>
-
-						</div>
-=======
-						<!-- Change Language  -->
-						<!-- ================================================= -->
->>>>>>> f773d2d (first commit)
-
-
-					</div>
-
-
-					<!-- DATE -->
-
-					<div th:if="${category != null}" class="text-right">
-
-						<div class="text-sm md:text-2xl font-bold text-gray-900"
-							th:text="${#dates.format(category.date, 'dd MMMM yyyy')}">
-							08 September 2026
-						</div>
-
-						<div class="text-sm text-gray-500" th:text="${category.day}">
-							Tuesday
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
-
-		</header>
-
-
-		<!-- ===================================================== -->
-		<!-- SUBCATEGORY HORIZONTAL NAVIGATION -->
-		<!-- ===================================================== -->
-
-		<div th:if="${category != null}" class="bg-white border-b sticky top-20 z-40">
-
-			<div class="max-w-[1600px] mx-auto">
-
-				<div id="sectionNavigation" class="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-
-					<button th:each="subCategory, stat : ${subCategories}" type="button"
-						class="section-btn px-8 py-4 text-sm font-semibold border-b-4 border-transparent hover:text-red-600 hover:border-red-600 transition"
-						th:classappend="${stat.first} ? ' active-section' : ''" th:attr="data-slide=${stat.index}"
-						th:text="${subCategory.name}">
-
-						National
-
-					</button>
-
-				</div>
-
-			</div>
-
-		</div>
-
-
-<<<<<<< HEAD
-=======
-		<!---  Advertisement -->
-
-
-
->>>>>>> f773d2d (first commit)
-		<!-- ===================================================== -->
-		<!-- EMPTY STATE -->
-		<!-- ===================================================== -->
-
-		<div th:if="${category == null}" class="min-h-[70vh] flex items-center justify-center">
-
-			<div class="text-center">
-
-				<div class="text-6xl mb-5">
-					📰
-				</div>
-
-				<h2 class="text-2xl font-bold text-gray-700">
-					E-Paper Not Available
-				</h2>
-
-				<p class="text-gray-500 mt-2">
-					No newspaper edition is available.
-				</p>
-
-			</div>
-
-		</div>
-
-
-		<!-- ===================================================== -->
-		<!-- E-PAPER -->
-		<!-- ===================================================== -->
-
-		<main th:if="${category != null}" class="relative">
-
-
-			<!-- ================================================= -->
-			<!-- SLIDER -->
-			<!-- ================================================= -->
-
-			<div id="epaperSlider" class="relative overflow-hidden">
-
-
-				<!-- ============================================= -->
-				<!-- EVERY SUBCATEGORY = ONE FULL PAGE -->
-				<!-- ============================================= -->
-
-				<section th:each="subCategory, stat : ${subCategories}"
-					class="epaper-page min-h-[calc(100vh-132px)] hidden"
-					th:classappend="${stat.first} ? ' active-page' : ''" th:id="'page-' + ${stat.index}">
-
-
-					<!-- ========================================= -->
-					<!-- PAGE CONTAINER -->
-					<!-- ========================================= -->
-
-					<div class="max-w-[1500px] mx-auto px-4 py-6">
-
-
-						<!-- ===================================== -->
-						<!-- NEWSPAPER FRAME -->
-						<!-- ===================================== -->
-
-<<<<<<< HEAD
-						<div class="bg-white border shadow-xl min-h-[calc(100vh-170px)]">
-
-
-							<!-- ================================= -->
-							<!-- NEWSPAPER HEADER -->
-							<!-- ================================= -->
-
-							<div class="border-b-4 border-black px-6 py-5">
-
-
-								<div class="flex items-center justify-between">
-
-									<span>
-										Page
-										<span th:text="${stat.index + 1}">
-											1
-										</span>
-									</span>
-
-									<div class="text-right hidden md:block">
-
-										<p class="text-sm font-semibold" th:text="${category.day}">
-											Tuesday
-										</p>
-
-										<p class="text-sm text-gray-500"
-											th:text="${#dates.format(category.date, 'dd MMM yyyy')}">
-											08 Sep 2026
-										</p>
-
-									</div>
-
-								</div>
-
-							</div>
-
-
-							<!-- ================================= -->
-							<!-- GET ARTICLE -->
-							<!-- ================================= -->
-
-							<div th:each="article : ${articleMap[subCategory.id]}">
-
-
-								<!-- ================================= -->
-								<!-- ARTICLE EXISTS -->
-								<!-- ================================= -->
-
-								<div th:if="${article != null}" class="p-5 md:p-8">
-
-									<!-- ================================= -->
-									<!-- MAIN FRAME IMAGES -->
-									<!-- ================================= -->
-
-									<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-1">
-
-
-										<!-- MAIN FRAME IMAGE -->
-										<div th:if="${article.articleId != null
-                                                and !#strings.isEmpty(article.articleId)}" class="xl:col-span-2">
-
-
-											<!-- ================================= -->
-											<!-- CLICKABLE -->
-											<!-- ================================= -->
-
-											<a th:if="${article.articleId != null
-                                                   and !#strings.isEmpty(article.articleId)}"
-												th:href="@{'/public/epaper/article/' + ${article.articleId}}"
-												class="block group">
-
-												<div class="relative overflow-hidden">
-
-													<img th:src="${article.mainFrameImageUrl}" th:alt="${article.title}"
-														class="w-full h-[420px] md:h-[550px] object-cover group-hover:scale-[1.02] transition duration-500">
-
-													<div class="absolute inset-x-0 bottom-0
-                                                            bg-gradient-to-t from-black/80
-                                                            to-transparent p-6">
-
-														<span class="inline-block
-                                                                 bg-red-600 text-white
-                                                                 px-3 py-1 text-xs
-                                                                 font-bold uppercase">
-
-															Read Article
-
-														</span>
-
-													</div>
-
-												</div>
-
-											</a>
-
-
-											<!-- ================================= -->
-											<!-- NON CLICKABLE -->
-											<!-- ================================= -->
-
-											<div th:unless="${article.articleId != null and !#strings.isEmpty(article.articleId)}"
-												class="block">
-												<img th:src="${article.mainFrameImageUrl}" th:alt="${article.title}"
-													class="w-full h-[420px] md:h-[550px] object-cover">
-
-											</div>
-
-
-										</div>
-
-									</div>
-
-
-									<!-- ================================= -->
-									<!-- NO ARTICLE -->
-									<!-- ================================= -->
-
-									<div th:if="${article == null}" class="min-h-[500px]
-                                        flex items-center
-                                        justify-center">
-
-										<div class="text-center">
-
-											<div class="text-5xl mb-4">
-												📰
-											</div>
-
-											<h3 class="text-2xl font-serif font-bold">
-												No Article Available
-											</h3>
-
-											<p class="text-gray-500 mt-2">
-												This section has no published article.
-											</p>
-
-										</div>
-
-									</div>
-
-
-								</div>
-
-							</div>
-
-
-
-
-							<!-- ================================= -->
-							<!-- PAGE FOOTER -->
-							<!-- ================================= -->
-
-							<div class="border-t-2 border-black
-					            px-6 py-3
-					            flex justify-between
-					            text-xs text-gray-500">
-
-								<span>
-									<span th:text="${category.day}">
-										Tuesday
-									</span>
-								</span>
-
-								<span>
-									E-PAPER
-								</span>
-
-								<span>
-									Page
-									<span th:text="${stat.index + 1}">
-										1
-									</span>
-								</span>
-
-							</div>
-
-						</div>
-=======
-<!-- =========================================================
-     NEWSPAPER FRAME
-     ARTICLE PLACEMENT IS CONTROLLED BY articleNo
-     
-     articleNo:
-     0 = Lead article
-     1 = Lead bottom-left
-     2 = Lead bottom-right
-     3 = Right top
-     4 = Right bottom
-     5 = Lower column 1
-     6 = Lower column 2
-     7 = Lower column 3
-     8 = Lower column 4
-     9 = Lower column 5
-
-     IMPORTANT:
-     Multiple articles can have articleNo = 5.
-     All of them will be displayed in the Article 5 area.
-     ========================================================= -->
-
-<div class="newspaper-page">
-
-    <div class="newspaper-paper relative border-2 border-gray-800">
-
-        <!-- =====================================================
-             TOP ADVERTISEMENT
-             ===================================================== -->
-
-        <div class="paper-top-ad">
-
-            <div class="paper-edition">
-
-                <span th:text="${category.day}">
-                    Tuesday
-                </span>
-
-                &nbsp; | &nbsp;
-
-                <span th:text="${#dates.format(category.date,
-                         'dd MMMM yyyy')}">
-                    29 September 2026
-                </span>
-
-                &nbsp; | &nbsp;
-
-                Page
-                <span th:text="${stat.index + 1}">
-                    1
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             SUBCATEGORY
-             ===================================================== -->
-
-        <div class="relative border-b-2 border-gray-800">
-
-            <div class="absolute left-1/2 top-0
-                        -translate-x-1/2 -translate-y-1/2
-                        bg-white m-15 px-6 rounded-full
-                        text-blue-500 font-bold text-2xl
-                        whitespace-nowrap">
-
-                <span th:text="${subCategory.name}">
-                    National
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             MASTHEAD
-             ===================================================== -->
-
-        <div class="paper-top-ad paper-masthead">
-
-            <div class="paper-ad-item">
-
-                <div class="paper-ad-text">
-                    <strong>आपका विज्ञापन</strong><br>
-                    Promote Your Brand Here
-                </div>
-
-            </div>
-
-
-            <div class="paper-brand">
-
-                <div class="paper-brand-main">
-                    Genz-CM
-                </div>
-
-            </div>
-
-
-            <div class="paper-ad-item">
-
-                <div class="paper-ad-text">
-                    <strong>Advertisement</strong><br>
-                    Your Brand Here
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             BREAKING NEWS
-             ===================================================== -->
-
-        <div class="breaking-box">
-
-            <div class="breaking-heading">
-                आज की बड़ी खबरें
-            </div>
-
-
-            <div class="breaking-items">
-
-                <div class="breaking-item">
-
-                    <span class="breaking-number">
-                        1
-                    </span>
-
-                    <span>
-                        देश-दुनिया की महत्वपूर्ण खबरें
-                    </span>
-
-                </div>
-
-
-                <div class="breaking-item">
-
-                    <span class="breaking-number">
-                        2
-                    </span>
-
-                    <span>
-                        राजनीति और समाज की बड़ी खबरें
-                    </span>
-
-                </div>
-
-
-                <div class="breaking-item">
-
-                    <span class="breaking-number">
-                        3
-                    </span>
-
-                    <span>
-                        प्रदेश की ताजा और प्रमुख खबरें
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             ARTICLE CONTENT
-             ===================================================== -->
-
-        <div class="paper-content">
-
-
-            <!-- =================================================
-                 NO ARTICLE
-                 ================================================= -->
-
-            <div th:if="${articleMap[subCategory.id] == null
-                        or #lists.isEmpty(articleMap[subCategory.id])}"
-                 class="py-24 text-center">
-
-                <div class="text-5xl mb-4">
-                    📰
-                </div>
-
-                <h3 class="text-2xl font-bold">
-                    No Article Available
-                </h3>
-
-                <p class="text-gray-500 mt-2">
-                    This section has no published article.
-                </p>
-
-            </div>
-
-
-            <!-- =================================================
-                 ARTICLE NEWSPAPER
-                 ================================================= -->
-
-            <div th:if="${articleMap[subCategory.id] != null
-                        and !#lists.isEmpty(articleMap[subCategory.id])}"
-                 class="paper-main-grid">
-
-
-                <!-- =================================================
-                     LEFT SIDE
-                     ================================================= -->
-
-                <div class="lead-section">
-
-
-                    <!-- =================================================
-                         ARTICLE NO 0
-                         LEAD ARTICLE
-                         ================================================= -->
-
-                    <th:block th:each="article :
-                                ${articleMap[subCategory.id]}"
-                              th:if="${article.articleNo == '0'}">
-
-                        <th:block th:with="lead=${article}">
-
-                            <div class="section-label">
-                                Breaking news
                             </div>
 
 
-                            <!-- LEAD TITLE -->
+                            <!-- DATE -->
 
-                            <a th:if="${lead.articleId != null
-                                       and !#strings.isEmpty(lead.articleId)}"
-                               th:href="@{'/public/epaper/article/' + ${lead.articleId}}">
+                            <div id="calendarDateContainer"
+                                 class="text-left">
 
-                                <h1 class="lead-title"
-                                    th:text="${lead.title}">
-                                    Lead Article
-                                </h1>
+                                <div id="calendarButtonDate"
+                                     class="text-sm font-bold text-gray-900">
 
-                            </a>
+                                    Current Date
 
+                                </div>
 
-                            <h1 th:unless="${lead.articleId != null
-                                            and !#strings.isEmpty(lead.articleId)}"
-                                class="lead-title"
-                                th:text="${lead.title}">
+                                <div id="calendarButtonDay"
+                                     class="text-xs text-gray-500">
 
-                                Lead Article
+                                    Today
 
-                            </h1>
+                                </div>
+
+                            </div>
 
 
-                            <!-- SUB TITLE -->
+                            <!-- ARROW -->
 
-                            <p class="lead-subtitle"
-                               th:if="${lead.shortDescription != null}"
-                               th:text="${lead.shortDescription}">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="w-4 h-4 text-gray-500"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
 
-                            </p>
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M19 9l-7 7-7-7"/>
 
+                            </svg>
 
-                            <!-- MAIN IMAGE -->
-
-                            <div class="lead-image-box">
-
-                                <a th:if="${lead.articleId != null
-                                           and !#strings.isEmpty(lead.articleId)}"
-                                   th:href="@{'/public/epaper/article/' + ${lead.articleId}}">
-
-                                    <img th:src="${lead.mainFrameImageUrl != null
-                                                  and !#strings.isEmpty(lead.mainFrameImageUrl)
-                                                  ? lead.mainFrameImageUrl
-                                                  : lead.imageUrl}"
-                                         th:alt="${lead.title}">
-
-                                </a>
+                        </button>
 
 
-                                <img th:unless="${lead.articleId != null
-                                                 and !#strings.isEmpty(lead.articleId)}"
-                                     th:src="${lead.mainFrameImageUrl != null
-                                              and !#strings.isEmpty(lead.mainFrameImageUrl)
-                                              ? lead.mainFrameImageUrl
-                                              : lead.imageUrl}"
-                                     th:alt="${lead.title}">
+                        <!-- ================================================= -->
+                        <!-- CALENDAR POPUP -->
+                        <!-- ================================================= -->
+
+                        <div id="calendarPopup"
+                             class="hidden absolute top-full left-1/2
+                                    -translate-x-1/2 mt-3
+                                    bg-white rounded-2xl
+                                    shadow-2xl
+                                    border border-gray-200
+                                    p-6 z-[100]"
+                             style="width:300px; max-width:calc(100vw - 2rem);">
+
+                            <div class="flex items-center justify-between mb-5">
+
+                                <button id="previousMonth"
+                                        type="button"
+                                        class="w-9 h-9
+                                               flex items-center justify-center
+                                               rounded-full
+                                               hover:bg-gray-100
+                                               text-xl">
+
+                                    ‹
+
+                                </button>
 
 
-                                <!-- VIDEO ICON -->
+                                <div id="monthTitle"
+                                     class="font-bold text-lg text-gray-900">
+                                </div>
 
-                                <span class="video-play"
-                                      th:if="${lead.mainUrl != null}">
-                                    ▶
+
+                                <button id="nextMonth"
+                                        type="button"
+                                        class="w-9 h-9
+                                               flex items-center justify-center
+                                               rounded-full
+                                               hover:bg-gray-100
+                                               text-xl">
+
+                                    ›
+
+                                </button>
+
+                            </div>
+
+
+                            <div class="grid grid-cols-7
+                                        text-center
+                                        text-xs
+                                        font-semibold
+                                        text-gray-500
+                                        mb-2">
+
+                                <div>रवि</div>
+                                <div>सोम</div>
+                                <div>मंगल</div>
+                                <div>बुध</div>
+                                <div>गुरु</div>
+                                <div>शुक्र</div>
+                                <div>शनि</div>
+
+                            </div>
+
+
+                            <div id="calendar"
+                                 class="grid grid-cols-7 gap-1 text-sm">
+                            </div>
+
+
+                            <div class="mt-5 pt-4 border-t text-xs text-gray-500">
+
+                                <div class="flex items-center gap-2">
+
+                                    <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
+
+                                    <span>
+                                        E-Paper available
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- CATEGORY DATA -->
+                        <!-- ================================================= -->
+
+                        <div id="categoryData"
+                             class="hidden">
+
+                            <span th:each="category : ${categories}"
+                                  class="category-data"
+                                  th:attr="data-date=${category.date},
+                                           data-category-id=${category.id}">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- LANGUAGE -->
+                    <!-- ================================================= -->
+
+                    <div class="relative">
+
+                        <button id="languageButton"
+                                type="button"
+                                class="flex items-center gap-3
+                                       px-4 py-2
+                                       bg-white
+                                       border border-gray-300
+                                       rounded-xl
+                                       shadow-sm
+                                       hover:border-red-500
+                                       hover:shadow-md
+                                       transition">
+
+                            <!-- LANGUAGE ICON -->
+
+                            <div class="flex items-center justify-center
+                                        w-10 h-10
+                                        bg-red-50
+                                        text-red-600
+                                        rounded-lg">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="w-6 h-6"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M3 5h12M9 3v2m0 0c0 4-2 7-5 9m5-9c0 3 2 6 5 8M5 21l4-4m0 0l4 4m-4-4v-5m7-9h5m-2 0v14"/>
+
+                                </svg>
+
+                            </div>
+
+
+                            <!-- SELECTED LANGUAGE -->
+
+                            <div id="languageContainer"
+                                 class="text-left">
+
+                                <div id="selectedLanguage"
+                                     class="text-sm font-bold text-gray-900">
+
+                                    हिन्दी
+
+                                </div>
+
+                                <span th:text="#{language}">
+                                    Language
                                 </span>
 
                             </div>
 
-                        </th:block>
 
-                    </th:block>
+                            <!-- ARROW -->
 
+                            <svg id="languageButtonArrow"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 class="w-4 h-4 text-gray-500"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
 
-                    <!-- =================================================
-                         ARTICLES NO 1 AND 2
-                         TWO STORIES UNDER LEAD
-                         ================================================= -->
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M19 9l-7 7-7-7"/>
 
-                    <div class="lead-image-news">
+                            </svg>
 
-
-                        <!-- =================================================
-                             ARTICLE NO 1
-                             ================================================= -->
-
-                        <th:block th:each="article :
-                                    ${articleMap[subCategory.id]}"
-                                  th:if="${article.articleNo == '1'}">
-
-                            <article class="lead-small-story">
-
-                                <a th:if="${article.articleId != null
-                                           and !#strings.isEmpty(article.articleId)}"
-                                   th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                                    <img th:src="${article.mainFrameImageUrl}"
-                                         th:alt="${article.title}">
-
-                                    <h2 class="lead-small-title"
-                                        th:text="${article.title}">
-                                        Important News
-                                    </h2>
-
-                                </a>
+                        </button>
 
 
-                                <th:block th:unless="${article.articleId != null
-                                                       and !#strings.isEmpty(article.articleId)}">
+                        <!-- ================================================= -->
+                        <!-- LANGUAGE POPUP -->
+                        <!-- ================================================= -->
 
-                                    <img th:src="${article.mainFrameImageUrl}"
-                                         th:alt="${article.title}">
+                        <div id="languagePopup"
+                             class="hidden absolute top-full right-0
+                                    mt-3
+                                    bg-white
+                                    rounded-2xl
+                                    shadow-2xl
+                                    border border-gray-200
+                                    p-4
+                                    z-[100]"
+                             style="width:360px; max-width:calc(100vw - 2rem);">
 
-                                    <h2 class="lead-small-title"
-                                        th:text="${article.title}">
-                                        Important News
-                                    </h2>
+                            <!-- HEADER -->
 
-                                </th:block>
+                            <div class="flex items-center justify-between
+                                        pb-3 mb-3 border-b">
 
+                                <div>
 
-                                <p class="lead-small-description"
-                                   th:if="${article.shortDescription != null}"
-                                   th:text="${article.shortDescription}">
-                                    News information
-                                </p>
+                                    <h3 class="font-bold text-gray-900"
+                                        th:text="#{select.language}">
+                                        Select Language
+                                    </h3>
 
-                            </article>
+                                    <p class="text-xs text-gray-500">
+                                        अपनी भाषा चुनें
+                                    </p>
 
-                        </th:block>
-
-
-                        <!-- =================================================
-                             ARTICLE NO 2
-                             ================================================= -->
-
-                        <th:block th:each="article :
-                                    ${articleMap[subCategory.id]}"
-                                  th:if="${article.articleNo == '2'}">
-
-                            <article class="lead-small-story">
-
-                                <a th:if="${article.articleId != null
-                                           and !#strings.isEmpty(article.articleId)}"
-                                   th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                                    <img th:src="${article.mainFrameImageUrl}"
-                                         th:alt="${article.title}">
-
-                                    <h2 class="lead-small-title"
-                                        th:text="${article.title}">
-                                        Important News
-                                    </h2>
-
-                                </a>
+                                </div>
 
 
-                                <th:block th:unless="${article.articleId != null
-                                                       and !#strings.isEmpty(article.articleId)}">
+                                <button id="closeLanguagePopup"
+                                        type="button"
+                                        class="w-8 h-8
+                                               flex items-center justify-center
+                                               rounded-full
+                                               hover:bg-gray-100
+                                               text-gray-500
+                                               text-xl">
 
-                                    <img th:src="${article.mainFrameImageUrl}"
-                                         th:alt="${article.title}">
+                                    ×
 
-                                    <h2 class="lead-small-title"
-                                        th:text="${article.title}">
-                                        Important News
-                                    </h2>
+                                </button>
 
-                                </th:block>
+                            </div>
 
 
-                                <p class="lead-small-description"
-                                   th:if="${article.shortDescription != null}"
-                                   th:text="${article.shortDescription}">
-                                    News information
-                                </p>
+                            <!-- LANGUAGES -->
 
-                            </article>
+                            <div id="languageList"
+                                 class="grid grid-cols-2 gap-2">
 
-                        </th:block>
+                                <!-- HINDI -->
 
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-red-200
+                                               bg-red-50
+                                               hover:bg-red-100
+                                               transition"
+                                        data-language="hi"
+                                        data-name="हिन्दी">
+
+                                    <span class="font-semibold text-gray-800">
+                                        हिन्दी
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        हिंदी
+                                    </span>
+
+                                </button>
+
+
+                                <!-- ENGLISH -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="en"
+                                        data-name="English">
+
+                                    <span class="font-semibold text-gray-800">
+                                        English
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        EN
+                                    </span>
+
+                                </button>
+
+
+                                <!-- BENGALI -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="bn"
+                                        data-name="বাংলা">
+
+                                    <span class="font-semibold text-gray-800">
+                                        বাংলা
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        বাংলা
+                                    </span>
+
+                                </button>
+
+
+                                <!-- MARATHI -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="mr"
+                                        data-name="मराठी">
+
+                                    <span class="font-semibold text-gray-800">
+                                        मराठी
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        मराठी
+                                    </span>
+
+                                </button>
+
+
+                                <!-- GUJARATI -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="gu"
+                                        data-name="ગુજરાતી">
+
+                                    <span class="font-semibold text-gray-800">
+                                        ગુજરાતી
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        ગુજરાતી
+                                    </span>
+
+                                </button>
+
+
+                                <!-- TAMIL -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="ta"
+                                        data-name="தமிழ்">
+
+                                    <span class="font-semibold text-gray-800">
+                                        தமிழ்
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        தமிழ்
+                                    </span>
+
+                                </button>
+
+
+                                <!-- TELUGU -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="te"
+                                        data-name="తెలుగు">
+
+                                    <span class="font-semibold text-gray-800">
+                                        తెలుగు
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        తెలుగు
+                                    </span>
+
+                                </button>
+
+
+                                <!-- KANNADA -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="kn"
+                                        data-name="ಕನ್ನಡ">
+
+                                    <span class="font-semibold text-gray-800">
+                                        ಕನ್ನಡ
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        ಕನ್ನಡ
+                                    </span>
+
+                                </button>
+
+
+                                <!-- MALAYALAM -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="ml"
+                                        data-name="മലയാളം">
+
+                                    <span class="font-semibold text-gray-800">
+                                        മലയാളം
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        മലയാളം
+                                    </span>
+
+                                </button>
+
+
+                                <!-- PUNJABI -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="pa"
+                                        data-name="ਪੰਜਾਬੀ">
+
+                                    <span class="font-semibold text-gray-800">
+                                        ਪੰਜਾਬੀ
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        ਪੰਜਾਬੀ
+                                    </span>
+
+                                </button>
+
+
+                                <!-- ODIA -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="or"
+                                        data-name="ଓଡ଼ିଆ">
+
+                                    <span class="font-semibold text-gray-800">
+                                        ଓଡ଼ିଆ
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        ଓଡ଼ିଆ
+                                    </span>
+
+                                </button>
+
+
+                                <!-- ASSAMESE -->
+
+                                <button type="button"
+                                        class="language-option
+                                               flex items-center justify-between
+                                               px-3 py-3
+                                               rounded-xl
+                                               border border-gray-200
+                                               hover:border-red-300
+                                               hover:bg-red-50
+                                               transition"
+                                        data-language="as"
+                                        data-name="অসমীয়া">
+
+                                    <span class="font-semibold text-gray-800">
+                                        অসমীয়া
+                                    </span>
+
+                                    <span class="text-xs text-gray-400">
+                                        অসমীয়া
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <!-- =================================================
-                     RIGHT SIDE
-                     ARTICLE NO 3 + ARTICLE NO 4
-                     ================================================= -->
+                <!-- ================================================= -->
+                <!-- CURRENT DATE -->
+                <!-- ================================================= -->
 
-                <aside class="right-news">
+                <div th:if="${category != null}"
+                     class="text-right">
 
+                    <div class="text-sm md:text-2xl font-bold text-gray-900"
+                         th:text="${#dates.format(category.date, 'dd MMMM yyyy')}">
 
-                    <!-- =================================================
-                         ARTICLE NO 3
-                         ================================================= -->
+                        08 September 2026
 
-                    <th:block th:each="article :
-                                ${articleMap[subCategory.id]}"
-                              th:if="${article.articleNo == '3'}">
+                    </div>
 
-                        <article class="right-story right-story-small">
+                    <div class="text-sm text-gray-500"
+                         th:text="${category.day}">
 
-                            <a th:if="${article.articleId != null
-                                       and !#strings.isEmpty(article.articleId)}"
-                               th:href="@{'/public/epaper/article/' + ${article.articleId}}">
+                        Tuesday
 
-                                <h2 class="right-title"
-                                    th:text="${article.title}">
-                                    Article 3
-                                </h2>
-
-                                <img th:src="${article.mainFrameImageUrl}"
-                                     th:alt="${article.title}"
-                                     class="right-image-small">
-
-                            </a>
-
-
-                            <th:block th:unless="${article.articleId != null
-                                                   and !#strings.isEmpty(article.articleId)}">
-
-                                <h2 class="right-title"
-                                    th:text="${article.title}">
-                                    Article 3
-                                </h2>
-
-                                <img th:src="${article.mainFrameImageUrl}"
-                                     th:alt="${article.title}"
-                                     class="right-image-small">
-
-                            </th:block>
-
-
-                            <p class="right-description"
-                               th:if="${article.shortDescription != null}"
-                               th:text="${article.shortDescription}">
-                            </p>
-
-                        </article>
-
-                    </th:block>
-
-
-                    <!-- =================================================
-                         ARTICLE NO 4
-                         ================================================= -->
-
-                    <th:block th:each="article :
-                                ${articleMap[subCategory.id]}"
-                              th:if="${article.articleNo == '4'}">
-
-                        <article class="right-story right-story-large">
-
-                            <a th:if="${article.articleId != null
-                                       and !#strings.isEmpty(article.articleId)}"
-                               th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                                <h2 class="right-title right-large-title"
-                                    th:text="${article.title}">
-                                    Article 4
-                                </h2>
-
-                                <img th:src="${article.mainFrameImageUrl}"
-                                     th:alt="${article.title}"
-                                     class="right-image-large">
-
-                            </a>
-
-
-                            <th:block th:unless="${article.articleId != null
-                                                   and !#strings.isEmpty(article.articleId)}">
-
-                                <h2 class="right-title right-large-title"
-                                    th:text="${article.title}">
-                                    Article 4
-                                </h2>
-
-                                <img th:src="${article.mainFrameImageUrl}"
-                                     th:alt="${article.title}"
-                                     class="right-image-large">
-
-                            </th:block>
-
-
-                            <p class="right-description"
-                               th:if="${article.shortDescription != null}"
-                               th:text="${article.shortDescription}">
-                            </p>
-
-                        </article>
-
-                    </th:block>
-
-
-                </aside>
-
-            </div>
-
-
-            <!-- =====================================================
-                 LOWER NEWS
-                 ARTICLE NO 5 - 9
-
-                 IMPORTANT:
-                 articleNo = 5 is NOT limited to one article.
-                 If database contains:
-
-                 Article A -> articleNo 5
-                 Article B -> articleNo 5
-                 Article C -> articleNo 5
-
-                 ALL THREE will appear in this section.
-                 ===================================================== -->
-
-            <div class="lower-news"
-                 th:if="${articleMap[subCategory.id] != null}">
-
-
-                <!-- =================================================
-                     ARTICLE NO 5
-                     MULTIPLE ARTICLES ALLOWED
-                     ================================================= -->
-
-                <th:block th:each="article :
-                            ${articleMap[subCategory.id]}"
-                          th:if="${article.articleNo == '5'}">
-
-                    <article class="lower-story">
-
-                        <a th:if="${article.articleId != null
-                                   and !#strings.isEmpty(article.articleId)}"
-                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 5
-                            </h3>
-
-                        </a>
-
-
-                        <th:block th:unless="${article.articleId != null
-                                               and !#strings.isEmpty(article.articleId)}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 5
-                            </h3>
-
-                        </th:block>
-
-
-                        <p class="lower-description"
-                           th:if="${article.shortDescription != null}"
-                           th:text="${article.shortDescription}">
-                        </p>
-
-                    </article>
-
-                </th:block>
-
-
-                <!-- =================================================
-                     ARTICLE NO 6
-                     MULTIPLE ARTICLES ALSO ALLOWED
-                     ================================================= -->
-
-                <th:block th:each="article :
-                            ${articleMap[subCategory.id]}"
-                          th:if="${article.articleNo == '6'}">
-
-                    <article class="lower-story">
-
-                        <a th:if="${article.articleId != null
-                                   and !#strings.isEmpty(article.articleId)}"
-                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 6
-                            </h3>
-
-                        </a>
-
-
-                        <th:block th:unless="${article.articleId != null
-                                               and !#strings.isEmpty(article.articleId)}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 6
-                            </h3>
-
-                        </th:block>
-
-
-                        <p class="lower-description"
-                           th:if="${article.shortDescription != null}"
-                           th:text="${article.shortDescription}">
-                        </p>
-
-                    </article>
-
-                </th:block>
-
-
-                <!-- =================================================
-                     ARTICLE NO 7
-                     ================================================= -->
-
-                <th:block th:each="article :
-                            ${articleMap[subCategory.id]}"
-                          th:if="${article.articleNo == '7'}">
-
-                    <article class="lower-story">
-
-                        <a th:if="${article.articleId != null
-                                   and !#strings.isEmpty(article.articleId)}"
-                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 7
-                            </h3>
-
-                        </a>
-
-
-                        <th:block th:unless="${article.articleId != null
-                                               and !#strings.isEmpty(article.articleId)}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 7
-                            </h3>
-
-                        </th:block>
-
-
-                        <p class="lower-description"
-                           th:if="${article.shortDescription != null}"
-                           th:text="${article.shortDescription}">
-                        </p>
-
-                    </article>
-
-                </th:block>
-
-
-                <!-- =================================================
-                     ARTICLE NO 8
-                     ================================================= -->
-
-                <th:block th:each="article :
-                            ${articleMap[subCategory.id]}"
-                          th:if="${article.articleNo == '8'}">
-
-                    <article class="lower-story">
-
-                        <a th:if="${article.articleId != null
-                                   and !#strings.isEmpty(article.articleId)}"
-                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 8
-                            </h3>
-
-                        </a>
-
-
-                        <th:block th:unless="${article.articleId != null
-                                               and !#strings.isEmpty(article.articleId)}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 8
-                            </h3>
-
-                        </th:block>
-
-
-                        <p class="lower-description"
-                           th:if="${article.shortDescription != null}"
-                           th:text="${article.shortDescription}">
-                        </p>
-
-                    </article>
-
-                </th:block>
-
-
-                <!-- =================================================
-                     ARTICLE NO 9
-                     ================================================= -->
-
-                <th:block th:each="article :
-                            ${articleMap[subCategory.id]}"
-                          th:if="${article.articleNo == '9'}">
-
-                    <article class="lower-story">
-
-                        <div class="lower-category">
-                        </div>
-
-
-                        <a th:if="${article.articleId != null
-                                   and !#strings.isEmpty(article.articleId)}"
-                           th:href="@{'/public/epaper/article/' + ${article.articleId}}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 9
-                            </h3>
-
-                        </a>
-
-
-                        <th:block th:unless="${article.articleId != null
-                                               and !#strings.isEmpty(article.articleId)}">
-
-                            <img th:src="${article.mainFrameImageUrl}"
-                                 th:alt="${article.title}"
-                                 class="lower-image">
-
-                            <h3 class="lower-title"
-                                th:text="${article.title}">
-                                Article 9
-                            </h3>
-
-                        </th:block>
-
-
-                        <p class="lower-description"
-                           th:if="${article.shortDescription != null}"
-                           th:text="${article.shortDescription}">
-                        </p>
-
-                    </article>
-
-                </th:block>
-
-
-            </div>
-
-
-            <!-- =====================================================
-                 ADVERTISEMENT
-                 ===================================================== -->
-
-            <div class="paper-ad-column">
-
-                <div class="ad-placeholder">
-                    Advertisement
-                </div>
-
-            </div>
-
-
-            <!-- =====================================================
-                 COLORED DOTS
-                 ===================================================== -->
-
-            <div class="grid grid-cols-3 gap-8">
-
-                <div class="paper-dots">
-
-                    <span class="paper-dot paper-dot1"></span>
-                    <span class="paper-dot paper-dot2"></span>
-                    <span class="paper-dot paper-dot3"></span>
-                    <span class="paper-dot paper-dot4"></span>
-                    <span class="paper-dot paper-dot5"></span>
-                    <span class="paper-dot paper-dot6"></span>
-
-                </div>
-
-
-                <div class="paper-dots">
-
-                    <span class="paper-dot paper-dot1"></span>
-                    <span class="paper-dot paper-dot2"></span>
-                    <span class="paper-dot paper-dot3"></span>
-                    <span class="paper-dot paper-dot4"></span>
-                    <span class="paper-dot paper-dot5"></span>
-                    <span class="paper-dot paper-dot6"></span>
-
-                </div>
-
-
-                <div class="paper-dots">
-
-                    <span class="paper-dot paper-dot1"></span>
-                    <span class="paper-dot paper-dot2"></span>
-                    <span class="paper-dot paper-dot3"></span>
-                    <span class="paper-dot paper-dot4"></span>
-                    <span class="paper-dot paper-dot5"></span>
-                    <span class="paper-dot paper-dot6"></span>
+                    </div>
 
                 </div>
 
             </div>
-
 
         </div>
 
+    </header>
 
-        <!-- =====================================================
-             FOOTER
-             ===================================================== -->
 
-        <div class="paper-footer">
+    <!-- ===================================================== -->
+    <!-- SUBCATEGORY NAVIGATION -->
+    <!-- ===================================================== -->
 
-            <span th:text="${category.day}">
-                Tuesday
-            </span>
+    <div th:if="${category != null}"
+         class="bg-white border-b sticky top-20 z-40">
 
-            <span>
-                E-PAPER
-            </span>
+        <div class="max-w-[1600px] mx-auto">
 
-            <span>
-                Page
-                <span th:text="${stat.index + 1}">
-                    1
-                </span>
-            </span>
+            <div id="sectionNavigation"
+                 class="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
+
+                <button th:each="subCategory, stat : ${subCategories}"
+                        type="button"
+                        class="section-btn
+                               px-8 py-4
+                               text-sm font-semibold
+                               border-b-4 border-transparent
+                               hover:text-red-600
+                               hover:border-red-600
+                               transition"
+                        th:classappend="${stat.first} ? ' active-section' : ''"
+                        th:attr="data-slide=${stat.index}"
+                        th:text="${subCategory.name}">
+
+                    National
+
+                </button>
+
+            </div>
 
         </div>
-
 
     </div>
 
+
+    <!-- ===================================================== -->
+    <!-- EMPTY CATEGORY -->
+    <!-- ===================================================== -->
+
+    <div th:if="${category == null}"
+         class="min-h-[70vh]
+                flex items-center justify-center">
+
+        <div class="text-center">
+
+            <div class="text-6xl mb-5">
+                📰
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-700">
+                E-Paper Not Available
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                No newspaper edition is available.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- E-PAPER MAIN -->
+    <!-- ===================================================== -->
+
+    <main th:if="${category != null}"
+          class="relative">
+
+
+        <!-- ================================================= -->
+        <!-- SLIDER -->
+        <!-- ================================================= -->
+
+        <div id="epaperSlider"
+             class="relative overflow-hidden">
+
+
+            <!-- ================================================= -->
+            <!-- ONE PAGE PER SUBCATEGORY -->
+            <!-- ================================================= -->
+
+            <section th:each="subCategory, stat : ${subCategories}"
+                     class="epaper-page
+                            min-h-[calc(100vh-132px)]
+                            hidden"
+                     th:classappend="${stat.first} ? ' active-page' : ''"
+                     th:id="'page-' + ${stat.index}">
+
+
+                <!-- ================================================= -->
+                <!-- PAGE CONTAINER -->
+                <!-- ================================================= -->
+
+                <div class="max-w-[1500px] mx-auto px-4 py-6">
+
+
+                    <!-- ================================================= -->
+                    <!-- NEWSPAPER PAPER -->
+                    <!-- ================================================= -->
+
+                    <div class="newspaper-paper
+                                relative
+                                bg-white
+                                border-2
+                                border-gray-800
+                                shadow-xl">
+
+
+                        <!-- ================================================= -->
+                        <!-- TOP EDITION BAR -->
+                        <!-- ================================================= -->
+
+                        <div class="paper-top-ad">
+
+                            <div class="paper-edition">
+
+                                <span th:text="${category.day}">
+                                    Tuesday
+                                </span>
+
+                                &nbsp; | &nbsp;
+
+                                <span th:text="${#dates.format(category.date,
+                                             'dd MMMM yyyy')}">
+                                    29 September 2026
+                                </span>
+
+                                &nbsp; | &nbsp;
+
+                                Page
+
+                                <span th:text="${stat.index + 1}">
+                                    1
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- SUBCATEGORY TITLE -->
+                        <!-- ================================================= -->
+
+                        <div class="relative border-b-2 border-gray-800">
+
+                            <div class="absolute
+                                        left-1/2
+                                        top-0
+                                        -translate-x-1/2
+                                        -translate-y-1/2
+                                        bg-white
+                                        px-6
+                                        rounded-full
+                                        text-blue-500
+                                        font-bold
+                                        text-2xl
+                                        whitespace-nowrap">
+
+                                <span th:text="${subCategory.name}">
+                                    National
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- MASTHEAD -->
+                        <!-- ================================================= -->
+
+                        <div class="paper-top-ad paper-masthead">
+
+
+                            <!-- LEFT AD -->
+
+                            <div class="paper-ad-item">
+
+                                <div class="paper-ad-text">
+
+                                    <strong>
+                                        आपका विज्ञापन
+                                    </strong>
+
+                                    <br>
+
+                                    Promote Your Brand Here
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- BRAND -->
+
+                            <div class="paper-brand">
+
+                                <div class="paper-brand-main">
+                                    Genz-CM
+                                </div>
+
+                            </div>
+
+
+                            <!-- RIGHT AD -->
+
+                            <div class="paper-ad-item">
+
+                                <div class="paper-ad-text">
+
+                                    <strong>
+                                        Advertisement
+                                    </strong>
+
+                                    <br>
+
+                                    Your Brand Here
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- BREAKING NEWS -->
+                        <!-- ================================================= -->
+
+                        <div class="breaking-box">
+
+                            <div class="breaking-heading">
+                                आज की बड़ी खबरें
+                            </div>
+
+
+                            <div class="breaking-items">
+
+                                <div class="breaking-item">
+
+                                    <span class="breaking-number">
+                                        1
+                                    </span>
+
+                                    <span>
+                                        देश-दुनिया की महत्वपूर्ण खबरें
+                                    </span>
+
+                                </div>
+
+
+                                <div class="breaking-item">
+
+                                    <span class="breaking-number">
+                                        2
+                                    </span>
+
+                                    <span>
+                                        राजनीति और समाज की बड़ी खबरें
+                                    </span>
+
+                                </div>
+
+
+                                <div class="breaking-item">
+
+                                    <span class="breaking-number">
+                                        3
+                                    </span>
+
+                                    <span>
+                                        प्रदेश की ताजा और प्रमुख खबरें
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- ARTICLE CONTENT -->
+                        <!-- ================================================= -->
+
+                        <div class="paper-content">
+
+
+                            <!-- ================================================= -->
+                            <!-- NO ARTICLE -->
+                            <!-- ================================================= -->
+
+                            <div th:if="${articleMap[subCategory.id] == null
+                                        or #lists.isEmpty(articleMap[subCategory.id])}"
+                                 class="py-24 text-center">
+
+                                <div class="text-5xl mb-4">
+                                    📰
+                                </div>
+
+                                <h3 class="text-2xl font-bold">
+                                    No Article Available
+                                </h3>
+
+                                <p class="text-gray-500 mt-2">
+                                    This section has no published article.
+                                </p>
+
+                            </div>
+
+
+                            <!-- ================================================= -->
+                            <!-- ARTICLE GRID -->
+                            <!-- ================================================= -->
+
+                            <div th:if="${articleMap[subCategory.id] != null
+                                        and !#lists.isEmpty(articleMap[subCategory.id])}"
+                                 class="paper-main-grid">
+
+
+                                <!-- ================================================= -->
+                                <!-- LEFT SIDE -->
+                                <!-- ================================================= -->
+
+                                <div class="lead-section">
+
+
+                                    <!-- ================================================= -->
+                                    <!-- ARTICLE NO 0 -->
+                                    <!-- LEAD ARTICLE -->
+                                    <!-- ================================================= -->
+
+                                    <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                              th:if="${article.articleNo == '0'}">
+
+                                        <th:block th:with="lead=${article}">
+
+
+                                            <div class="section-label">
+                                                Breaking news
+                                            </div>
+
+
+                                            <!-- LEAD TITLE -->
+
+                                            <a th:if="${lead.articleId != null
+                                                       and !#strings.isEmpty(lead.articleId)}"
+                                               th:href="@{/public/epaper/article/{id}(id=${lead.articleId})}">
+
+                                                <h1 class="lead-title"
+                                                    th:text="${lead.title}">
+
+                                                    Lead Article
+
+                                                </h1>
+
+                                            </a>
+
+
+                                            <h1 th:unless="${lead.articleId != null
+                                                            and !#strings.isEmpty(lead.articleId)}"
+                                                class="lead-title"
+                                                th:text="${lead.title}">
+
+                                                Lead Article
+
+                                            </h1>
+
+
+                                            <!-- SUBTITLE -->
+
+                                            <p class="lead-subtitle"
+                                               th:if="${lead.shortDescription != null
+                                                       and !#strings.isEmpty(lead.shortDescription)}"
+                                               th:text="${lead.shortDescription}">
+
+                                            </p>
+
+
+                                            <!-- LEAD IMAGE -->
+
+                                            <div class="lead-image-box">
+
+
+                                                <!-- CLICKABLE IMAGE -->
+
+                                                <a th:if="${lead.articleId != null
+                                                           and !#strings.isEmpty(lead.articleId)}"
+                                                   th:href="@{/public/epaper/article/{id}(id=${lead.articleId})}">
+
+                                                    <img th:src="${lead.mainFrameImageUrl != null
+                                                                  and !#strings.isEmpty(lead.mainFrameImageUrl)
+                                                                  ? lead.mainFrameImageUrl
+                                                                  : lead.imageUrl}"
+                                                         th:alt="${lead.title}">
+
+                                                </a>
+
+
+                                                <!-- NON CLICKABLE IMAGE -->
+
+                                                <img th:unless="${lead.articleId != null
+                                                                 and !#strings.isEmpty(lead.articleId)}"
+                                                     th:src="${lead.mainFrameImageUrl != null
+                                                              and !#strings.isEmpty(lead.mainFrameImageUrl)
+                                                              ? lead.mainFrameImageUrl
+                                                              : lead.imageUrl}"
+                                                     th:alt="${lead.title}">
+
+
+                                                <!-- VIDEO -->
+
+                                                <span class="video-play"
+                                                      th:if="${lead.mainUrl != null
+                                                              and !#strings.isEmpty(lead.mainUrl)}">
+
+                                                    ▶
+
+                                                </span>
+
+                                            </div>
+
+                                        </th:block>
+
+                                    </th:block>
+
+
+                                    <!-- ================================================= -->
+                                    <!-- ARTICLE 1 + ARTICLE 2 -->
+                                    <!-- ================================================= -->
+
+                                    <div class="lead-image-news">
+
+
+                                        <!-- ================================================= -->
+                                        <!-- ARTICLE NO 1 -->
+                                        <!-- ================================================= -->
+
+                                        <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                                  th:if="${article.articleNo == '1'}">
+
+                                            <article class="lead-small-story">
+
+
+                                                <a th:if="${article.articleId != null
+                                                           and !#strings.isEmpty(article.articleId)}"
+                                                   th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                                    <img th:src="${article.mainFrameImageUrl}"
+                                                         th:alt="${article.title}">
+
+                                                    <h2 class="lead-small-title"
+                                                        th:text="${article.title}">
+                                                        Important News
+                                                    </h2>
+
+                                                </a>
+
+
+                                                <th:block th:unless="${article.articleId != null
+                                                                       and !#strings.isEmpty(article.articleId)}">
+
+                                                    <img th:src="${article.mainFrameImageUrl}"
+                                                         th:alt="${article.title}">
+
+                                                    <h2 class="lead-small-title"
+                                                        th:text="${article.title}">
+                                                        Important News
+                                                    </h2>
+
+                                                </th:block>
+
+
+                                                <p class="lead-small-description"
+                                                   th:if="${article.shortDescription != null}"
+                                                   th:text="${article.shortDescription}">
+
+                                                    News information
+
+                                                </p>
+
+                                            </article>
+
+                                        </th:block>
+
+
+                                        <!-- ================================================= -->
+                                        <!-- ARTICLE NO 2 -->
+                                        <!-- ================================================= -->
+
+                                        <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                                  th:if="${article.articleNo == '2'}">
+
+                                            <article class="lead-small-story">
+
+
+                                                <a th:if="${article.articleId != null
+                                                           and !#strings.isEmpty(article.articleId)}"
+                                                   th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                                    <img th:src="${article.mainFrameImageUrl}"
+                                                         th:alt="${article.title}">
+
+                                                    <h2 class="lead-small-title"
+                                                        th:text="${article.title}">
+                                                        Important News
+                                                    </h2>
+
+                                                </a>
+
+
+                                                <th:block th:unless="${article.articleId != null
+                                                                       and !#strings.isEmpty(article.articleId)}">
+
+                                                    <img th:src="${article.mainFrameImageUrl}"
+                                                         th:alt="${article.title}">
+
+                                                    <h2 class="lead-small-title"
+                                                        th:text="${article.title}">
+                                                        Important News
+                                                    </h2>
+
+                                                </th:block>
+
+
+                                                <p class="lead-small-description"
+                                                   th:if="${article.shortDescription != null}"
+                                                   th:text="${article.shortDescription}">
+
+                                                    News information
+
+                                                </p>
+
+                                            </article>
+
+                                        </th:block>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ================================================= -->
+                                <!-- RIGHT SIDE -->
+                                <!-- ARTICLE 3 + ARTICLE 4 -->
+                                <!-- ================================================= -->
+
+                                <aside class="right-news">
+
+
+                                    <!-- ================================================= -->
+                                    <!-- ARTICLE NO 3 -->
+                                    <!-- ================================================= -->
+
+                                    <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                              th:if="${article.articleNo == '3'}">
+
+                                        <article class="right-story right-story-small">
+
+
+                                            <a th:if="${article.articleId != null
+                                                       and !#strings.isEmpty(article.articleId)}"
+                                               th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                                <h2 class="right-title"
+                                                    th:text="${article.title}">
+                                                    Article 3
+                                                </h2>
+
+                                                <img th:src="${article.mainFrameImageUrl}"
+                                                     th:alt="${article.title}"
+                                                     class="right-image-small">
+
+                                            </a>
+
+
+                                            <th:block th:unless="${article.articleId != null
+                                                                   and !#strings.isEmpty(article.articleId)}">
+
+                                                <h2 class="right-title"
+                                                    th:text="${article.title}">
+                                                    Article 3
+                                                </h2>
+
+                                                <img th:src="${article.mainFrameImageUrl}"
+                                                     th:alt="${article.title}"
+                                                     class="right-image-small">
+
+                                            </th:block>
+
+
+                                            <p class="right-description"
+                                               th:if="${article.shortDescription != null}"
+                                               th:text="${article.shortDescription}">
+                                            </p>
+
+                                        </article>
+
+                                    </th:block>
+
+
+                                    <!-- ================================================= -->
+                                    <!-- ARTICLE NO 4 -->
+                                    <!-- ================================================= -->
+
+                                    <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                              th:if="${article.articleNo == '4'}">
+
+                                        <article class="right-story right-story-large">
+
+
+                                            <a th:if="${article.articleId != null
+                                                       and !#strings.isEmpty(article.articleId)}"
+                                               th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                                <h2 class="right-title right-large-title"
+                                                    th:text="${article.title}">
+                                                    Article 4
+                                                </h2>
+
+                                                <img th:src="${article.mainFrameImageUrl}"
+                                                     th:alt="${article.title}"
+                                                     class="right-image-large">
+
+                                            </a>
+
+
+                                            <th:block th:unless="${article.articleId != null
+                                                                   and !#strings.isEmpty(article.articleId)}">
+
+                                                <h2 class="right-title right-large-title"
+                                                    th:text="${article.title}">
+                                                    Article 4
+                                                </h2>
+
+                                                <img th:src="${article.mainFrameImageUrl}"
+                                                     th:alt="${article.title}"
+                                                     class="right-image-large">
+
+                                            </th:block>
+
+
+                                            <p class="right-description"
+                                               th:if="${article.shortDescription != null}"
+                                               th:text="${article.shortDescription}">
+                                            </p>
+
+                                        </article>
+
+                                    </th:block>
+
+                                </aside>
+
+                            </div>
+
+
+                            <!-- ================================================= -->
+                            <!-- LOWER ARTICLES -->
+                            <!-- ARTICLE NO 5 - 9 -->
+                            <!-- ================================================= -->
+
+                            <div class="lower-news"
+                                 th:if="${articleMap[subCategory.id] != null}">
+
+
+                                <!-- ================================================= -->
+                                <!-- ARTICLE NO 5 -->
+                                <!-- ================================================= -->
+
+                                <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                          th:if="${article.articleNo == '5'}">
+
+                                    <article class="lower-story">
+
+
+                                        <a th:if="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}"
+                                           th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 5
+                                            </h3>
+
+                                        </a>
+
+
+                                        <th:block th:unless="${article.articleId != null
+                                                               and !#strings.isEmpty(article.articleId)}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 5
+                                            </h3>
+
+                                        </th:block>
+
+
+                                        <p class="lower-description"
+                                           th:if="${article.shortDescription != null}"
+                                           th:text="${article.shortDescription}">
+                                        </p>
+
+                                    </article>
+
+                                </th:block>
+
+
+                                <!-- ================================================= -->
+                                <!-- ARTICLE NO 6 -->
+                                <!-- ================================================= -->
+
+                                <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                          th:if="${article.articleNo == '6'}">
+
+                                    <article class="lower-story">
+
+
+                                        <a th:if="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}"
+                                           th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 6
+                                            </h3>
+
+                                        </a>
+
+
+                                        <th:block th:unless="${article.articleId != null
+                                                               and !#strings.isEmpty(article.articleId)}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 6
+                                            </h3>
+
+                                        </th:block>
+
+
+                                        <p class="lower-description"
+                                           th:if="${article.shortDescription != null}"
+                                           th:text="${article.shortDescription}">
+                                        </p>
+
+                                    </article>
+
+                                </th:block>
+
+
+                                <!-- ================================================= -->
+                                <!-- ARTICLE NO 7 -->
+                                <!-- ================================================= -->
+
+                                <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                          th:if="${article.articleNo == '7'}">
+
+                                    <article class="lower-story">
+
+
+                                        <a th:if="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}"
+                                           th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 7
+                                            </h3>
+
+                                        </a>
+
+
+                                        <th:block th:unless="${article.articleId != null
+                                                               and !#strings.isEmpty(article.articleId)}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 7
+                                            </h3>
+
+                                        </th:block>
+
+
+                                        <p class="lower-description"
+                                           th:if="${article.shortDescription != null}"
+                                           th:text="${article.shortDescription}">
+                                        </p>
+
+                                    </article>
+
+                                </th:block>
+
+
+                                <!-- ================================================= -->
+                                <!-- ARTICLE NO 8 -->
+                                <!-- ================================================= -->
+
+                                <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                          th:if="${article.articleNo == '8'}">
+
+                                    <article class="lower-story">
+
+
+                                        <a th:if="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}"
+                                           th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 8
+                                            </h3>
+
+                                        </a>
+
+
+                                        <th:block th:unless="${article.articleId != null
+                                                               and !#strings.isEmpty(article.articleId)}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 8
+                                            </h3>
+
+                                        </th:block>
+
+
+                                        <p class="lower-description"
+                                           th:if="${article.shortDescription != null}"
+                                           th:text="${article.shortDescription}">
+                                        </p>
+
+                                    </article>
+
+                                </th:block>
+
+
+                                <!-- ================================================= -->
+                                <!-- ARTICLE NO 9 -->
+                                <!-- ================================================= -->
+
+                                <th:block th:each="article : ${articleMap[subCategory.id]}"
+                                          th:if="${article.articleNo == '9'}">
+
+                                    <article class="lower-story">
+
+
+                                        <div class="lower-category">
+                                        </div>
+
+
+                                        <a th:if="${article.articleId != null
+                                                   and !#strings.isEmpty(article.articleId)}"
+                                           th:href="@{/public/epaper/article/{id}(id=${article.articleId})}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 9
+                                            </h3>
+
+                                        </a>
+
+
+                                        <th:block th:unless="${article.articleId != null
+                                                               and !#strings.isEmpty(article.articleId)}">
+
+                                            <img th:src="${article.mainFrameImageUrl}"
+                                                 th:alt="${article.title}"
+                                                 class="lower-image">
+
+                                            <h3 class="lower-title"
+                                                th:text="${article.title}">
+                                                Article 9
+                                            </h3>
+
+                                        </th:block>
+
+
+                                        <p class="lower-description"
+                                           th:if="${article.shortDescription != null}"
+                                           th:text="${article.shortDescription}">
+                                        </p>
+
+                                    </article>
+
+                                </th:block>
+
+                            </div>
+
+
+                            <!-- ================================================= -->
+                            <!-- ADVERTISEMENT -->
+                            <!-- ================================================= -->
+
+                            <div class="paper-ad-column">
+
+                                <div class="ad-placeholder">
+                                    Advertisement
+                                </div>
+
+                            </div>
+
+
+                            <!-- ================================================= -->
+                            <!-- COLORED DOTS -->
+                            <!-- ================================================= -->
+
+                            <div class="grid grid-cols-3 gap-8">
+
+
+                                <div class="paper-dots">
+
+                                    <span class="paper-dot paper-dot1"></span>
+                                    <span class="paper-dot paper-dot2"></span>
+                                    <span class="paper-dot paper-dot3"></span>
+                                    <span class="paper-dot paper-dot4"></span>
+                                    <span class="paper-dot paper-dot5"></span>
+                                    <span class="paper-dot paper-dot6"></span>
+
+                                </div>
+
+
+                                <div class="paper-dots">
+
+                                    <span class="paper-dot paper-dot1"></span>
+                                    <span class="paper-dot paper-dot2"></span>
+                                    <span class="paper-dot paper-dot3"></span>
+                                    <span class="paper-dot paper-dot4"></span>
+                                    <span class="paper-dot paper-dot5"></span>
+                                    <span class="paper-dot paper-dot6"></span>
+
+                                </div>
+
+
+                                <div class="paper-dots">
+
+                                    <span class="paper-dot paper-dot1"></span>
+                                    <span class="paper-dot paper-dot2"></span>
+                                    <span class="paper-dot paper-dot3"></span>
+                                    <span class="paper-dot paper-dot4"></span>
+                                    <span class="paper-dot paper-dot5"></span>
+                                    <span class="paper-dot paper-dot6"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- PAPER FOOTER -->
+                        <!-- ================================================= -->
+
+                        <div class="paper-footer">
+
+                            <span th:text="${category.day}">
+                                Tuesday
+                            </span>
+
+
+                            <span>
+                                E-PAPER
+                            </span>
+
+
+                            <span>
+
+                                Page
+
+                                <span th:text="${stat.index + 1}">
+                                    1
+                                </span>
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- PREVIOUS PAGE -->
+        <!-- ================================================= -->
+
+        <button id="previousPage"
+                type="button"
+                class="absolute
+                       left-4
+                       top-1/2
+                       -translate-y-1/2
+                       w-12 h-12
+                       rounded-full
+                       bg-white
+                       shadow-lg
+                       flex items-center justify-center
+                       text-2xl
+                       hover:bg-red-600
+                       hover:text-white
+                       transition
+                       z-30">
+
+            ‹
+
+        </button>
+
+
+        <!-- ================================================= -->
+        <!-- NEXT PAGE -->
+        <!-- ================================================= -->
+
+        <button id="nextPage"
+                type="button"
+                class="absolute
+                       right-4
+                       top-1/2
+                       -translate-y-1/2
+                       w-12 h-12
+                       rounded-full
+                       bg-white
+                       shadow-lg
+                       flex items-center justify-center
+                       text-2xl
+                       hover:bg-red-600
+                       hover:text-white
+                       transition
+                       z-30">
+
+            ›
+
+        </button>
+
+
+        <!-- ================================================= -->
+        <!-- PAGE NUMBER -->
+        <!-- ================================================= -->
+
+        <div class="flex justify-center
+                    items-center
+                    gap-2
+                    py-5">
+
+            <span id="pageNumber"
+                  class="text-sm
+                         font-semibold
+                         text-gray-600">
+
+                1 / 1
+
+            </span>
+
+        </div>
+
+    </main>
+
 </div>
->>>>>>> f773d2d (first commit)
-
-				</section>
-
-			</div>
 
 
-			<!-- ================================================= -->
-			<!-- PREVIOUS BUTTON -->
-			<!-- ================================================= -->
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
 
-			<button id="previousPage" type="button" class="absolute left-4 top-1/2 -translate-y-1/2
-                       w-12 h-12 rounded-full
-                       bg-white shadow-lg
-                       flex items-center justify-center
-                       text-2xl
-                       hover:bg-red-600 hover:text-white
-                       transition
-                       z-30">
+<script>
 
-				‹
-
-			</button>
-
-
-			<!-- ================================================= -->
-			<!-- NEXT BUTTON -->
-			<!-- ================================================= -->
-
-			<button id="nextPage" type="button" class="absolute right-4 top-1/2 -translate-y-1/2
-                       w-12 h-12 rounded-full
-                       bg-white shadow-lg
-                       flex items-center justify-center
-                       text-2xl
-                       hover:bg-red-600 hover:text-white
-                       transition
-                       z-30">
-
-				›
-
-			</button>
-
-
-			<!-- ================================================= -->
-			<!-- PAGE INDICATOR -->
-			<!-- ================================================= -->
-
-			<div class="flex justify-center items-center gap-2 py-5">
-
-				<span id="pageNumber" class="text-sm font-semibold text-gray-600">
-
-					1 / 1
-
-				</span>
-
-			</div>
-
-		</main>
-
-	</div>
-
-
-	<!-- ========================================================= -->
-	<!-- JAVASCRIPT -->
-	<!-- ========================================================= -->
-
-	<script>
-
-	</script>
+</script>
 
 
 </body>

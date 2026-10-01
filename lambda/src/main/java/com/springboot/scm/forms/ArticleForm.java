@@ -71,11 +71,9 @@ public class ArticleForm {
 	// MEDIA
 	// =========================================================
 
-<<<<<<< HEAD
-=======
 	private String articleNo;
 	
->>>>>>> f773d2d (first commit)
+
 	private MultipartFile mainFrameImageFile;
 	
 	private String mainFrameImagePreviewUrl;// main preview url

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> f773d2d (first commit)
 package com.springboot.scm.entities;
 
 import java.time.LocalDateTime;
@@ -21,13 +17,8 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-<<<<<<< HEAD
-import lombok.NoArgsConstructor;
-=======
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
->>>>>>> f773d2d (first commit)
 
 @Entity
 @Data
@@ -49,10 +40,6 @@ public class Article {
     // ARTICLE INFORMATION
     // =========================================================
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f773d2d (first commit)
     private String articleId;
 
     private String title;
@@ -71,7 +58,6 @@ public class Article {
     // CONTENT TYPE
     // =========================================================
 
-<<<<<<< HEAD
     /**
      * NEWS
      * OPINION
@@ -79,8 +65,6 @@ public class Article {
      * FEATURE
      * PRESS_RELEASE
      */
-=======
->>>>>>> f773d2d (first commit)
     private String contentType;
 
 
@@ -88,15 +72,12 @@ public class Article {
     // STATUS
     // =========================================================
 
-<<<<<<< HEAD
     /**
      * DRAFT
      * SCHEDULED
      * PUBLISHED
      * ARCHIVED
      */
-=======
->>>>>>> f773d2d (first commit)
     private String status;
 
 
@@ -127,23 +108,9 @@ public class Article {
     // =========================================================
     // MEDIA
     // =========================================================
-<<<<<<< HEAD
-    private String mainFrameImageUrl;// main page image url
-    
-    private String mainFrameCloudinaryid;
-    
-    private String mediaType;
-    
-    private String imageUrl;
-    
-    private String embedMainUrl;
-    
-    private String mainUrl;
-    
-=======
 
     private String articleNo;
-    
+
     private String mainFrameImageUrl;
 
     private String mainFrameCloudinaryid;
@@ -156,10 +123,12 @@ public class Article {
 
     private String mainUrl;
 
->>>>>>> f773d2d (first commit)
     private String subUrl1;
+
     private String subUrl2;
+
     private String subUrl3;
+
     private String subUrl4;
 
     private String imageCloudinaryId;
@@ -182,10 +151,6 @@ public class Article {
     private String metaRobots;
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f773d2d (first commit)
     // =========================================================
     // STATISTICS
     // =========================================================
@@ -203,11 +168,7 @@ public class Article {
         name = "sub_category_id",
         nullable = false
     )
-<<<<<<< HEAD
-=======
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
->>>>>>> f773d2d (first commit)
     private ContentSubCategory subCategory;
 
 
@@ -220,15 +181,7 @@ public class Article {
         name = "author_id",
         nullable = true
     )
-<<<<<<< HEAD
-    private EmployeeDetails author;
-
-}
-
-=======
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private EmployeeDetails author;
 
 }
->>>>>>> f773d2d (first commit)
