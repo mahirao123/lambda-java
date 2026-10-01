@@ -1,9 +1,3 @@
-
-
-
-
-
-
 /* =========================================================
    HORIZONTAL SCROLLBAR
    ========================================================= */
@@ -82,8 +76,6 @@
     }
 
 }
-<<<<<<< HEAD
-=======
 
 
 /* =========================================================
@@ -153,7 +145,7 @@
 
 .paper-masthead {
     padding: 5px 4px 3px;
-    border-bottom: 4px solid #111;
+    border-bottom: 3px solid #111;
 }
 
 .paper-top-line {
@@ -242,7 +234,7 @@
    ========================================================= */
 
 .paper-content {
-    padding: 0 12px 10px;
+    padding: 0 2px 1px;
 }
 
 
@@ -253,9 +245,10 @@
 .paper-main-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 3px;
+    gap: 0px;
     align-items: stretch;
     width: 100%;
+	height: 900px;
 }
 
 
@@ -265,7 +258,7 @@
 
 .lead-section {
     border-right: 2px solid #222;
-    padding-right: 12px;
+    padding-right: 3px;
     min-width: 0;
     height: 100%;
     box-sizing: border-box;
@@ -312,6 +305,7 @@
     color: #444;
     font-weight: 600;
     margin-bottom: 8px;
+	overflow: hidden;
 }
 
 
@@ -322,6 +316,7 @@
 .lead-image-box {
     position: relative;
     width: 100%;
+	height: auto;
     overflow: hidden;
     background: #eee;
 }
@@ -370,7 +365,7 @@
 .lead-image-news {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 3px;
     margin-top: 8px;
 }
 
@@ -426,10 +421,12 @@
 
 .right-news {
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 10px;
+    grid-template-rows: 1fr 2fr;
+    gap: 3px;
     min-width: 0;
     height: 100%;
+	
+	
 }
 
 
@@ -441,8 +438,8 @@
     min-width: 0;
     min-height: 0;
     overflow: hidden;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #222;
+    padding-bottom: 2px;
+   
     box-sizing: border-box;
 }
 
@@ -461,7 +458,7 @@
     height: 200px;
     object-fit: cover;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 
 
@@ -471,12 +468,13 @@
 
 .right-story-large {
     min-height: 0;
+	border-top: 2px solid #222;
 }
 
 
 .right-image-large {
     width: 100%;
-    height: 100%;
+    height: 87%;
     object-fit: cover;
     display: block;
     margin-bottom: 5px;
@@ -511,6 +509,8 @@
     line-height: 1.35;
     color: #555;
     margin: 0;
+	overflow: hidden;
+	
 }
 
 
@@ -522,7 +522,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    margin-top: 12px;
+    margin-top: 2px;
     padding-top: 10px;
     border-top: 3px solid #111;
     align-items: start;
@@ -712,6 +712,63 @@
 }
 
 
+
+
+/* =========================================================
+   DESCRIPTION OVERFLOW CONTROL
+   ========================================================= */
+
+.lead-subtitle,
+.lead-small-description,
+.right-description,
+.lower-description,
+.paper-ad-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+
+/* =========================================================
+   DESCRIPTION LINE LIMITS
+   ========================================================= */
+
+/* Main article */
+.lead-subtitle {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+
+
+/* Article 1 + Article 2 */
+.lead-small-description {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+
+
+/* Article 3 + Article 4 */
+.right-description {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+}
+
+
+/* Lower articles */
+.lower-description {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+
+
+/* Advertisement text */
+.paper-ad-text {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+
 /* =========================================================
    MEDIUM SCREEN
    SAME NEWSPAPER STRUCTURE
@@ -719,6 +776,9 @@
 
 @media (max-width: 900px) {
 
+		.newspaper-paper{
+			width:99%;
+		}
     .paper-main-grid {
         grid-template-columns: 2fr 1fr;
         gap: 8px;
@@ -749,7 +809,7 @@
 
 
     .right-news {
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 1fr 2fr;
         gap: 8px;
     }
 
@@ -797,143 +857,141 @@
    SAME STRUCTURE
    ========================================================= */
 
-@media (max-width: 600px) {
 
-    .newspaper-page {
-        padding: 4px;
-    }
-
-
-    .paper-content {
-        padding: 0 4px 8px;
-    }
-
+@media (max-width: 768px) {
 
     /*
-       KEEP SAME STRUCTURE
+       Keep the complete newspaper layout.
 
-       LEFT = 2fr
-       RIGHT = 1fr
+       Nothing is stacked.
+       Nothing changes from:
+
+       2fr | 1fr
+
+       and
+
+       1 | 1 | 1 | 1
     */
+	.newspaper-paper{
+		width:100%;
+	}
+    .newspaper-page {
+        padding: 1px 1px 1px;
+    }
+
+    .paper-content {
+        padding: 0 2px 1px;
+    }
 
     .paper-main-grid {
         grid-template-columns: 2fr 1fr;
-        gap: 5px;
+        gap: 1px;
+        height: 650px;
     }
-
 
     .lead-section {
-        padding-right: 5px;
+        padding-right: 3px;
     }
 
-
-    .lead-title {
-        font-size: 24px;
-        letter-spacing: -1px;
+    .lead-image-box {
+        height: 300px;
     }
 
-
-    .lead-subtitle {
-        font-size: 9px;
-    }
-
-	.lead-image-box{
-		height:auto;
-	}
     .lead-image-box img {
-        height: 230px;
+        height: 300px;
     }
-
 
     .lead-image-news {
         grid-template-columns: 1fr 1fr;
-        gap: 4px;
+        gap: 1px;
     }
-
 
     .lead-small-story img {
-        height: 80px;
+        height: 100px;
     }
-
-
-    .lead-small-title {
-        font-size: 11px;
-    }
-
-
-    .lead-small-description {
-        font-size: 7px;
-    }
-
 
     .right-news {
-        grid-template-rows: 1fr 1fr;
-        gap: 5px;
+        grid-template-rows: 1fr 2fr;
+        gap: 1px;
     }
-
 
     .right-image-small {
-        height: 55px;
+        height: 100px;
     }
-
 
     .right-image-large {
-        height: 230px;
+        height: 300px;
     }
-
-
-    .right-title {
-        font-size: 11px;
-        line-height: 1.05;
-    }
-
-
-    .right-description {
-        font-size: 7px;
-        line-height: 1.2;
-    }
-
-
-    /*
-       LOWER AREA
-
-       Keep four-column newspaper structure.
-       Multiple articleNo = 5 articles can flow
-       into the available lower grid cells.
-    */
 
     .lower-news {
         grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
+        gap: 3px;
     }
-
-
-    .lower-story {
-        padding-right: 4px;
-    }
-
 
     .lower-image {
-        height: 80px;
+        height: 100px;
     }
-
-
-    .lower-title {
-        font-size: 10px;
-        line-height: 1.05;
-    }
-
-
-    .lower-description {
-        font-size: 7px;
-        line-height: 1.2;
-    }
-
-
-    .paper-dot {
-        width: 9px;
-        height: 9px;
-    }
-
 }
->>>>>>> f773d2d (first commit)
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+   STILL SAME STRUCTURE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    /*
+       DO NOT change:
+
+       2fr 1fr
+       1fr 1fr
+       repeat(4, 1fr)
+
+       The browser will simply make each column narrower.
+    */
+	.newspaper-paper{
+		width:100%;
+	}
+	
+    .paper-main-grid {
+        grid-template-columns: 2fr 1fr;
+        height: 600px;
+    }
+
+    .lead-image-box {
+        height: 250px;
+    }
+
+    .lead-image-box img {
+        height: 250px;
+    }
+
+    .lead-image-news {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .lead-small-story img {
+        height: 100px;
+    }
+
+    .right-news {
+        grid-template-rows: 1fr 2fr;
+    }
+
+    .right-image-small {
+        height: 100px;
+    }
+
+    .right-image-large {
+        height: 250px;
+    }
+
+    .lower-news {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .lower-image {
+        height: 100px;
+    }
+}
