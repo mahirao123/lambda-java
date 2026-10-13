@@ -93,6 +93,15 @@ public class ArticleForm {
 	private String subUrl4;
 
 	private String caption;
+	
+    // =========================================================
+    // Advertisement
+    // =========================================================
+    private String mainAdvertisementUrl;
+    
+    private String subAdvertisementUrl1;
+    
+    private String subAdvertisementUrl2;
 
 	// =========================================================
 	// NEWS FLAGS

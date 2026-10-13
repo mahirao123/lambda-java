@@ -206,4 +206,26 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+function toggleAdSound(button) {
+    const wrapper = button.closest('.paper-ad-video-wrapper');
+    const video = wrapper.querySelector('video');
+    const icon = button.querySelector('i');
 
+    video.muted = !video.muted;
+
+    if (video.muted) {
+        icon.classList.remove('fa-volume-high');
+        icon.classList.add('fa-volume-xmark');
+        button.setAttribute('aria-label', 'Unmute advertisement');
+    } else {
+        icon.classList.remove('fa-volume-xmark');
+        icon.classList.add('fa-volume-high');
+        button.setAttribute('aria-label', 'Mute advertisement');
+    }
+
+    if (video.paused) {
+        video.play().catch(error => {
+            console.error('Video playback failed:', error);
+        });
+    }
+}

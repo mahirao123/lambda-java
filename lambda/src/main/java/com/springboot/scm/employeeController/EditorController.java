@@ -43,6 +43,7 @@ import com.springboot.scm.forms.OpeningForm;
 import com.springboot.scm.forms.SliderForm;
 import com.springboot.scm.forms.SlidingTextForm;
 import com.springboot.scm.forms.SocialMediaUrlsForm;
+import com.springboot.scm.forms.SubCategoryAdvertisementForm;
 import com.springboot.scm.helpers.AppConstants;
 import com.springboot.scm.helpers.EmployeeHelper;
 import com.springboot.scm.helpers.Message;
@@ -905,7 +906,7 @@ public String addAimsSubCategory(
 // ======================================================
 
 @PostMapping("/category/subcategory/update")
-public String updateAimsSubCategory(
+public String updateSubCategory(
         @RequestParam("id") Long id,
         @RequestParam("name") String name) {
 
@@ -942,6 +943,95 @@ public String updateAimsSubCategory(
 
     return "redirect:/editor/ourAims/category";
 }
+
+
+// ======================================================
+// GET SUBCATEGORIES ADVERTISEMENTS
+// ======================================================
+@RequestMapping("/category/subcategory/advertisement/{id}")
+public String subcategoryAdvertisements(@PathVariable Long id,Model model) {
+	
+	ContentSubCategory subCategory = subCategoryService.getById(id)
+	        .orElseThrow(() ->
+	                new RuntimeException("Subcategory not found: " + id));
+
+	model.addAttribute("subCategory", subCategory);
+	
+	return"editor/subcategoryAdvertisementList";
+	
+}
+
+// ======================================================
+// GET SUBCATEGORIES ADVERTISEMENTS UPDATE
+// ======================================================
+@RequestMapping("/subcategory/advertisement/update/{id}")
+public String subcategoryAdvertisementsUpdate(@PathVariable Long id,Model model) {
+	
+	ContentSubCategory subCategory = subCategoryService.getById(id)
+			.orElseThrow(() ->
+			new RuntimeException("Subcategory not found: " + id));
+	
+	SubCategoryAdvertisementForm advertisementForm=new SubCategoryAdvertisementForm();
+	
+	advertisementForm.setName(subCategory.getName());
+	advertisementForm.setLongFrameAdvertisement(subCategory.getLongFrameAdvertisement());
+	advertisementForm.setSortFrameAdvertisement1(subCategory.getSortFrameAdvertisement1());
+	advertisementForm.setSortFrameAdvertisement2(subCategory.getSortFrameAdvertisement2());
+	
+	model.addAttribute("subCategoryForm", advertisementForm);
+	
+	return"editor/updateSubCategoryAdvertisements";
+	
+}
+
+
+// ======================================================
+// GET SUBCATEGORIES ADVERTISEMENTS UPDATE Process
+// ======================================================
+@RequestMapping(value="/subcategory/advertisement/update/{id}",method=RequestMethod.POST)
+public String subcategoryAdvertisementsUpdateProcess(@PathVariable Long id,
+													@ModelAttribute("subCategoryForm") SubCategoryAdvertisementForm subCategoryForm,
+													BindingResult bindingResult,HttpSession session,
+													Model model) {
+	
+    // Validation
+if (bindingResult.hasErrors()) {
+	session.setAttribute("message",Message.builder()
+.content("Please correct the following errors")
+		.type(MessageType.red)
+		.build());
+
+	return"editor/updateSubCategoryAdvertisements";
+}
+	
+	ContentSubCategory subCategory = subCategoryService.getById(id).orElseThrow(() ->  new RuntimeException("Subcategory not found: " + id));
+	subCategory.setId(id);
+	subCategory.setName(subCategoryForm.getName());
+	subCategory.setLongFrameAdvertisement(subCategoryForm.getLongFrameAdvertisement());
+	subCategory.setSortFrameAdvertisement1(subCategoryForm.getSortFrameAdvertisement1());
+	subCategory.setSortFrameAdvertisement2(subCategoryForm.getSortFrameAdvertisement2());
+	
+	
+	
+	try {
+		subCategoryService.updateSubCategory(subCategory);
+		
+		Message message = Message.builder()
+		        .content(" Updated Successfully")
+		        .type(MessageType.green)
+		        .build();
+		
+		session.setAttribute("message", message);
+		return "redirect:/editor/subcategory/advertisement/update/{id}";
+		
+	}catch(Exception e) {
+		model.addAttribute("subCategoryForm",subCategoryForm);
+		model.addAttribute("error",e.getMessage());
+	}
+	return"editor/updateSubCategoryAdvertisements";
+	
+}
+
 
 
 // ======================================================
@@ -1142,13 +1232,26 @@ if (bindingResult.hasErrors()) {
                     );
     subCategory.setEnable(true);
     article.setSubCategory(subCategory);
-
+    
+    
+    // =====================================================
+    // Advertisement
+    // =====================================================
+    
+    article.setMainAdvertisementUrl(articleForm.getMainAdvertisementUrl());
+    
+    article.setSubAdvertisementUrl1(articleForm.getSubAdvertisementUrl1());
+    
+    article.setSubAdvertisementUrl2(articleForm.getSubAdvertisementUrl2());
+    
+    
+    
+    
     // =====================================================
     // MAIN FRAME IMAGE
-    // =====================================================
+    // =====================================================    
 
-    if (articleForm.getMainFrameImageFile() != null
-            && !articleForm.getMainFrameImageFile().isEmpty()) {
+    if (articleForm.getMainFrameImageFile() != null && !articleForm.getMainFrameImageFile().isEmpty()) {
 
         String imageId = "mainFrameImage_" + fileName;
         
@@ -1451,6 +1554,20 @@ public String updateArticleForm(
     );
 
 
+    
+    
+    // =====================================================
+    // Advertisement
+    // =====================================================
+    
+    articleForm.setMainAdvertisementUrl(article.getMainAdvertisementUrl());
+    
+    articleForm.setSubAdvertisementUrl1(article.getSubAdvertisementUrl1());
+    
+    articleForm.setSubAdvertisementUrl2(article.getSubAdvertisementUrl2());
+
+    
+    
     // =========================================================
     // MEDIA
     // =========================================================
@@ -1689,9 +1806,19 @@ if (bindingResult.hasErrors()) {
         article.setCaption( articleForm.getCaption());
     }
 
+    
+    // =====================================================
+    // Advertisement
+    // =====================================================
+    
+    article.setMainAdvertisementUrl(articleForm.getMainAdvertisementUrl());
+    
+    article.setSubAdvertisementUrl1(articleForm.getSubAdvertisementUrl1());
+    
+    article.setSubAdvertisementUrl2(articleForm.getSubAdvertisementUrl2());
 
     // =====================================================
-    // URLS
+    // Media
     // =====================================================
 
     article.setMainUrl(articleForm.getMainUrl());

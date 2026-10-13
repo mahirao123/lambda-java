@@ -40,7 +40,16 @@ public class ContentSubCategory {
     // =========================================================
 
     private String name;
-
+    
+    // =========================================================
+    // Advertisement 
+    // =========================================================
+    
+    private String longFrameAdvertisement;
+    
+    private String sortFrameAdvertisement1;
+    
+    private String sortFrameAdvertisement2;
 
     // =========================================================
     // CATEGORY

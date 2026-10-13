@@ -11,11 +11,20 @@
 </head>
 
 <body>
+	
 
+ 
 	<div id="content" class="bg-gray-50 min-h-screen pt-[0px] ">
+		<!-- ===================================================== -->
+		<!-- NAVBAR -->
+		<!-- ===================================================== -->
+		<div th:replace="~{navbar :: navbar}">	</div>
+		
+		<!-- ===================================================== -->
+		<!-- E-PAPER HEADER -->
+		<!-- ===================================================== -->
 
-		<!---   Main Slider Fragment -->
-		<div th:replace="~{fragments/language :: changeLanguage}"></div>
+		<div th:replace="~{fragments/epaperHeader :: epaperHeader}"> </div>
 		
 		<!-- ========================================================= -->
 		<!-- BREAKING NEWS BAR                                         -->
@@ -158,13 +167,13 @@
 							<!-- IMAGE -->
 
 							<img th:if="${article.mediaType == 'IMAGE'}" th:src="${article.imageUrl}"
-								th:alt="${article.title}" class="w-full max-h-[650px]
+								th:alt="${article.title}" class="w-full max-h-[350px]
                                     object-contain mx-auto">
 
 
 							<!-- VIDEO -->
 
-							<video th:if="${article.mediaType == 'VIDEO'}" class="w-full max-h-[650px]" controls
+							<video th:if="${article.mediaType == 'VIDEO'}" class="w-full max-h-[350px]" controls
 								preload="metadata" playsinline>
 
 								<source th:src="${article.mainFrameImageUrl}" type="video/mp4">

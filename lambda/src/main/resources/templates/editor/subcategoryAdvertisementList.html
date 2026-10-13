@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+
+	<title>Advertisements</title>
+
+</head>
+
+<body>
+
+	<div id="content" class="flex-1 px-4 sm:ml-64 transition-all duration-300">
+
+		<!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+		<div class="flex flex-col md:flex-row
+                md:items-center md:justify-between
+                gap-4 mb-6">
+
+			<div>
+
+				<h1 class="text-2xl font-bold
+                       text-gray-900 dark:text-white">
+
+					SubCategory Advertisement
+
+				</h1>
+
+				<p class="text-sm text-gray-500 mt-1">
+					Manage Adds
+				</p>
+
+			</div>
+			<div class="flex flex-row
+		                items-center justify-between
+		                gap-2 ">
+
+				<a th:href="@{/editor/article/add}" class="px-5 py-2.5
+
+                  text-sm font-medium
+                  text-white
+                  bg-blue-600
+                  rounded-lg
+                  hover:bg-blue-700">
+
+					+ Add Article
+
+				</a>
+
+				<a th:href="@{/editor/ourAims/category}" class="px-6 py-3
+		       text-sm font-medium
+		       bg-gray-200
+		       rounded-lg
+		       hover:bg-gray-300">
+
+					Back 
+
+				</a>
+
+			</div>
+		</div>
+
+
+		<!-- =========================================================
+         MESSAGE
+    ========================================================== -->
+
+		<div th:if="${session.message}" class="mb-5">
+
+			<div th:replace="~{message :: messagebox}"></div>
+
+			<th:block th:text="${@sessionHelper.removeMessage()}"></th:block>
+
+		</div>
+
+
+		<!-- =========================================================
+         ARTICLE TABLE
+    ========================================================== -->
+
+		<div class="relative overflow-x-auto
+                shadow-md sm:rounded-lg
+                bg-white dark:bg-gray-800">
+
+			<table class="w-full text-sm text-left
+                      text-gray-500 dark:text-gray-400">
+
+				<!-- TABLE HEADER -->
+
+				<thead class="text-xs uppercase
+                          bg-gray-100
+                          dark:bg-gray-700
+                          dark:text-gray-300">
+
+					<tr>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							SubCategory ID
+						</th>
+
+						<th scope="col" class="px-6 py-4 min-w-[250px]">
+							Name
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Long Adds
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Short 1
+						</th>
+
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Short 2
+						</th>
+						
+						<th scope="col" class="px-6 py-4 whitespace-nowrap">
+							Actions
+						</th>
+
+
+					</tr>
+
+				</thead>
+
+
+				<!-- TABLE BODY -->
+
+				<tbody>
+
+<tbody>
+
+    <tr th:each="advertise, stat : ${subCategory}"
+        th:object="${advertise}"
+        class="bg-white border-b hover:bg-gray-50">
+
+        <!-- SUBCATEGORY ID -->
+        <td class="px-6 py-4">
+            <span th:text="${subCategory.id}">5</span>
+        </td>
+
+        <!-- SUBCATEGORY NAME -->
+        <td class="px-6 py-4">
+            <span th:text="${subCategory.name}">Education</span>
+        </td>
+
+        <!-- LONG FRAME ADVERTISEMENT -->
+        <td class="px-6 py-4">
+            <a th:if="*{longFrameAdvertisement != null}"
+               th:href="*{longFrameAdvertisement}"
+			   class="bg-green-100 font-bold text-blue-700 p-2 rounded-full"
+               target="_blank">
+                Long Frame Advertisement
+            </a>
+            <span th:unless="*{longFrameAdvertisement != null}">
+                Not available
+            </span>
+        </td>
+
+        <!-- LEFT SIDE ADVERTISEMENT -->
+        <td class="px-6 py-4">
+            <a th:if="*{sortFrameAdvertisement1 != null}"
+               th:href="*{sortFrameAdvertisement1}"
+			   class="bg-green-100 font-bold text-blue-700 p-2 rounded-full"
+               target="_blank">
+                Left Side Advertisement
+            </a>
+            <span th:unless="*{sortFrameAdvertisement1 != null}">
+                Not available
+            </span>
+        </td>
+
+        <!-- RIGHT SIDE ADVERTISEMENT -->
+        <td class="px-6 py-4">
+            <a th:if="*{sortFrameAdvertisement2 != null}"
+               th:href="*{sortFrameAdvertisement2}"
+			   class="bg-green-100 font-bold text-blue-700 p-2 rounded-full"
+               target="_blank">
+                Right Side Advertisement
+            </a>
+            <span th:unless="*{sortFrameAdvertisement2 != null}">
+                Not available
+            </span>
+        </td>
+		
+		<!-- ACTIONS -->
+
+		<td class="px-6 py-4 whitespace-nowrap">
+
+			<div class="flex items-center gap-2">
+
+
+
+				<!-- UPDATE -->
+
+				<a th:href="@{/editor/subcategory/advertisement/update/{id}(id=${subCategory.id})}" title="Update Article"
+					class="inline-flex items-center
+		          px-3 py-2
+		          text-xs font-medium
+		          text-white
+		          bg-blue-600
+		          rounded-lg
+		          hover:bg-blue-700">
+
+					Update
+
+				</a>
+
+	</td>
+
+
+    </tr>
+
+    <tr th:if="${subCategory == null or #lists.isEmpty(subCategory)}">
+        <td colspan="6" class="px-6 py-10 text-center text-gray-500">
+            No advertisements found.
+        </td>
+    </tr>
+
+</tbody></div>
+
+	</div>
+
+
+	<script>
+
+
+
+	</script>
+
+</body>
+
+</html>
+```

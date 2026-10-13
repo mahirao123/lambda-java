@@ -135,7 +135,16 @@ public class Article {
 
     private String caption;
 
-
+    
+    // =========================================================
+    // Advertisement
+    // =========================================================
+    private String mainAdvertisementUrl;
+    
+    private String subAdvertisementUrl1;
+    
+    private String subAdvertisementUrl2;
+    
     // =========================================================
     // SEO
     // =========================================================
