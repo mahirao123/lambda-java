@@ -946,7 +946,7 @@ public String updateSubCategory(
 
 
 // ======================================================
-// GET SUBCATEGORIES ADVERTISEMENTS
+// GET SUBCATEGORIES ADVERTISEMENTS AND IMPORTANT NEWS TEXT
 // ======================================================
 @RequestMapping("/category/subcategory/advertisement/{id}")
 public String subcategoryAdvertisements(@PathVariable Long id,Model model) {
@@ -977,6 +977,10 @@ public String subcategoryAdvertisementsUpdate(@PathVariable Long id,Model model)
 	advertisementForm.setLongFrameAdvertisement(subCategory.getLongFrameAdvertisement());
 	advertisementForm.setSortFrameAdvertisement1(subCategory.getSortFrameAdvertisement1());
 	advertisementForm.setSortFrameAdvertisement2(subCategory.getSortFrameAdvertisement2());
+	
+	advertisementForm.setImportantText1(subCategory.getImportantText1());
+	advertisementForm.setImportantText2(subCategory.getImportantText2());
+	advertisementForm.setImportantText3(subCategory.getImportantText3());
 	
 	model.addAttribute("subCategoryForm", advertisementForm);
 	
@@ -1011,7 +1015,9 @@ if (bindingResult.hasErrors()) {
 	subCategory.setSortFrameAdvertisement1(subCategoryForm.getSortFrameAdvertisement1());
 	subCategory.setSortFrameAdvertisement2(subCategoryForm.getSortFrameAdvertisement2());
 	
-	
+	subCategory.setImportantText1(subCategoryForm.getImportantText1());
+	subCategory.setImportantText2(subCategoryForm.getImportantText2());
+	subCategory.setImportantText3(subCategoryForm.getImportantText3());
 	
 	try {
 		subCategoryService.updateSubCategory(subCategory);

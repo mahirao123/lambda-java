@@ -1,6 +1,7 @@
 .epaper-calendar-popup {
     width: 560px;
     max-width: calc(100vw - 2rem);
+	z-index: 50;
 }
 
 @media (max-width: 767px) {

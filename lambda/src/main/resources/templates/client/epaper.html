@@ -28,41 +28,6 @@
 	<div th:replace="~{fragments/epaperHeader :: epaperHeader}"> </div>
 
 
-    <!-- ===================================================== -->
-    <!-- SUBCATEGORY NAVIGATION -->
-    <!-- ===================================================== -->
-
-    <div th:if="${category != null}"
-         class="bg-white border-b sticky top-20 z-30">
-
-        <div class="max-w-[1600px] mx-auto">
-
-            <div id="sectionNavigation"
-                 class="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-
-                <button th:each="subCategory, stat : ${subCategories}"
-                        type="button"
-                        class="section-btn
-                               px-8 py-4
-                               text-sm font-semibold
-                               border-b-4 border-transparent
-                               hover:text-red-600
-                               hover:border-red-600
-                               transition"
-                        th:classappend="${stat.first} ? ' active-section' : ''"
-                        th:attr="data-slide=${stat.index}"
-                        th:text="${subCategory.name}">
-
-                    National
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
 
     <!-- ===================================================== -->
     <!-- EMPTY CATEGORY -->
@@ -111,12 +76,14 @@
             <!-- ONE PAGE PER SUBCATEGORY -->
             <!-- ================================================= -->
 
-            <section th:each="subCategory, stat : ${subCategories}"
-                     class="epaper-page
-                            min-h-[calc(100vh-132px)]
-                            hidden"
-                     th:classappend="${stat.first} ? ' active-page' : ''"
-                     th:id="'page-' + ${stat.index}">
+			<section th:each="subCategory, stat : ${subCategories}"
+			th:unless="${articleMap[subCategory.id] == null
+			            or #lists.isEmpty(articleMap[subCategory.id])}"
+			th:attr="data-subcategory-id=${subCategory.id}"
+			class="epaper-page min-h-[calc(100vh-132px)] hidden"
+			th:classappend="${selectedSubCategory != null
+			            and selectedSubCategory.id == subCategory.id}
+			            ? ' active-page' : ''">
 
 
                 <!-- ================================================= -->
@@ -142,9 +109,9 @@
                         <!-- TOP EDITION BAR -->
                         <!-- ================================================= -->
 
-                        <div class="paper-top-ad">
+                        <div class="paper-top">
 
-                            <div class="paper-edition">
+                            <div class="paper-top-left">
 
                                 <span th:text="${category.day}">
                                     Tuesday
@@ -166,7 +133,13 @@
                                 </span>
 
                             </div>
-
+							
+								<div class="paper-top-right">
+								    <span>Total Page:</span>
+								    <span th:text="${subCategories != null ? #lists.size(subCategories) : 0}">
+								        1
+								    </span>
+								</div>
                         </div>
 
 
@@ -197,10 +170,10 @@
 
                         </div>
 <!-- ================================================= -->
-<!-- MASTHEAD & ADVERTISEMENTS -->
+<!-- BRAND & ADVERTISEMENTS -->
 <!-- ================================================= -->
 
-<div class="paper-top-ad paper-masthead">
+<div class="paper-top-ad">
 
     <!-- LEFT ADVERTISEMENT -->
     <div class="paper-ad-item"
@@ -224,8 +197,15 @@
                     aria-label="Unmute left advertisement">
                 <i class="fa-solid fa-volume-xmark"></i>
             </button>
+			
+
+			
         </div>
 
+		
+		<!--ADVERTISEMENT TEXT-->
+		<p class="addsText"> Adds </p>
+		
         <!-- LEFT IMAGE -->
         <img th:unless="${#strings.contains(subCategory.sortFrameAdvertisement1, '/video/upload/')}"
              th:src="${subCategory.sortFrameAdvertisement1}"
@@ -262,8 +242,13 @@
                     aria-label="Unmute right advertisement">
                 <i class="fa-solid fa-volume-xmark"></i>
             </button>
+			
+			<!--ADVERTISEMENT TEXT-->
+			<p class="addsText"> Adds </p>
+			
         </div>
 
+		
         <!-- RIGHT IMAGE -->
         <img th:unless="${#strings.contains(subCategory.sortFrameAdvertisement2, '/video/upload/')}"
              th:src="${subCategory.sortFrameAdvertisement2}"
@@ -277,49 +262,64 @@
                         <!-- BREAKING NEWS -->
                         <!-- ================================================= -->
 
-                        <div class="breaking-box">
+                        <div 
+						th:if="${subCategory.importantText1 != null	and !#strings.isEmpty(subCategory.importantText1)}"
+						
+						class="breaking-box">
 
                             <div class="breaking-heading">
-                                आज की बड़ी खबरें
+                                Today News
                             </div>
 
 
                             <div class="breaking-items">
 
-                                <div class="breaking-item">
+                                <div 
+								th:if="${subCategory.importantText1 != null	and !#strings.isEmpty(subCategory.importantText1)}"
+								class="breaking-item">
 
                                     <span class="breaking-number">
                                         1
                                     </span>
 
-                                    <span>
-                                        देश-दुनिया की महत्वपूर्ण खबरें
+                                    <span 
+									th:text="${subCategory.importantText1}"
+									>
+                                       Important news from the country and the world 
                                     </span>
 
                                 </div>
 
 
-                                <div class="breaking-item">
+                                <div 
+								th:if="${subCategory.importantText2 != null	and !#strings.isEmpty(subCategory.importantText2)}"
+								class="breaking-item">
 
                                     <span class="breaking-number">
                                         2
                                     </span>
 
-                                    <span>
-                                        राजनीति और समाज की बड़ी खबरें
+                                    <span
+									th:text="${subCategory.importantText2}"
+									>
+                                        Big news of politics and society
                                     </span>
 
                                 </div>
 
 
-                                <div class="breaking-item">
+                                <div 
+								th:if="${subCategory.importantText3 != null	and !#strings.isEmpty(subCategory.importantText3)}"
+								class="breaking-item">
 
                                     <span class="breaking-number">
                                         3
                                     </span>
 
-                                    <span>
-                                        प्रदेश की ताजा और प्रमुख खबरें
+                                    <span
+									th:text="${subCategory.importantText3}"
+									>
+                                        Latest and important news of the state
                                     </span>
 
                                 </div>
@@ -374,6 +374,8 @@
 
                                 <div class="lead-section">
 
+									
+									
 
                                     <!-- ================================================= -->
                                     <!-- ARTICLE NO 0 -->
@@ -978,11 +980,11 @@
 <!-- LONG FRAME ADVERTISEMENT -->
 <!-- =============================================== -->
 
-<div class="paper-ad-column"
+<div class="paper-ad-column "
      th:if="${subCategory.longFrameAdvertisement != null
               and !#strings.isEmpty(subCategory.longFrameAdvertisement)}">
 
-    <div class="paper-ad-item">
+    <div class="paper-ad-item paper-ad-video-wrapper">
 
         <!-- VIDEO ADVERTISEMENT -->
         <video th:if="${#strings.contains(
@@ -1007,7 +1009,10 @@
                 onclick="toggleAdSound(this)">
             <i class="fa-solid fa-volume-xmark"></i>
         </button>
-
+				
+		<!--ADVERTISEMENT TEXT-->
+         <p class="addsText"> Advertisement </p>
+		 
         <!-- IMAGE ADVERTISEMENT -->
         <img th:unless="${#strings.contains(
                             subCategory.longFrameAdvertisement,
@@ -1160,22 +1165,13 @@
         <!-- PAGE NUMBER -->
         <!-- ================================================= -->
 
-        <div class="flex justify-center
-                    items-center
-                    gap-2
-                    py-5">
-
-            <span id="pageNumber"
-                  class="text-sm
-                         font-semibold
-                         text-gray-600">
-
-                1 / 1
-
-            </span>
-
-        </div>
-
+				<div class="flex justify-center items-center gap-2 py-5">
+				    <span id="pageNumber"
+				          class="text-sm font-semibold text-gray-600">
+				        1 / 1
+				    </span>
+				</div>
+				
     </main>
 
 </div>

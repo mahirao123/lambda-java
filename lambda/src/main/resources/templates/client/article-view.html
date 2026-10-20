@@ -58,7 +58,62 @@
 
 		</div>
 
+		<!-- =============================================== -->
+		<!-- LONG FRAME ADVERTISEMENT -->
+		<!-- =============================================== -->
+			<div class="long-add">
+				
+				
+				<div class="paper-ad-column"
+				     th:if="${article.mainAdvertisementUrl != null
+				              and !#strings.isEmpty(article.mainAdvertisementUrl)}">
 
+				    <div class="paper-ad-item paper-ad-video-wrapper">
+
+				        <!-- VIDEO ADVERTISEMENT -->
+				        <video th:if="${#strings.contains(
+				                           article.mainAdvertisementUrl,
+				                           '/video/upload/')}"
+				               class="paper-ad-media"
+				               autoplay
+				               muted
+				               loop
+				               playsinline
+				               preload="metadata">
+
+				            <source th:src="${article.mainAdvertisementUrl}"
+				                    type="video/mp4">
+				        </video>
+
+				        <!-- VIDEO UNMUTE BUTTON -->
+				        <button th:if="${#strings.contains(article.mainAdvertisementUrl,'/video/upload/')}"
+				                type="button"
+				                class="other-video-mute"
+				                aria-label="Unmute advertisement"
+				                onclick="toggleAdSound(this)">
+				            <i class="fa-solid fa-volume-xmark"></i>
+				        </button>
+								
+						<!--ADVERTISEMENT TEXT-->
+				         <p class="addsText"> Advertisement </p>
+						 
+				        <!-- IMAGE ADVERTISEMENT -->
+				        <img th:unless="${#strings.contains(
+				                            article.mainAdvertisementUrl,
+				                            '/video/upload/')}"
+				             th:src="${article.mainAdvertisementUrl}"
+				             alt="Advertisement"
+				             class="paper-ad-media">
+
+				    </div>
+
+				</div>
+				
+				
+				
+			</div>
+		
+		
 		<!-- ========================================================= -->
 		<!-- ARTICLE CONTAINER                                         -->
 		<!-- ========================================================= -->
@@ -76,11 +131,30 @@
 						<ol class="flex flex-wrap items-center gap-2
                        text-sm text-gray-500">
 
-							<li>
-								<a th:href="@{/}" class="hover:text-red-600 transition">
-									Home
-								</a>
-							</li>
+<li>
+	        <div 
+			
+			id="sectionNavigation"
+	             class="flex overflow-x-auto whitespace-nowrap scrollbar-hide ">
+
+		<a th:href="@{'/public/epaper/'+${article.subCategory.category.id}+'/'+${article.subCategory.id}}"
+		   
+		   class="section-btn inline-block
+		          px-8 py-4
+		          text-sm font-semibold
+		          border-b-4 border-transparent
+		          hover:text-red-600
+		          hover:border-red-600
+		          transition"
+		
+		   >
+		
+		    Back
+		
+		</a>
+
+	        </div>
+</li>
 
 							<li>/</li>
 
@@ -156,24 +230,24 @@
 				<article class="lg:col-span-8 mb-3">
 
 					<div class="bg-white rounded-2xl shadow-sm
-                            border border-gray-200 overflow-hidden">
+                           border border-gray-200 overflow-hidden ">
 
 						<!-- ================================================= -->
 						<!-- MAIN MEDIA                                          -->
 						<!-- ================================================= -->
 
-						<div class="w-full bg-black">
+						<div class="w-full bg-black article-media">
 
 							<!-- IMAGE -->
 
 							<img th:if="${article.mediaType == 'IMAGE'}" th:src="${article.imageUrl}"
-								th:alt="${article.title}" class="w-full max-h-[350px]
+								th:alt="${article.title}" class="
                                     object-contain mx-auto">
 
 
 							<!-- VIDEO -->
 
-							<video th:if="${article.mediaType == 'VIDEO'}" class="w-full max-h-[350px]" controls
+							<video th:if="${article.mediaType == 'VIDEO'}" class="" controls
 								preload="metadata" playsinline>
 
 								<source th:src="${article.mainFrameImageUrl}" type="video/mp4">
@@ -199,6 +273,7 @@
 
 						</div>
 
+						
 
 						<!-- ================================================= -->
 						<!-- SHARE BAR                                           -->
@@ -292,6 +367,52 @@
 
 									</div>
 									
+									<!-- SUB ADVERTISEMENT -->
+										
+									<div class="sort-add">
+										
+										<div class="paper-ad-item "
+										     th:if="${article.subAdvertisementUrl1 != null and !#strings.isEmpty(article.subAdvertisementUrl1)}">
+
+										    <!-- LEFT VIDEO -->
+										    <div class="paper-ad-video-wrapper"
+										         th:if="${#strings.contains(article.subAdvertisementUrl1, '/video/upload/')}">
+
+										        <video class="paper-ad-media"
+										               autoplay muted loop playsinline preload="metadata">
+										            <source th:src="${article.subAdvertisementUrl1}"
+										                    type="video/mp4">
+										        </video>
+
+										        <!-- LEFT UNMUTE BUTTON -->
+										        <button type="button"
+										                class="other-video-mute"
+										                onclick="toggleAdSound(this)"
+										                aria-label="Unmute left advertisement">
+										            <i class="fa-solid fa-volume-xmark"></i>
+										        </button>
+												
+
+												
+										    </div>
+
+											
+											<!--ADVERTISEMENT TEXT-->
+											<p class="addsText"> Adds </p>
+											
+										    <!-- LEFT IMAGE -->
+										    <img th:unless="${#strings.contains(article.subAdvertisementUrl1, '/video/upload/')}"
+										         th:src="${article.subAdvertisementUrl1}"
+										         alt="Left Advertisement"
+										         class="paper-ad-media">
+										</div>
+
+										
+									</div>
+										
+
+									
+									
 									<!---Social Media Page -->
 									<div th:replace="~{fragments/socialMediaPage :: socialMediaPage}"></div>
 							</div>
@@ -341,6 +462,51 @@
 
 							</div>
 
+							<!-- SUB ADVERTISEMENT -->
+								
+							<div class="sort-add">
+								
+								<div class="paper-ad-item "
+								     th:if="${article.subAdvertisementUrl2 != null and !#strings.isEmpty(article.subAdvertisementUrl2)}">
+
+								    <!-- LEFT VIDEO -->
+								    <div class="paper-ad-video-wrapper"
+								         th:if="${#strings.contains(article.subAdvertisementUrl2, '/video/upload/')}">
+
+								        <video class="paper-ad-media"
+								               autoplay muted loop playsinline preload="metadata">
+								            <source th:src="${article.subAdvertisementUrl2}"
+								                    type="video/mp4">
+								        </video>
+
+								        <!-- LEFT UNMUTE BUTTON -->
+								        <button type="button"
+								                class="other-video-mute"
+								                onclick="toggleAdSound(this)"
+								                aria-label="Unmute left advertisement">
+								            <i class="fa-solid fa-volume-xmark"></i>
+								        </button>
+										
+
+										
+								    </div>
+
+									
+									<!--ADVERTISEMENT TEXT-->
+									<p class="addsText"> Adds </p>
+									
+								    <!-- LEFT IMAGE -->
+								    <img th:unless="${#strings.contains(article.subAdvertisementUrl2, '/video/upload/')}"
+								         th:src="${article.subAdvertisementUrl2}"
+								         alt="Left Advertisement"
+								         class="paper-ad-media">
+								</div>
+
+								
+							</div>
+
+							
+							
 						</div>
 
 

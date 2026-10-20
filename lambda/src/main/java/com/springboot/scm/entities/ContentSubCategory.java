@@ -52,6 +52,17 @@ public class ContentSubCategory {
     private String sortFrameAdvertisement2;
 
     // =========================================================
+    // IMPORTENT NEWS TEXT
+    // =========================================================
+    private String importantText1;
+    
+    private String importantText2;
+    
+    private String importantText3;
+    
+    
+    
+    // =========================================================
     // CATEGORY
     // =========================================================
 

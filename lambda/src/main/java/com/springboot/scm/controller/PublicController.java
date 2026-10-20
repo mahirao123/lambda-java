@@ -2,6 +2,7 @@ package com.springboot.scm.controller;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -194,40 +195,98 @@ public String ePaper(@PathVariable Long id, Model model) {
             .toList();
 
 
-     Map<Long, List<Article>> articleMap = new HashMap<>();  
+    Map<Long, List<Article>> articleMap = new HashMap<>();  
 
-    for (ContentSubCategory subCategory : subCategories) {
-    	System.out.println("SubCategories from the epaper page  "+subCategory) ;
-        List<Article> articles =articleService.getArticlesBySubCategory(subCategory.getId());
+   for (ContentSubCategory subCategory : subCategories) {
+   	System.out.println("SubCategories from the epaper page  "+subCategory) ;
+       List<Article> articles =articleService.getArticlesBySubCategory(subCategory.getId());
 
 
-        articleMap.put(subCategory.getId(), articles);
-    }
-    
-    
-    List<ContentCategory> categories =  categoryService.getAllCategoriesByDate();
-
+       articleMap.put(subCategory.getId(), articles);
+   }
    
+   
+   List<ContentCategory> categories =  categoryService.getAllCategoriesByDate();
+
+  
 
 
+   model.addAttribute("categories", categories);
+
+   model.addAttribute("category", category);
+   model.addAttribute("subCategories", subCategories);
+   model.addAttribute("articleMap", articleMap);
+
+    return "client/epaper";
+}
+
+
+@GetMapping("/epaper/{categoryId}/{subCategoryId}")
+public String subCategoryByCategoryIdAndSubCategoryId(
+        @PathVariable Long categoryId,
+        @PathVariable Long subCategoryId,
+        Model model) {
+
+    // 1. Find category
+    ContentCategory category = categoryService.findById(categoryId);
+
+    if (category == null) {
+        return "redirect:/public/epaper";
+    }
+
+    // 2. Find the requested subcategory inside this category
+    List<ContentSubCategory> subCategories = category.getSubCategories()
+            .stream()
+            .filter(ContentSubCategory::isEnable)
+            .toList();
+
+    ContentSubCategory selectedSubCategory = subCategories.stream()
+            .filter(sub -> sub.getId().equals(subCategoryId))
+            .findFirst()
+            .orElse(null);
+
+ 
+
+    if (selectedSubCategory == null) {
+        return "redirect:/public/epaper/" + categoryId;
+    }
+
+    // 3. Fetch articles for the selected subcategory
+    List<Article> articles = articleService.getArticlesBySubCategory(subCategoryId);
+    
+
+    // 4. Prepare article map
+    Map<Long, List<Article>> articleMap = new HashMap<>();
+    articleMap.put(subCategoryId, articles);
+
+    
+    // 5. Load categories
+    List<ContentCategory> categories = categoryService.getAllCategoriesByDate();
+
+    // 6. Add attributes to model
     model.addAttribute("categories", categories);
-
     model.addAttribute("category", category);
     model.addAttribute("subCategories", subCategories);
+    model.addAttribute("selectedSubCategory", selectedSubCategory);
     model.addAttribute("articleMap", articleMap);
 
     return "client/epaper";
 }
 
+
+
 @GetMapping("/epaper/article/{articleId}")
-public String subCategoryEPaper(@PathVariable String articleId, Model model) {	
-	
+ public String subCategoryEPaper(@PathVariable String articleId, Model model) {	
+	 List<ContentCategory> categories =  categoryService.getAllCategoriesByDate();
+	 model.addAttribute("categories", categories);
+	 
 	Article article =articleService.getArticleByArticleId(articleId);
 	
     // Increase view count
     Long views = article.getViewCount() == null ? 0L : article.getViewCount();
     article.setViewCount(views + 1);
     articleService.saveArticle(article);
+    
 	model.addAttribute("article", article);
 	
 	return "client/article-view";
